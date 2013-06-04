@@ -1,5 +1,5 @@
-<div class="span7">
-    <% _.each(tasks, function(task){
-        print ctx.templates("task", {ctx:ctx, task:task});
-    }
+<div id="tasks" class="span7">
+    <% for(var task in tasks) {
+        print(templates("task", {task:tasks[task]}));
+    } %>
 </div>

@@ -5,7 +5,6 @@
 
 define(['mt.backbone.sio', 'underscore', 'mt.util', 'jquery', 'mt.spinner', 'mt.message.box'],
         function(Backbone, _, util, $, activity, msgBox) {
-            var appView;
             var UserLogin = Backbone.View.extend({
                 // User input indicator
                 formChanged: false,

@@ -13,11 +13,10 @@ var TaskSchema = new Schema({
     title: {type: String, required: true, default: 'New task'}
     , text: {type: String, unique: true, default: 'Description of New task'}
 
-    , author: {type: ObjectId, ref: 'User'}
+//    , author: {type: mongoose.Types.ObjectId, ref: 'User'}
     , cretionTime: {type: Date, default: Date.now}
     , lastChangeTime: {type: Date, default: Date.now}
     , public: {type: Boolean, default: false}
-    , hash: {type: String, required: true}
 }, {collection: "mtTasks"});
 
 

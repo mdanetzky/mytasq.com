@@ -4,21 +4,23 @@
  */
 
 define(
-        ['backbone', 'underscore', 'jquery', 'mt.socket'
+        ['mt.backbone.sio', 'underscore', 'jquery', 'mt.socket'
                     , 'models/user.register', 'views/user.register'
                     , 'models/user.login', 'views/user.login'
                     , 'views/user.logout'
-                    , 'mt.backbone.sio'
+                    , 'views/tasks'
 
         ], function(Backbone, _, $, socket
         , UserRegisterModel, UserRegisterView
         , UserLoginModel, UserLoginView
         , UserLogoutView
+        , TasksView
         ) {
 
     var appRouter, userRegisterModel, userRegisterView
             , userLoginModel, userLoginView
             , userLogoutView
+            , TasksView
             ;
     var AppRouter = Backbone.Router.extend({
         routes: {
@@ -50,6 +52,7 @@ define(
             userLoginModel = new UserLoginModel({socket: socket});
             userLoginView = new UserLoginView({socket: socket, model: userLoginModel, app: this});
             userLogoutView = new UserLogoutView({socket: socket});
+            tasksView = new TasksView({socket: socket});
         }
     });
     return AppView;

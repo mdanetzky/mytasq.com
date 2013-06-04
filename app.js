@@ -76,6 +76,7 @@ app.configure('production', function() {
 
 // Routes
 app.get('/', routes.home);
+app.get('/testdata', routes.testdata);
 app.get('/content', routes.content);
 app.post('/dummy', function(req, res) {
     res.send('');
