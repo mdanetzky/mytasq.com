@@ -47,12 +47,12 @@ define(
             this.on("global-rerender", this.initViews);
         },
         initViews: function() {
-            userRegisterModel = new UserRegisterModel({socket: socket});
-            userRegisterView = new UserRegisterView({socket: socket, model: userRegisterModel});
-            userLoginModel = new UserLoginModel({socket: socket});
-            userLoginView = new UserLoginView({socket: socket, model: userLoginModel, app: this});
-            userLogoutView = new UserLogoutView({socket: socket});
-            tasksView = new TasksView({socket: socket});
+            userRegisterModel = new UserRegisterModel();
+            userRegisterView = new UserRegisterView({model: userRegisterModel});
+            userLoginModel = new UserLoginModel();
+            userLoginView = new UserLoginView({model: userLoginModel, app: this});
+            userLogoutView = new UserLogoutView();
+            tasksView = new TasksView();
         }
     });
     return AppView;

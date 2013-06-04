@@ -3,20 +3,20 @@
  * Author: Matthias Danetzky
  */
 
-define(['mt.backbone.sio', 'jquery', 'models/tasks'], function(Backbone, $, Tasks){
+define(['mt.backbone.sio', 'jquery', 'models/tasks', 'views/task'], function(Backbone, $, Tasks, TaskView){
     
     var TasksView = Backbone.View.extend({
         el: "#tasks",
         initialize: function(){
-            var sdfklasdf = $('[id|="task"]');
-            $('[id|="task"]').each(function(index){
-               console.log('index :' + index);
-               
+            var self = this;
+            if(!this.collection){
+                this.collection = new Tasks();
+            }
+            $('[id|="task"]').each(function(){
+                var taskView = new TaskView({el: '#' + $(this).attr('id')});
+                self.collection.add(taskView.model);
             });
-            $('[id|="task"] [id!="tasks"]').each(function(index){
-               console.log('index :' + index);
-               
-            });
+            console.log(this.collection);
         }
     });
     

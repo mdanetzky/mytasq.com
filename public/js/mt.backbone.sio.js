@@ -3,7 +3,7 @@
  * Author: Matthias Danetzky
  */
 
-define(['backbone'], function(Backbone) {
+define(['backbone', 'mt.socket'], function(Backbone, socket) {
     var originalCollection, originalModel, originalView, originalSync;
 
     originalSync = Backbone.sync;
@@ -38,24 +38,21 @@ define(['backbone'], function(Backbone) {
 
     Backbone.Model = Backbone.Model.extend({
         constructor: function(attributes, options) {
-            this.socket = attributes !== null ? attributes.socket : void 0;
-            delete attributes.socket;
+            this.socket = socket;
             originalModel.apply(this, arguments);
         }
     });
 
     Backbone.View = Backbone.View.extend({
         constructor: function(attributes, options) {
-            this.socket = attributes !== null ? attributes.socket : void 0;
-            delete attributes.socket;
+            this.socket = socket;
             originalView.apply(this, arguments);
         }
     });
 
     Backbone.Collection = Backbone.Collection.extend({
         constructor: function(attributes, options) {
-            this.socket = attributes !== null ? attributes.socket : void 0;
-            delete attributes.socket;
+            this.socket = socket;
             originalCollection.apply(this, arguments);
         }
     });

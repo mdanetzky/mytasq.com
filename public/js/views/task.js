@@ -6,7 +6,18 @@
 define(['mt.backbone.sio', 'models/task'], function(Backbone, Task){
     
     var TaskView = Backbone.View.extend({
-        el: "#task" + this.model.id,
+        initialize: function(){
+            if(!this.options.model) {
+                this.model = new Task({
+                    id: this.options.el.split('-').pop(),
+                    title: $(this.options.el).find('.mt-task-title').html(),
+                    text: $(this.options.el).find('.mt-task-text').html()
+                });
+            } else {
+                this.el = "#task-" + options.model.id;
+                this.render();
+            }
+        },
         events: {
            "dblclick" : "doubleclick" 
         },
