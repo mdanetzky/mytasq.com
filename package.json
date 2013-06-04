@@ -1,0 +1,29 @@
+{
+  "name": "mytasq",
+  "preferGlobal": false,
+  "version": "0.0.1",
+  "author": "Matthias Danetzky <matthias.danetzky@gmail.com>",
+  "description": "task management service",
+  "keywords": [
+    "task",
+    "management",
+    "service"
+  ],
+  "dependencies" : {
+    "require-directory": "*",
+    "async": "*",
+    "express": "3.x",
+    "socket.io": "*",
+    "mongoose": "*",
+    "connect-mongo": "*",
+    "consolidate": "*",
+    "underscore": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "passport-local-mongoose": "*",
+    "passport-facebook": "*"
+  },
+  "engines": {
+    "node": ">=0.6"
+  }
+}

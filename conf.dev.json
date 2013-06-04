@@ -1,0 +1,27 @@
+{
+    "author": "Matthias Danetzky <matthias.danetzky@gmail.com>",
+    "url": "http://192.168.0.218",
+    "staticPathRelative": "public",
+    "staticPathAbsolute": "",
+    "db": {
+        "uri": "mongodb://localhost/MyTasq",
+        "options": {
+            "keepAlive": 1,
+            "db": {"native_parser": true},
+            "server": {"poolSize": 5}
+        }
+    },
+    "session": {
+        "db": {
+            "db": "MyTasq",
+            "host": "127.0.0.1",
+            "port": 27017,
+            "username": "",
+            "password": "",
+            "collection": "mtSessions",
+            "auto_reconnect": true
+        },
+        "secret": "qGeP4Vh5EVuvzsif8Ggq38tUuNSDTBNgbKHHhjhA",
+        "key": "mytasq.sid"
+    }
+}
