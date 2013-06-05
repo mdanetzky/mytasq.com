@@ -5,7 +5,7 @@
  * Client main entry point
  */
 
-define(['jquery', 'mt.socket', 'mt.backbone.app', 'mt.spinner'], function($, socket, AppView, activity) {
+define(['jquery', 'mt.socket', 'mt.backbone.app', 'mt.spinner', 'jquery-ui'], function($, socket, AppView, activity) {
 // init all handlers
 
     var appView;

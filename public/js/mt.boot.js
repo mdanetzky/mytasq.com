@@ -10,6 +10,7 @@
         baseUrl: 'js',
         paths: {
             "jquery": 'lib/jquery-1.10.1.full',
+            "jquery-ui": 'lib/jquery-ui.min',
             "text": 'lib/require/text',
             "async": 'lib/require/async',
             "backbone": 'lib/backbone',
@@ -34,6 +35,9 @@
             },
             "jquery": {
                 exports: '$'
+            },
+            "jquery-ui": {
+                deps: ['jquery'],
             },
             "underscore": {
                 exports: '_'
