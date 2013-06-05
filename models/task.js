@@ -10,8 +10,8 @@ var mongoose = require('mongoose')
 
 // Define schema
 var TaskSchema = new Schema({
-    title: {type: String, required: true, default: 'New task'}
-    , text: {type: String, unique: true, default: 'Description of New task'}
+    title: {type: String, default: 'New task'}
+    , text: {type: String, default: 'Description of New task'}
 
 //    , author: {type: mongoose.Types.ObjectId, ref: 'User'}
     , cretionTime: {type: Date, default: Date.now}

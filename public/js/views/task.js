@@ -45,12 +45,28 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task'], function(Backbone, te
             this.model.set('title', $(this.el).find(this.title).html());
             this.model.set('text', $(this.el).find(this.text).html());
             if (this.model.get('id') === 'new' && !this.hasChanged) {
-                if (this.model.validate()) {
-                    this.model.set('id', '' + new Date().getTime());
-                    this.$el.attr('id', 'task-' + this.model.get('id'));
+                if (this.model.isValid()) {
+                    this.model.save({}, {
+                        success: function(model, response, options) {
+                            this.model.set('id', '' + response);
+                            this.$el.attr('id', 'task-' + this.model.get('id'));
+                        }, error: function(response) {
+                      console.log(response);
+                          alert("Task save failed!");
+                        }
+                    });
+
+                    return;
+                    // todo
                 }
             }
             this.hasChanged = true;
+            this.model.save(null, {
+                success: function(model, response, options) {
+                }, error: function(model, response, options) {
+                    console.log(response);
+                }
+            });
         },
         render: function() {
             $(this.el).html(templates("task", {task: this.model.toJSON()}));
