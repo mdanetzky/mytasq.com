@@ -6,7 +6,9 @@
  */
 
 var tasksController = require('../controllers/tasks')
-        , async = require('async');
+        , async = require('async')
+        , backboneMongoose = require('../lib/mt.backbone.mongoose')
+        ;
 
 exports = module.exports = function(req, res) {
     var renderingContext = {};
@@ -14,15 +16,6 @@ exports = module.exports = function(req, res) {
     renderingContext.user = req.session.user || false;
     renderingContext.templates = require('../lib/mt.templates');
     req.session.visitCount = req.session.visitCount ? req.session.visitCount + 1 : 1;
-    if (renderingContext.user) {
-        renderingContext.task = {
-            id: "12345322",
-            name: "The Task",
-            description: "sfaf asdf asf a fa sf as fd as fa sdfa sfasdfasd fa sf asd fas f asdf"
-        };
-    } else {
-        renderingContext.task = undefined;
-    }
     async.parallel([
         function(callback) {
             tasksController.publicTasks(null,function(err, tasks){
@@ -30,7 +23,7 @@ exports = module.exports = function(req, res) {
                     console.log(err);
                     renderingContext.tasks = undefined;
                 } else {
-                    renderingContext.tasks = tasks;
+                    renderingContext.tasks = backboneMongoose.convert(tasks);
                 }
                 callback();
             });

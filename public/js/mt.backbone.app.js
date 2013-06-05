@@ -20,7 +20,7 @@ define(
     var appRouter, userRegisterModel, userRegisterView
             , userLoginModel, userLoginView
             , userLogoutView
-            , TasksView
+            , tasksView
             ;
     var AppRouter = Backbone.Router.extend({
         routes: {
@@ -53,6 +53,13 @@ define(
             userLoginView = new UserLoginView({model: userLoginModel, app: this});
             userLogoutView = new UserLogoutView();
             tasksView = new TasksView();
+        },
+        events: {
+            "click #new_task": "createTask"
+        },
+        createTask: function(){
+            tasksView.createNewTask();
+            return false;
         }
     });
     return AppView;

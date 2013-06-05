@@ -1,5 +1,8 @@
 <div id="tasks" class="span7">
-    <% for(var task in tasks) {
-        print(templates("task", {task:tasks[task]}));
-    } %>
+<!--    <div id="task-new" class="row-fluid mt.task"></div>-->
+    <% for(var task in tasks) { %>
+    <div id="task-<%=tasks[task].id %>" class="row-fluid mt.task">
+        <%    print(templates("task", {task:tasks[task]})); %>
+    </div>
+    <% } %>
 </div>

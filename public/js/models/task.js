@@ -8,7 +8,11 @@ define(['mt.backbone.sio'], function(Backbone) {
         url: 'task',
         id: null,
         title : null,
-        text : null
+        text : null,
+        
+        validate: function(){
+            return this.title || this.text;
+        }
     });
     
     return Task;
