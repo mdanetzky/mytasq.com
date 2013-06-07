@@ -7,28 +7,29 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task'], function(Backbone, te
 
     var TaskView = Backbone.View.extend({
         el: '',
-        title: '.mt-task-title',
-        text: '.mt-task-text',
         editMode: false,
         hasChanged: false,
         initialize: function() {
             this.eventBus = this.options.eventBus;
             this.eventBus.on("blur", this.blur, this);
-            if (this.options.model) {
-                this.model = this.options.model;
-                if (this.model.get('id') === 'new') {
-                    this.render();
-                    this.eventBus.trigger("blur", this);
-                    this.switchEditable();
-                    $(this.el).find(this.title).focus();
-                }
+            if (this.model) {
+                this.render();
+                this.init$fields();
+                this.eventBus.trigger("blur", this);
+                this.switchEditable();
+                this.$title.focus();
             } else {
+                this.init$fields();
                 this.model = new Task({
                     id: this.options.el.split('-').pop(),
-                    title: $(this.options.el).find('.mt-task-title').html(),
-                    text: $(this.options.el).find('.mt-task-text').html()
+                    title: this.$title.html(),
+                    text: this.$text.html()
                 });
             }
+        },
+        init$fields: function() {
+            this.$title = this.$el.find('.mt-task-title');
+            this.$text = this.$el.find('.mt-task-text');
         },
         events: {
             "click": "click",
@@ -58,10 +59,10 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task'], function(Backbone, te
                     || ($(event.target).parents('.mt-task-title').length !== 0)) {
                 // return, tab -> switch to text field
                 if (event.keyCode === 13 || event.keyCode === 9) {
-                    if ($(this.el).find(this.text).attr('contenteditable') !== 'true') {
-                        $(this.el).find(this.text).attr('contenteditable', 'true');
+                    if (this.$text.attr('contenteditable') !== 'true') {
+                        this.$text.attr('contenteditable', 'true');
                     }
-                    $(this.el).find(this.text).focus();
+                    this.$text.focus();
                     return false;
                 }
             }
@@ -70,7 +71,7 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task'], function(Backbone, te
                     || ($(event.target).parents('.mt-task-text').length !== 0)) {
                 // tab -> switch to title field
                 if (event.keyCode === 9) {
-                    $(this.el).find(this.title).focus();
+                    this.$title.focus();
                     return false;
                 }
             }
@@ -79,8 +80,8 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task'], function(Backbone, te
 
             // save changed content
             var self = this;
-            this.model.set('title', $(this.el).find(this.title).html());
-            this.model.set('text', $(this.el).find(this.text).html());
+            this.model.set('title', this.$title.html());
+            this.model.set('text', this.$text.html());
             if (this.model.get('id') === 'new' && !this.hasChanged) {
                 if (this.model.isValid()) {
                     this.model.save(null, {
@@ -110,22 +111,22 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task'], function(Backbone, te
         },
         switchEditable: function(on) {
             // stop running animations
-            $(this.el).find(this.title).stop(true, false);
-            $(this.el).find(this.text).stop(true, false);
+            this.$title.stop(true, false);
+            this.$text.stop(true, false);
             if (typeof on === 'undefined') {
                 on = true;
             }
             if (on) {
                 this.editMode = true;
-                $(this.el).find(this.title).attr('contenteditable', 'true');
+                this.$title.attr('contenteditable', 'true');
                 if (this.model.get("text")) {
-                    $(this.el).find(this.text).attr('contenteditable', 'true');
+                    this.$text.attr('contenteditable', 'true');
                 }
                 $(this.el).find('.mt-task-edit-mode').fadeIn(200);
             } else {
                 this.editMode = false;
-                $(this.el).find(this.title).attr('contenteditable', 'false');
-                $(this.el).find(this.text).attr('contenteditable', 'false');
+                this.$title.attr('contenteditable', 'false');
+                this.$text.attr('contenteditable', 'false');
                 $(this.el).find('.mt-task-edit-mode').fadeOut(400);
             }
         },
@@ -139,7 +140,7 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task'], function(Backbone, te
         focus: function() {
             this.eventBus.trigger("blur", this);
             this.switchEditable();
-            $(this.el).find(this.title).focus();
+            this.$title.focus();
         },
         show: function() {
             this.$el.show();

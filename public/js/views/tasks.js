@@ -1,6 +1,8 @@
 /* 
  * Copyright 2013 MyTasq.com
  * Author: Matthias Danetzky
+ * 
+ * Tasks View
  */
 
 define(['mt.backbone.sio', 'underscore', 'jquery', 'models/tasks', 'models/task', 'views/task'], function(Backbone, _, $, Tasks, Task, TaskView) {
