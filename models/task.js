@@ -13,9 +13,9 @@ var TaskSchema = new Schema({
     title: {type: String, default: 'New task'}
     , text: {type: String, default: 'Description of New task'}
 
-//    , author: {type: mongoose.Types.ObjectId, ref: 'User'}
+    , author: {type: Schema.ObjectId, ref: 'User'}
     , cretionTime: {type: Date, default: Date.now}
-    , lastChangeTime: {type: Date, default: Date.now}
+    , lastModifiedTime: {type: Date, default: Date.now}
     , public: {type: Boolean, default: false}
 }, {collection: "mtTasks"});
 
