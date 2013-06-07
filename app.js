@@ -21,15 +21,6 @@ if (conf.err) {
     process.exit(1);
 }
 
-// set absolute path to static resources
-if (!conf.staticPathAbsolute) {
-    if (!conf.staticPathRelative) {
-        console.log("Missing staticPath in configuration! Exiting");
-        process.exit(1);
-    }
-    conf.staticPathAbsolute = path.join(__dirname, conf.staticPathRelative);
-}
-
 // Connect to the database
 mongoose.connect(conf.db.uri, conf.db.options, function(err) {
     if (err) {
