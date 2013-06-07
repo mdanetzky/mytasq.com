@@ -37,7 +37,7 @@
                 exports: '$'
             },
             "jquery-ui": {
-                deps: ['jquery'],
+                deps: ['jquery']
             },
             "underscore": {
                 exports: '_'
@@ -47,14 +47,14 @@
                 exports: 'Backbone'
             },
             "bootstrap": {
-                deps: ['jquery', 'css!../css/bootstrap.min.css']
+                deps: ['jquery', 'css!../css/bootstrap.min.css', 'css!../css/bootstrap-responsive.min.css']
             }
         }
     });
 
     mtRequire(['mt.spinner'], function(activity) {
         activity.show();
-        mtRequire(['mt.main', 'bootstrap'], function(mtMain) {
+        mtRequire(['mt.main', 'bootstrap', 'css!../css/mt.css'], function(mtMain) {
             mtMain.init();
         });
     });
