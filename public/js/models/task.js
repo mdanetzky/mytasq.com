@@ -5,7 +5,7 @@
 
 define(['mt.backbone.sio'], function(Backbone) {
     var Task = Backbone.Model.extend({
-        url: 'task',
+        url: 'task/save',
         id: null,
         title: null,
         text: null,
