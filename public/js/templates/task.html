@@ -1,5 +1,9 @@
-    <div class="span12">
-        <h2 class="mt-task-title"><%=task.title %></h2>
-        <p class="mt-task-text"><%=task.text %></p>
-<!--        <p><a class="btn" href="#">View details &raquo;</a></p>-->
-    </div><!--/span-->
+<div class="span12" style="position: relative;">
+    <h2 class="mt-task-title" style="outline: none;"><%=task.title %></h2>
+    <p class="mt-task-text" style="outline: none;"><%=task.text %></p>
+    <div class="btn-group"style="margin-bottom: 10px;">
+        <button class="btn">Done!</button>
+        <button class="btn">Operations &raquo;</button>
+    </div> 
+    <div class="mt-task-edit-mode" style="display:none;"></div>
+</div>
