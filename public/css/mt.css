@@ -1,0 +1,14 @@
+/* 
+    Document   : mt
+    Created on : Jun 7, 2013, 2:05:01 PM
+    Author     : Matthias Danetzky <matthias.danetzky@gmail.com>
+    Description:
+        Global mytasq.com css
+*/
+
+/* reset outlines */
+div { outline: 0; }
+a { outline: 0; }
+p { outline: 0; }
+
+.mt-task-edit-mode { position: absolute; left: -10px; right: -10px; top: 0; bottom: 0; background-color: #BCFABC; z-index: -1; border: 1px solid #74EE60; border-radius: 4px; box-shadow: inset 0 1px 1px rgba(0,0,0,.05); }
