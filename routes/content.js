@@ -5,33 +5,11 @@
  * main content route
  */
 
-var tasksController = require('../controllers/tasks')
-        , async = require('async')
-        , backboneMongoose = require('../lib/mt.backbone.mongoose')
+var contentController = require('../controllers/content')
         ;
 
 exports = module.exports = function(req, res) {
-    var renderingContext = {};
-    renderingContext.session = req.session || {};
-    renderingContext.user = req.session.user || false;
-    renderingContext.templates = require('../lib/mt.templates');
-    req.session.visitCount = req.session.visitCount ? req.session.visitCount + 1 : 1;
-    async.parallel([
-        function(callback) {
-            tasksController.publicTasks(null,function(err, tasks){
-                if(err){
-                    console.log(err);
-                    renderingContext.tasks = undefined;
-                } else {
-                    renderingContext.tasks = backboneMongoose.convert(tasks);
-                }
-                callback();
-            });
-        },
-        function(callback) {
-            callback();
-        }
-    ], function(err) { //This is the final callback
+    contentController.mainContent(req, function(err, renderingContext) { 
         res.render('content.html', renderingContext);
     });
 };
