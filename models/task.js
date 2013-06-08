@@ -17,6 +17,7 @@ var TaskSchema = new Schema({
     , cretionTime: {type: Date, default: Date.now}
     , lastModifiedTime: {type: Date, default: Date.now}
     , public: {type: Boolean, default: false}
+    , done: {type: Boolean, default: false}
 }, {collection: "mtTasks"});
 
 

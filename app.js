@@ -13,11 +13,14 @@ var express = require('express')
         , engines = require('consolidate')
         , util = require('util')
         , conf = require('./lib/mt.conf')
+        , log = require('./lib/mt.logger')
         ;
+
+log.info('START: mytasq.com server');
 
 // Check for errors in configuration
 if (conf.err) {
-    console.log(conf.err);
+    log.error(conf.err);
     process.exit(1);
 }
 
@@ -77,7 +80,7 @@ app.get('/dummy', function(req, res) {
 });
 
 var server = http.createServer(app).listen(app.get('port'), function() {
-    console.log("Express server listening on port " + app.get('port'));
+    log.info("Express server listening on port " + app.get('port'));
 });
 
 // socket event handlers

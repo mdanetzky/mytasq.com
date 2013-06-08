@@ -3,6 +3,7 @@
     "url": "http://192.168.0.218",
     "staticPathRelative": "public",
     "staticPathAbsolute": "",
+    "loglevel": "debug",
     "db": {
         "uri": "mongodb://localhost/MyTasq",
         "options": {

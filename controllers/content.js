@@ -1,11 +1,14 @@
 /* 
  * Copyright 2013 MyTasq.com
  * Author: Matthias Danetzky
+ * 
+ * content controller
  */
 
 var async = require('async')
         , backboneMongoose = require('../lib/mt.backbone.mongoose')
         , tasksController = require('../controllers/tasks')
+        , log = require('../lib/mt.logger')
         ;
 
 module.exports = exports = {
@@ -26,7 +29,7 @@ module.exports = exports = {
             function(callback) {
                 getTasks(renderingContext, function(err, tasks) {
                     if (err) {
-                        console.log(err);
+                        log.error(err);
                         renderingContext.tasks = undefined;
                     } else {
                         renderingContext.tasks = backboneMongoose.convert(tasks);

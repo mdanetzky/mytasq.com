@@ -21,7 +21,9 @@
     "passport": "*",
     "passport-local": "*",
     "passport-local-mongoose": "*",
-    "passport-facebook": "*"
+    "passport-facebook": "*",
+    "winston": "*",
+    "moment": "*"
   },
   "engines": {
     "node": ">=0.6"
