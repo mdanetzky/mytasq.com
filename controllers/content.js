@@ -16,6 +16,7 @@ module.exports = exports = {
         renderingContext.user = context.session.user || false;
         renderingContext.templates = require('../lib/mt.templates');
         context.session.visitCount = context.session.visitCount ? context.session.visitCount + 1 : 1;
+        context.session.lastVisit = Date.now();
         if (context.session.user) {
             getTasks = tasksController.userTasks;
         } else {
