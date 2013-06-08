@@ -12,7 +12,7 @@ define(['backbone', 'mt.socket'], function(Backbone, socket) {
     originalCollection = Backbone.Collection.prototype.constructor;
 
     Backbone.sync = function(method, model, options) {
-        var error, socket, success, _ref;
+        var error, socket, success, _ref, timeout;
 
         if (!model._saving) {
             model._saving = true;
@@ -24,6 +24,8 @@ define(['backbone', 'mt.socket'], function(Backbone, socket) {
             delete options.success;
             error = options.error;
             delete options.error;
+
+            var sldfkaldsfk = model.changedAttributes();
             var modelUrl = (typeof model.url === 'function') ? model.url() : model.url;
             socket.emit("backbone.sync", {
                 url: modelUrl,
@@ -37,7 +39,12 @@ define(['backbone', 'mt.socket'], function(Backbone, socket) {
                     success.call(this, response);
                 }
                 model._saving = false;
+                clearTimeout(timeout);
             });
+            timeout = setTimeout(function() {
+                model._saving = false;
+                error.call(this, 'timeout');
+            }, 5000)
         }
     };
 
