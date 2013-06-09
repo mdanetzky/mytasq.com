@@ -32,10 +32,28 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task'], function(Backbone, te
             this.$text = this.$el.find('.mt-task-text');
         },
         events: {
-            "click": "click",
+            "click .mt-task": "click",
+            "click .mt-btn-task-done": "done",
             "keydown": "keyShotcuts",
             "keypress": "keyShotcuts",
             "keyup": "onChange"
+        },
+        done: function(event) {
+            var self = this;
+            if (this.model.id !== 'new') {
+                this.model.save({"done": true}, {
+                    patch: true,
+                    success: function(model, response, options) {
+                        self.eventBus.trigger('removeTaskFromView', self);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Task save failed!\ncheck console for details.");
+                    }
+
+                });
+            }
+            return false;
         },
         click: function(event) {
             if (!this.editMode) {

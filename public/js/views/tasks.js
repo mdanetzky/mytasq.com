@@ -11,9 +11,11 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'models/tasks', 'models/task'
         el: "#tasks",
         newTaskView: null,
         initialize: function() {
-            this.eventBus = {};
 
+            // create event bus
+            this.eventBus = {};
             _.extend(this.eventBus, Backbone.Events);
+            this.eventBus.on("removeTaskFromView", this.removeTaskFromView, this);
             var self = this;
             if (!this.collection) {
                 this.collection = new Tasks();
@@ -32,6 +34,32 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'models/tasks', 'models/task'
                 var newTask = new Task({id: 'new'});
                 newTaskView = new TaskView({el: '#task-new', model: newTask, eventBus: this.eventBus});
                 this.collection.add(newTask, {at: 0});
+            }
+        },
+        removeTaskFromView: function(taskView) {
+            var self = this;
+            if (taskView && taskView.model && taskView.model.id) {
+                var $task = this.$el.find('#task-' + taskView.model.id);
+                var fadeOutTask = function() {
+                    $task.css('overflow', 'hidden');
+                    $task.animate({height: 0}, function() {
+                        // cleanup
+                        self.collection.remove(taskView.model);
+                        taskView.remove();
+                        delete taskView.model;
+                        delete taskView;
+                        $task.remove();
+                    });
+                    $task.fadeOut(200);
+                };
+                if ($task.length) {
+                    var $editMode = $task.find('.mt-task-edit-mode');
+                    if ($editMode.is(":visible")) {
+                        $editMode.fadeOut(100, fadeOutTask);
+                    } else {
+                        fadeOutTask();
+                    }
+                }
             }
         }
     });

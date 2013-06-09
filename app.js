@@ -16,6 +16,7 @@ var express = require('express')
         , log = require('./lib/mt.logger')
         ;
 
+log.info('########################');
 log.info('START: mytasq.com server');
 
 // Check for errors in configuration
