@@ -34,8 +34,8 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task'], function(Backbone, te
         events: {
             "click .mt-task": "click",
             "click .mt-btn-task-done": "done",
-            "keydown": "keyShotcuts",
-            "keypress": "keyShotcuts",
+            "keydown": "keyShortcuts",
+            "keypress": "keyShortcuts",
             "keyup": "onChange"
         },
         done: function(event) {
@@ -63,6 +63,7 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task'], function(Backbone, te
             this.setFocusOnEditableDiv(event.target);
         },
         setFocusOnEditableDiv: function(element) {
+            // traverse parents and set focus on element with contenteditable
             if (element !== document) {
                 if (element.getAttribute('contenteditable') === 'true') {
                     element.focus();
@@ -71,7 +72,7 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task'], function(Backbone, te
                 }
             }
         },
-        keyShotcuts: function(event) {
+        keyShortcuts: function(event) {
             // title specific events
             if ((event.target.className.indexOf('mt-task-title') > -1)
                     || ($(event.target).parents('.mt-task-title').length !== 0)) {
@@ -98,12 +99,16 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task'], function(Backbone, te
 
             // save changed content
             var self = this;
-            this.model.set('title', this.$title.html());
-            this.model.set('text', this.$text.html());
+            var $target = $(event.target);
+            if ($target.is(this.$title) || $target.parents('.mt-task-title').length) {
+                this.model.set('title', this.$title.text());
+            }
+            if ($target.is(this.$text) || $target.parents('.mt-task-text').length) {
+                this.model.set('text', this.$text.html());
+            }
             if (this.model.get('id') === 'new' && !this.hasChanged) {
                 if (this.model.isValid()) {
-                    this.model.save(null, {
-                        patch: true,
+                    Backbone.sync('create', model, {
                         success: function(model, response, options) {
                             self.model.set('id', '' + response);
                             self.$el.attr('id', 'task-' + self.model.get('id'));
@@ -119,6 +124,7 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task'], function(Backbone, te
             this.hasChanged = true;
             this.model.save(null, {
                 success: function(model, response, options) {
+                    var gkkjgljklkj;
                 },
                 error: function(model, response, options) {
                     console.log(response);
