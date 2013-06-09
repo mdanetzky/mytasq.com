@@ -108,7 +108,7 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task'], function(Backbone, te
             }
             if (this.model.get('id') === 'new' && !this.hasChanged) {
                 if (this.model.isValid()) {
-                    Backbone.sync('create', model, {
+                    this.model.save(null, {
                         success: function(model, response, options) {
                             self.model.set('id', '' + response);
                             self.$el.attr('id', 'task-' + self.model.get('id'));
