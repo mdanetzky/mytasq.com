@@ -123,6 +123,7 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task'], function(Backbone, te
             }
             this.hasChanged = true;
             this.model.save(null, {
+                deferredSave: true,
                 success: function(model, response, options) {
                     var gkkjgljklkj;
                 },
