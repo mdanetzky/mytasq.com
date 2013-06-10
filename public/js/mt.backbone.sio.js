@@ -30,8 +30,13 @@ define(['backbone', 'underscore', 'mt.socket', 'jquery'], function(Backbone, _, 
         }
     });
 
-    var bufferModelChanges = function(buffer, model) {
-        var changedAttributes = model.changedAttributes();
+    var bufferModelChanges = function(buffer, model, options) {
+        var changedAttributes;
+        if (options.patch) {
+            changedAttributes = model.changedAttributes();
+        } else {
+            changedAttributes = model.toJSON();
+        }
         if (changedAttributes) {
             if (buffer) {
                 buffer = _.extend(buffer, model.changedAttributes());
@@ -43,25 +48,24 @@ define(['backbone', 'underscore', 'mt.socket', 'jquery'], function(Backbone, _, 
     };
 
     var sendData = function(method, model, options) {
-        var error, socket, success, _ref;
+        var error, socket, success, _ref, modelAttributes;
         socket = model.socket || ((_ref = model.collection) !== null ? _ref.socket : void 0);
         if (!socket) {
             return originalSync.apply(this, arguments);
         }
-        success = options.success;
-        delete options.success;
-        error = options.error;
-        delete options.error;
-
         var model2send = {};
-        var changedAttributes = model.changedAttributes();
 
+        if (options.patch) {
+            modelAttributes = model.changedAttributes();
+        } else {
+            modelAttributes = model.toJSON();
+        }
         // check if anything to send
-        if (changedAttributes || model._saveBuffer) {
+        if (modelAttributes || model._saveBuffer) {
 
             model._saveTimeout = setTimeout(function() {
 
-                // todo: store data to be saved when connection is up
+                // todo: store data until the connection is back on
 
                 console('SAVE TIMEOUT');
                 model._saveTimeout = null;
@@ -71,8 +75,8 @@ define(['backbone', 'underscore', 'mt.socket', 'jquery'], function(Backbone, _, 
                 model2send = model._saveBuffer;
                 delete model._saveBuffer;
             }
-            if (changedAttributes) {
-                model2send = _.extend(model2send, changedAttributes);
+            if (modelAttributes) {
+                model2send = _.extend(model2send, modelAttributes);
             }
 
             model2send.id = model.id;
@@ -84,9 +88,9 @@ define(['backbone', 'underscore', 'mt.socket', 'jquery'], function(Backbone, _, 
                 model: model2send
             }, function(err, response) {
                 if (err) {
-                    error.call(this, err);
+                    options.error.call(this, err);
                 } else {
-                    success.call(this, response);
+                    options.success.call(this, response);
                 }
                 delete model._savingData;
                 clearTimeout(model._saveTimeout);
@@ -99,7 +103,7 @@ define(['backbone', 'underscore', 'mt.socket', 'jquery'], function(Backbone, _, 
         if (options.deferredSave) {
             // Postpone save by deferralTime
             var deferralTime = 1000;
-            model._saveBuffer = bufferModelChanges(model._saveBuffer, model);
+            model._saveBuffer = bufferModelChanges(model._saveBuffer, model, options);
             if (model._saveBuffer) {
                 delete options.deferredSave;
                 if (model._saveTimeoutDeferred) {
@@ -117,7 +121,7 @@ define(['backbone', 'underscore', 'mt.socket', 'jquery'], function(Backbone, _, 
         }
         if (model._savingData && !options.immediate) {
             // Buffer changes until current save is finished
-            model._saveBuffer = bufferModelChanges(model._saveBuffer, model);
+            model._saveBuffer = bufferModelChanges(model._saveBuffer, model, options);
             // If there is any data not yet saved,
             // try to save it later
             if (model._saveBuffer) {

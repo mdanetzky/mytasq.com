@@ -109,6 +109,7 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task'], function(Backbone, te
             if (this.model.get('id') === 'new' && !this.hasChanged) {
                 if (this.model.isValid()) {
                     this.model.save(null, {
+                        patch: true,
                         success: function(model, response, options) {
                             self.model.set('id', '' + response);
                             self.$el.attr('id', 'task-' + self.model.get('id'));
@@ -124,6 +125,7 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task'], function(Backbone, te
             this.hasChanged = true;
             this.model.save(null, {
                 deferredSave: true,
+                patch: true,
                 success: function(model, response, options) {
                     var gkkjgljklkj;
                 },

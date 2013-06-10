@@ -8,9 +8,9 @@ define(['mt.backbone.sio'], function(Backbone) {
         
         url: 'user/login',
         
-        email : null,
-        password : null,
-        rememberme : null
+        email : '',
+        password : '',
+        rememberme : false
     });
     
     
