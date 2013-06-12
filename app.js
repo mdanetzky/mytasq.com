@@ -33,10 +33,17 @@ if (conf.development) {
     mongoose.set('debug', function(collectionName, method, query, doc) {
         log.debug('Mongoose collection: ' + collectionName);
         log.debug('Mongoose method: ' + method);
-//        log.debug('Mongoose query: ');
-//        log.debug(query);
+        log.debug('Mongoose query: ');
+        log.debug(query);
     });
 }
+// Prepare logStream for express
+var logStream = {
+    write: function(message){
+        log.info(message);
+    }
+};
+
 // Connect to the database
 mongoose.connect(conf.db.uri, conf.db.options, function(err) {
     if (err) {
@@ -62,7 +69,7 @@ if (cluster.isMaster) {
         cluster.fork();
     }
 
-// Code to run if we're in a worker process
+// Start Express app in worker process
 } else {
 
 // Create express app
@@ -71,7 +78,6 @@ if (cluster.isMaster) {
     app.configure(function() {
         app.engine('.jade', engines.jade);
         app.engine('.html', engines.underscore);
-
         app.set('port', process.env.PORT || 80);
         app.set('views', __dirname + '/views');
         app.use(express.static(conf.staticPathAbsolute));
@@ -86,8 +92,7 @@ if (cluster.isMaster) {
             store: sessionStore
         }));
         app.use(app.router);
-
-        app.use(express.logger('dev'));
+        app.use(express.logger({stream: logStream}));
         require('./lib/mt.passport')(app);
     });
     app.configure('development', function() {
