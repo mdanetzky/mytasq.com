@@ -19,7 +19,8 @@
             "transit": "lib/transit.min",
             "bootstrap": 'lib/bootstrap.min',
             "socket.io": '/socket.io/socket.io',
-            "uri.parser" : "lib/uri.parser"
+            "uri.parser" : "lib/uri.parser",
+            "ckeditor" : "lib/ckeditor/ckeditor"
         },
         map: {
             '*': {
@@ -47,14 +48,14 @@
                 exports: 'Backbone'
             },
             "bootstrap": {
-                deps: ['jquery', 'css!../css/bootstrap.min.css', 'css!../css/bootstrap-responsive.min.css']
+                deps: ['jquery', 'css!../css/bootstrap.min.css', 'css!../css/bootstrap-responsive.min.css', 'css!../css/mt.css']
             }
         }
     });
 
     mtRequire(['mt.spinner'], function(activity) {
         activity.show();
-        mtRequire(['mt.main', 'bootstrap', 'css!../css/mt.css'], function(mtMain) {
+        mtRequire(['mt.main', 'bootstrap'], function(mtMain) {
             mtMain.init();
         });
     });
