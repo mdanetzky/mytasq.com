@@ -11,9 +11,9 @@ define(['backbone', 'underscore', 'mt.socket', 'jquery'], function(Backbone, _, 
     originalView = Backbone.View.prototype.constructor;
     originalCollection = Backbone.Collection.prototype.constructor;
 
-    // collection with models to be saved with delay
+    // Collection with models to be saved with delay.
     var deferredModels = new Backbone.Collection();
-    // on window close try to save all deferred models immediately
+    // On window close try to save all deferred models immediately.
     $(window).bind('unload beforeunload', function(e) {
         var isRunning;
         if (!isRunning) {
@@ -23,7 +23,7 @@ define(['backbone', 'underscore', 'mt.socket', 'jquery'], function(Backbone, _, 
                     success: function() {
                     },
                     error: function() {
-                        // todo store unsaved data in browser
+                        // TODO store unsaved data in browser
                     }
                 });
             });
