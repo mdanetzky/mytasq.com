@@ -1,8 +1,8 @@
-<div id="tasks" class="span7">
+<div id="tasks" class="span7" style="position: relative;">
 <!--    <div id="task-new" class="row-fluid mt.task"></div>-->
-    <% for(var task in tasks) { %>
-    <div id="task-<%=tasks[task].id %>" class="row-fluid">
-        <%    print(templates("task", {task:tasks[task]})); %>
+    <% for(var i in tasks) { %>
+    <div id="task-<%=tasks[i].id %>" class="row-fluid">
+        <% print(templates("task", {task:tasks[i]})); %>
     </div>
     <% } %>
 </div>
