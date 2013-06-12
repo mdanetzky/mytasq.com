@@ -13,11 +13,11 @@ var TaskSchema = new Schema({
     title: {type: String, default: ''}
     , text: {type: String, default: ''}
 
-    , author: {type: Schema.ObjectId, ref: 'User'}
+    , author: {type: Schema.ObjectId, ref: 'User', index: true}
     , cretionTime: {type: Date, default: Date.now}
-    , lastModifiedTime: {type: Date, default: Date.now}
-    , public: {type: Boolean, default: false}
-    , done: {type: Boolean, default: false}
+    , lastModifiedTime: {type: Date, default: Date.now, index: true}
+    , public: {type: Boolean, default: false, index: true}
+    , done: {type: Boolean, default: false, index: true}
 }, {collection: "mtTasks"});
 
 

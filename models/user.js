@@ -4,18 +4,23 @@
  */
 
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    passportLocalMongoose = require('passport-local-mongoose');
+        Schema = mongoose.Schema,
+        passportLocalMongoose = require('passport-local-mongoose'),
+        log = require('../lib/mt.logger')
+        ;
 
 var UserSchema = new Schema({
-    email: {type: String, sparse: true},
     nickname: String,
     birthdate: Date
-}, { collection: 'mtUsers' });
+}, {collection: 'mtUsers'});
 
 UserSchema.plugin(passportLocalMongoose, {
     usernameField: 'email',
     passwordField: 'password'
 });
 
-module.exports = mongoose.model('User', UserSchema);
+UserSchema.index({email: 1}, { unique: true, sparse: true });
+
+var User = mongoose.model('User', UserSchema);
+
+module.exports = User;
