@@ -29,6 +29,14 @@ if (conf.err) {
     process.exit(1);
 }
 
+if (conf.development) {
+    mongoose.set('debug', function(collectionName, method, query, doc) {
+        log.debug('Mongoose collection: ' + collectionName);
+        log.debug('Mongoose method: ' + method);
+//        log.debug('Mongoose query: ');
+//        log.debug(query);
+    });
+}
 // Connect to the database
 mongoose.connect(conf.db.uri, conf.db.options, function(err) {
     if (err) {
@@ -43,9 +51,11 @@ var sessionStore = new MongoStore(conf.session.db);
 
 // Define CPUs cluster
 if (cluster.isMaster) {
+//if (cluster.isMaster && !conf.development) {
 
     // Count the machine's CPUs
     var cpuCount = require('os').cpus().length;
+
     log.info('Starting cluster for ' + cpuCount + ' CPUs');
     // Create a worker for each CPU
     for (var i = 0; i < cpuCount; i += 1) {
@@ -65,7 +75,7 @@ if (cluster.isMaster) {
         app.set('port', process.env.PORT || 80);
         app.set('views', __dirname + '/views');
         app.use(express.static(conf.staticPathAbsolute));
-//    app.use(express.favicon(path.join(__dirname, 'public', 'favicon.ico'), {maxAge: 1}));
+//      app.use(express.favicon(path.join(__dirname, 'public', 'favicon.ico'), {maxAge: 1}));
         app.use(express.bodyParser());
         app.use(express.methodOverride());
         app.use(express.cookieParser());
