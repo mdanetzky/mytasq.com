@@ -6,7 +6,7 @@
 var mongoose = require('mongoose'),
         Schema = mongoose.Schema,
         passportLocalMongoose = require('passport-local-mongoose'),
-        log = require('../lib/mt.logger')
+        log = require('../lib/mt.logger')(module)
         ;
 
 var UserSchema = new Schema({

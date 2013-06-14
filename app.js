@@ -14,7 +14,7 @@ var express = require('express')
         , engines = require('consolidate')
         , util = require('util')
         , conf = require('./lib/mt.conf')
-        , log = require('./lib/mt.logger')
+        , log = require('./lib/mt.logger')(module)
         ;
 
 log.info('#################################');
@@ -31,10 +31,7 @@ if (conf.err) {
 
 if (conf.development) {
     mongoose.set('debug', function(collectionName, method, query, doc) {
-        log.debug('Mongoose collection: ' + collectionName);
-        log.debug('Mongoose method: ' + method);
-        log.debug('Mongoose query: ');
-        log.debug(query);
+        log.log('debug', 'Mongoose collection: "' + collectionName + '" method: "' + method + '" query: ', query);
     });
 }
 // Prepare logStream for express

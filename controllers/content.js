@@ -8,7 +8,7 @@
 var async = require('async')
         , backboneMongoose = require('../lib/mt.backbone.mongoose')
         , tasksController = require('../controllers/tasks')
-        , log = require('../lib/mt.logger')
+        , log = require('../lib/mt.logger')(module)
         ;
 
 module.exports = exports = {
