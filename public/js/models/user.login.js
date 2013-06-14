@@ -1,6 +1,9 @@
 /* 
  * Copyright 2013 MyTasq.com
  * Author: Matthias Danetzky
+ * 
+ * Backbone model.
+ * User login data.
  */
 
 define(['mt.backbone.sio'], function(Backbone) {
