@@ -5,7 +5,9 @@
 
 var Task = require('../models/task')
         , mongoose = require('mongoose')
+        , sanitize = require('validator').sanitize
         , backboneMongoose = require('../lib/mt.backbone.mongoose')
+        , log = require('../lib/mt.logger')(module)
         ;
 
 module.exports = exports = {
@@ -14,7 +16,7 @@ module.exports = exports = {
     },
     userTasks: function(context, callback) {
         if (context.user) {
-            Task.find({author: context.user._id, done:false}).sort('-lastModifiedTime').limit(5).lean().exec(callback);
+            Task.find({author: context.user._id, done: false}).sort('-lastModifiedTime').limit(5).lean().exec(callback);
         } else {
             callback('user not logged in');
         }
@@ -22,6 +24,16 @@ module.exports = exports = {
     saveTask: function(context, callback) {
         var id = context.data.model.id;
         var mongoData = backboneMongoose.convert(context.data.model);
+        if (context.data.model.title) {
+            log.debug('Original title: ' + context.data.model.title);
+            context.data.model.title = sanitize(context.data.model.title).xss().trim();
+            log.debug('Sanitized title: ' + context.data.model.title);
+        }
+        if (context.data.model.text) {
+            log.debug('Original text: ' + context.data.model.text);
+            context.data.model.text = sanitize(context.data.model.text).xss().trim();
+            log.debug('Sanitized text: ' + context.data.model.text);
+        }
         mongoData.lastModifiedTime = new Date();
         if (id === 'new') {
             delete mongoData._id;
