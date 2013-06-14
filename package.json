@@ -13,6 +13,7 @@
     "require-directory": "*",
     "async": "*",
     "express": "3.x",
+    "validator": "*",
     "socket.io": "*",
     "mongoose": "*",
     "connect-mongo": "*",
