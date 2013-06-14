@@ -9,7 +9,7 @@
  */
 
 define(['mt.backbone.sio', 'underscore', 'jquery'], function(Backbone, _, $) {
-    
+
     var ScrollableView = function() {
         _.extend(this, {
             scrollbars: null,
@@ -21,15 +21,18 @@ define(['mt.backbone.sio', 'underscore', 'jquery'], function(Backbone, _, $) {
                 if (typeof newHeight === 'number' && newHeight >= 0) {
                     if (this.currentHeight !== newHeight) {
                         var contentHeight = this.$content.outerHeight(true);
-                        var heightInset = this.$el.outerHeight(true) - this.$viewport.height();
+                        var viewportHeight = this.$el.outerHeight(true);
+                        var heightInset = viewportHeight - this.$viewport.height();
                         var maxHeight = contentHeight + heightInset;
                         if (contentHeight > (newHeight - heightInset)) {
                             this.currentHeight = newHeight;
                             this.$el.outerHeight(newHeight);
                             this.scrollbars.resize();
                         } else {
-                            this.$el.outerHeight(maxHeight);
-                            this.currentHeight = maxHeight;
+                            if (viewportHeight !== maxHeight) {
+                                this.$el.outerHeight(maxHeight);
+                                this.currentHeight = maxHeight;
+                            }
                         }
                     }
                 }
@@ -45,7 +48,7 @@ define(['mt.backbone.sio', 'underscore', 'jquery'], function(Backbone, _, $) {
         // Call child's initialization method
         this.initialize && this.initialize.apply(this, arguments);
     };
-    
+
     // Make extendable
     ScrollableView.extend = Backbone.View.extend;
 
