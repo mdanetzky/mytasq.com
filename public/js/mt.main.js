@@ -6,15 +6,18 @@
  */
 
 define(['jquery', 'mt.socket', 'mt.backbone.app', 'mt.spinner', 'jquery-ui'], function($, socket, AppView, activity) {
-// init all handlers
-
-    var appView;
+    var app;
     return {
         init: function() {
+            // Init Backbone App.
+            app = new AppView({socket: socket});
+            // Show page after it is rendered.
             $(document).ready(function() {
-                appView = new AppView({socket: socket});
                 activity.hide();
-                $('#content').fadeIn("fast");
+//                $('#content').fadeIn('fast');
+//                $('#content').animate( {
+//                    opacity:1
+//                }, 'fast');
             });
         }
     };
