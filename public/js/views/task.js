@@ -14,7 +14,6 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task', 'mt.editor'], function
         initialize: function() {
             this.eventBus = this.options.eventBus;
             this.eventBus.on("blur", this.blur, this);
-            this.eventBus.on("mouseover", this.mouseout, this);
             if (this.model) {
                 // Init task from given model
                 this.render();
@@ -53,7 +52,16 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task', 'mt.editor'], function
             "keypress": "keyShortcuts",
             "keyup": "onChange",
             "mouseover .mt-task": "mouseover",
+            "mouseout .mt-task": "mouseOut2",
+            "mouseleave .mt-task": "mouseleave",
             "blur .mt-task-title": "blurTitle"
+        },
+        mouseleave: function(event) {
+            if (this.hasMouseover) {
+                this.hasMouseover = false;
+                this.$buttons.stop(true, true);
+                this.$buttons.fadeOut('fast');
+            }
         },
         blurTitle: function(event) {
             // Cleanup title.
@@ -76,8 +84,8 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task', 'mt.editor'], function
                         return false;
                     }
                     if (this.$title.is($focusable)) {
-                        if(!this.model.get('title')){
-                        // TODO: if title is empty -> move cursor to beginning
+                        if (!this.model.get('title')) {
+                            // TODO: if title is empty -> move cursor to beginning
                         }
                     }
                 }
@@ -90,13 +98,6 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task', 'mt.editor'], function
                 this.hasMouseover = true;
                 this.$buttons.stop(true, true);
                 this.$buttons.fadeIn('fast');
-            }
-        },
-        mouseout: function(view) {
-            if (this.hasMouseover) {
-                this.hasMouseover = false;
-                this.$buttons.stop(true, true);
-                this.$buttons.fadeOut('fast');
             }
         },
         done: function(event) {
