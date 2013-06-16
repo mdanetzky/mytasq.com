@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <%= templates("head") %>
-    <body>
-<!--       <div id="content" style="position: absolute; display: none; top: 60px; right: 0; bottom: 0; left: 0;">-->
-       <div id="content" style="position: absolute; top: 60px; right: 0; bottom: 0; left: 0;">
+    <body style="position: fixed; top: 0; right: 0; bottom: 0; left: 0; overflow: hidden;">
+       <div id="content" >
            <%= templates('content') %>
        </div>
     </body>
