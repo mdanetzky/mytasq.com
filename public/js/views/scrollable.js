@@ -48,11 +48,6 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'nicescroll'], function(Backb
             },
             remove: function() {
                 this.scrollbars.remove();
-                delete this.scrollbars;
-                this.$el.removeData();
-                this.$viewport.removeData();
-//                this.$el.detach();
-//                this.$viewport.detach();
             },
             ensureScrollbars: function(callback, ctx) {
                 var self = this;
