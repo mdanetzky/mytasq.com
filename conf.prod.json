@@ -4,6 +4,7 @@
     "staticPathRelative": "public",
     "staticPathAbsolute": "",
     "loglevel": "info",
+    "singleThread": false,
     "db": {
         "uri": "mongodb://localhost/MyTasq",
         "options": {

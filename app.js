@@ -54,8 +54,7 @@ var MongoStore = require('connect-mongo')(express);
 var sessionStore = new MongoStore(conf.session.db);
 
 // Define CPUs cluster
-if (cluster.isMaster) {
-//if (cluster.isMaster && !conf.development) {
+if (cluster.isMaster && !conf.singleThread) {
 
     // Count the machine's CPUs
     var cpuCount = require('os').cpus().length;
