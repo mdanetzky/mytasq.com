@@ -58,12 +58,16 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'nicescroll'], function(Backb
                     }
                 } else {
                     $(function() {
-                        self.scrollbars = self.$viewport.niceScroll({
+                        var options = {
                             cursoropacitymax: 0.3,
                             cursorborder: '',
                             iframeautoresize: false,
                             spacebarenabled: false
-                        });
+                        };
+                        if (self.barOptions){
+                            _.extend(options, self.barOptions);
+                        }
+                        self.scrollbars = self.$viewport.niceScroll(options);
                         if (callback) {
                             callback.apply(ctx);
                         }

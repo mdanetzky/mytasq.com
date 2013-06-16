@@ -10,7 +10,10 @@ define(['jquery', 'views/scrollable'], function($, ScrollableView) {
 
     var NavLeftView = ScrollableView.extend({
         el: '#mt-left-nav-container',
-        viewport: '#mt-left-nav-viewport'
+        viewport: '#mt-left-nav-viewport',
+        barOptions: {
+            railoffset: {left: 12}
+        }
     });
 
     return NavLeftView;

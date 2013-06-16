@@ -10,8 +10,10 @@ define(['jquery', 'views/scrollable'], function($, ScrollableView) {
 
     var TasksContainerView = ScrollableView.extend({
         el: '#mt-tasks-list-container',
-        viewport: '#mt-tasks-list-container'
-//        $viewport: $('#tasks')
+        viewport: '#mt-tasks-list-container',
+        barOptions: {
+            railoffset: {left: 12}
+        }
     });
 
     return TasksContainerView;
