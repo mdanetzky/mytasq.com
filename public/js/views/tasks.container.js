@@ -10,7 +10,8 @@ define(['jquery', 'views/scrollable'], function($, ScrollableView) {
 
     var TasksContainerView = ScrollableView.extend({
         el: '#mt-tasks-list-container',
-        $viewport: $('#mt-tasks-list-viewport')
+        viewport: '#mt-tasks-list-container'
+//        $viewport: $('#tasks')
     });
 
     return TasksContainerView;

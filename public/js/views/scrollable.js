@@ -8,44 +8,75 @@
  * https://github.com/inuyaksa/jquery.nicescroll
  */
 
-define(['mt.backbone.sio', 'underscore', 'jquery'], function(Backbone, _, $) {
+define(['mt.backbone.sio', 'underscore', 'jquery', 'nicescroll'], function(Backbone, _, $) {
 
     var ScrollableView = function() {
         _.extend(this, {
             scrollbars: null,
             currentHeight: 0,
             $el: $(this.el),
+            $viewport: $(this.viewport),
             initializeScrollbars: function() {
             },
             resize: function(newHeight) {
                 if (typeof newHeight === 'number' && newHeight >= 0) {
                     if (this.currentHeight !== newHeight) {
-                        var contentHeight = this.$content.outerHeight(true);
-                        var viewportHeight = this.$el.outerHeight(true);
-                        var heightInset = viewportHeight - this.$viewport.height();
+                        var contentHeight = this.$viewport[0].scrollHeight;
+                        var containerHeight = this.$el.outerHeight(false);
+                        var heightInset = containerHeight - this.$el.height();
                         var maxHeight = contentHeight + heightInset;
+//                        if (this.el === '#mt-left-nav-container') {
+//                            console.log('heightInset ' + heightInset);
+//                            console.log('containerHeight ' + containerHeight);
+//                            console.log('newHeight ' + newHeight);
+//                            console.log('contentHeight ' + contentHeight);
+//                            console.log('newHeight - heightInset ' + (newHeight - heightInset));
+//                        }
                         if (contentHeight > (newHeight - heightInset)) {
                             this.currentHeight = newHeight;
                             this.$el.outerHeight(newHeight);
-                            this.scrollbars.resize();
+                            this.$viewport.outerHeight(newHeight - heightInset);
                         } else {
-                            if (viewportHeight !== maxHeight) {
+                            if (containerHeight !== maxHeight) {
                                 this.$el.outerHeight(maxHeight);
                                 this.currentHeight = maxHeight;
                             }
                         }
                     }
                 }
+                this.ensureScrollbars();
+            },
+            remove: function() {
+                this.scrollbars.remove();
+                delete this.scrollbars;
+                this.$el.removeData();
+                this.$viewport.removeData();
+//                this.$el.detach();
+//                this.$viewport.detach();
+            },
+            ensureScrollbars: function(callback, ctx) {
+                var self = this;
+                if (this.scrollbars) {
+                    if (callback) {
+                        callback.apply(ctx);
+                    }
+                } else {
+                    $(function() {
+                        self.scrollbars = self.$viewport.niceScroll({
+                            cursoropacitymax: 0.3,
+                            cursorborder: '',
+                            iframeautoresize: false,
+                            spacebarenabled: false
+                        });
+                        if (callback) {
+                            callback.apply(ctx);
+                        }
+                    });
+                }
             }
         });
 
         // Initialization
-        this.scrollbars = this.$viewport.niceScroll({cursorcolor: "#ddd"});
-        this.$viewport.wrapInner('<div style="overflow:hidden" />');
-        this.$content = this.$viewport.find(':first-child');
-        this.heightInset = this.$el.outerHeight(true) - this.$viewport.height();
-        this.initializeScrollbars();
-        // Call child's initialization method
         this.initialize && this.initialize.apply(this, arguments);
     };
 

@@ -10,7 +10,7 @@ define(['jquery', 'views/scrollable'], function($, ScrollableView) {
     
     var NavRightView = ScrollableView.extend({
         el: '#mt-right-nav-container',
-        $viewport: $('#mt-right-nav-viewport')
+        viewport: '#mt-right-nav-container'
     });
 
     return NavRightView;
