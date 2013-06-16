@@ -19,16 +19,13 @@ var express = require('express')
 
 log.info('#################################');
 log.info('START: mytasq.com server instance');
-
 // precompile templates at start
 require('./lib/mt.templates');
-
 // Check for errors in configuration
 if (conf.err) {
     log.error(conf.err);
     process.exit(1);
 }
-
 if (conf.development) {
     mongoose.set('debug', function(collectionName, method, query, doc) {
         log.log('debug', 'Mongoose collection: "' + collectionName + '" method: "' + method + '" query: ', query);
@@ -40,7 +37,6 @@ var logStream = {
         log.info(message);
     }
 };
-
 // Connect to the database
 mongoose.connect(conf.db.uri, conf.db.options, function(err) {
     if (err) {
@@ -48,29 +44,21 @@ mongoose.connect(conf.db.uri, conf.db.options, function(err) {
         process.exit(1);
     }
 });
-
 // Create session store
 var MongoStore = require('connect-mongo')(express);
 var sessionStore = new MongoStore(conf.session.db);
-
 // Define CPUs cluster
 if (cluster.isMaster && !conf.singleThread) {
-
-    // Count the machine's CPUs
+    // Count the machine's CPUs.
     var cpuCount = require('os').cpus().length;
-
     log.info('Starting cluster for ' + cpuCount + ' CPUs');
-    // Create a worker for each CPU
+    // Create a worker for each CPU.
     for (var i = 0; i < cpuCount; i += 1) {
         cluster.fork();
     }
-
-// Start Express app in worker process
 } else {
-
-// Create express app
+    // Start Express app in worker process.
     var app = express();
-
     app.configure(function() {
         app.engine('.jade', engines.jade);
         app.engine('.html', engines.underscore);
@@ -97,8 +85,7 @@ if (cluster.isMaster && !conf.singleThread) {
     app.configure('production', function() {
         app.use(express.errorHandler());
     });
-
-// Routes
+    // Routes.
     app.get('/', routes.home);
     app.get('/testdata', routes.testdata);
     app.get('/content', routes.content);
@@ -108,15 +95,10 @@ if (cluster.isMaster && !conf.singleThread) {
     app.get('/dummy', function(req, res) {
         res.send('');
     });
-
     var server = http.createServer(app).listen(app.get('port'), function() {
         log.info("Express server listening on port " + app.get('port'));
     });
-
-// socket event handlers
-// current socket is passed as 'this'
+    // Socket event handlers.
     var socketEvents = require('./lib/mt.socket.events');
-
     var io = require('./lib/mt.socket')(server, sessionStore, socketEvents);
 }
-require('./lib/test');
