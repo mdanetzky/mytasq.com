@@ -39,6 +39,7 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'nicescroll'], function(Backb
                         } else {
                             if (containerHeight !== maxHeight) {
                                 this.$el.outerHeight(maxHeight);
+                                this.$viewport.outerHeight(maxHeight - heightInset);
                                 this.currentHeight = maxHeight;
                             }
                         }
