@@ -13,10 +13,10 @@ p { outline: 0; }
 h2 { outline: 0; }
 
 @media (max-width: 767px) {
-    .mt-right-nav{
+    #mt-right-nav-container{
         display: none !important;
     }
-    .mt-left-nav-container{
+    #mt-left-nav-container{
         display: none !important;
     }
 }
@@ -26,5 +26,3 @@ h2 { outline: 0; }
 .mt-task-text { margin: 3px 0 10px 0; }
 .mt-task-text p { margin: 0; }
 .mt-task-title { margin: 10px 0 0 0; line-height: 35px;}
-#mt-tasks-list-container { position: relative; }
-#mt-tasks-list-viewport { position: absolute; left: -10px; right: -10px; top: 0; bottom: 0; padding: 0 10px 0 10px; }
