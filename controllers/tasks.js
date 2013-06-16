@@ -16,7 +16,7 @@ module.exports = exports = {
     },
     userTasks: function(context, callback) {
         if (context.user) {
-            Task.find({author: context.user._id, done: false}).sort('-lastModifiedTime').limit(5).lean().exec(callback);
+            Task.find({author: context.user._id, done: false}).sort('-lastModifiedTime').limit(15).lean().exec(callback);
         } else {
             callback('user not logged in');
         }
@@ -38,7 +38,7 @@ module.exports = exports = {
         if (id === 'new') {
             delete mongoData._id;
             if (context.user) {
-                mongoData.author = new mongoose.Types.ObjectId(context.user._id);
+                mongoData.author = new mongoose.Types.ObjectId(context.user.id);
             }
             Task.create(mongoData, function(err, task) {
                 if (err) {
