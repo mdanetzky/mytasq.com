@@ -1,5 +1,4 @@
-<div id="mt-navbar" class="navbar navbar-inverse navbar-fixed-top" style="position: fixed; top:0; right: 0; left: 0; ">
-    <!--<div id="navbar" class="navbar navbar-inverse navbar-fixed-top">-->
+<div id="mt-navbar" class="navbar navbar-inverse navbar-static-top">
     <div class="navbar-inner">
         <div class="container-fluid">
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -8,11 +7,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="brand" href="#" style="margin: 0 10px 0 0; padding: 0"><img alt="mytasq.com" src="img/logo32White.png"/></a>
-            <!--            <a class="brand" href="#">Mytasq</a>-->
             <div class="nav-collapse collapse">
-                <!--                        <p class="navbar-text pull-right">
-                                            <a href="#" class="navbar-link">Logged in</a>
-                                        </p>-->
                 <ul class="nav pull-right">
                     <% if (session.user) { %>
                     <li class="dropdown">
@@ -50,58 +45,41 @@
                     <li><a href="#about">Team</a></li>
                     <li><a href="#about">About</a></li>
                 </ul>
-            </div><!--/.nav-collapse -->
+            </div>
         </div>
     </div>
 </div>
 
-<div class="container-fluid" style="position: absolute; top 0; right: 0; left: 0;">
+<div id="mt-main-row" class="container-fluid" style="position: absolute; overflow: hidden; top: 60px; right: 0; bottom: 60px; left: 0;">
     <div class="row-fluid">
-        <div id="mt-left-nav-container" class="mt-left-nav-container span3" style="position:relative;">
-            <div id="mt-left-nav-viewport" class="well sidebar-nav" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin-bottom: 0;">
-                <ul class="nav nav-list">
-                    <li class="nav-header">Teams</li>
-                    <li class="active"><a href="#">Me</a></li>
-                    <li><a href="#">My personalities</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li class="nav-header">Recent tasks</li>
-                    <li><a href="#">Link</a></li>
-<!--                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li class="nav-header">Important</li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>-->
-                </ul>
-            </div>
-        </div><!--/span-->
-        <div id="mt-tasks-list-container" class="span7">
-            <div id="mt-tasks-list-viewport">
-                <% if(tasks){ print(templates('tasks', {tasks:tasks})); }%>
-            </div>
+        <div id="mt-left-nav-container" class="well span3" >
+            <ul id="mt-left-nav-viewport" class="nav nav-list" style="position:relative;">
+                <li class="nav-header">Teams</li>
+                <li class="active"><a href="#">Me</a></li>
+                <li><a href="#">My personalities</a></li>
+                <li><a href="#">Link</a></li>
+                <li><a href="#">Link</a></li>
+                <li class="nav-header">Recent tasks</li>
+                <li><a href="#">Link</a></li>
+            </ul>
+        </div>
+        <div id="mt-tasks-list-container" class="span7" style="position:relative; padding: 0 10px 0 10px;">
+            <% if(tasks){ print(templates('tasks', {tasks:tasks})); }%>
         </div>
         <div id="mt-right-nav-container" class="mt-right-nav span2" style="position:relative;">
-            <div id="mt-right-nav-viewport" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;"><!--
-        <div id="mt-right-nav-container" class="mt-right-nav span2">
-            <div id="mt-right-nav-viewport">-->
-                <div class="row-fluid">
-                    <div class="span12">
-                        <h2>Heading</h2>
-                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                        <p><a class="btn" href="#">View details &raquo;</a></p>
-                    </div><!--/span-->
-                </div><!--/row-->
+            <div class="row-fluid">
+                <div class="span12">
+                    <h2>Heading</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn" href="#">View details &raquo;</a></p>
+                </div>
             </div>
         </div>
-    </div><!--/span-->
-</div><!--/row-->
+    </div>
+</div>
 
 <div id="mt-footer" style="overflow: hidden; position: absolute; right: 0; bottom: 0; left: 0; padding: 0 10px 0 10px;">
-    <hr>
+    <hr style="margin: 0px 0px 10px 0px;">
     <footer>
         <p>&copy; MyTasq.com 2013</p>
     </footer>
