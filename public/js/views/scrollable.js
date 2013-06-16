@@ -62,7 +62,8 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'nicescroll'], function(Backb
                             cursoropacitymax: 0.3,
                             cursorborder: '',
                             iframeautoresize: false,
-                            spacebarenabled: false
+                            spacebarenabled: false,
+                            enablekeyboard: false
                         };
                         if (self.barOptions){
                             _.extend(options, self.barOptions);
