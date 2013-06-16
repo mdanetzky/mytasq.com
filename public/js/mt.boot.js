@@ -2,7 +2,7 @@
  * Copyright 2013 MyTasq.com
  * Author: Matthias Danetzky
  * 
- * requirejs config and startup
+ * Requirejs config and startup.
  */
 
 (function() {
@@ -21,7 +21,7 @@
             "socket.io": '/socket.io/socket.io',
             "uri.parser" : "lib/uri.parser",
             "ckeditor" : "lib/ckeditor/ckeditor",
-            "nicescroll" : "lib/jquery.nicescroll.min"
+            "nicescroll" : "lib/jquery.nicescroll"
         },
         map: {
             '*': {
@@ -59,7 +59,7 @@
 
     mtRequire(['mt.spinner'], function(activity) {
         activity.show();
-        mtRequire(['mt.main', 'bootstrap', 'nicescroll'], function(mtMain) {
+        mtRequire(['mt.main', 'bootstrap'], function(mtMain) {
             mtMain.init();
         });
     });
