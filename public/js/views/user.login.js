@@ -1,6 +1,9 @@
 /* 
  * Copyright 2013 MyTasq.com
  * Author: Matthias Danetzky
+ * 
+ * Backbone view.
+ * User login functionality.
  */
 
 define(['mt.backbone.sio', 'underscore', 'mt.util', 'jquery', 'mt.spinner', 'mt.message.box'],
@@ -34,8 +37,9 @@ define(['mt.backbone.sio', 'underscore', 'mt.util', 'jquery', 'mt.spinner', 'mt.
                             activity.hide();
                             // Submit dummy form to let browser save email/password
                             // reload page
-                            util.loadAndSlide('content', '/content', function() {
-                                self.options.app.trigger('global-rerender');
+                            self.options.app.trigger('global-remove');
+                            util.reloadContent('content', '/content', function() {
+                                self.options.app.trigger('global-render');
                             });
                         }, error: function(response) {
                             self.copyAndValidate();
