@@ -1,10 +1,12 @@
 /* 
  * Copyright 2013 MyTasq.com
  * Author: Matthias Danetzky
+ * 
+ * Backbone view.
+ * Task.
  */
 
 define(['mt.backbone.sio', 'mt.templates', 'models/task', 'mt.editor'], function(Backbone, templates, Task, editor) {
-
     var TaskView = Backbone.View.extend({
         el: '',
         editMode: false,
@@ -15,14 +17,14 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task', 'mt.editor'], function
             this.eventBus = this.options.eventBus;
             this.eventBus.on("blur", this.blur, this);
             if (this.model) {
-                // Init task from given model
+                // Init task from given model.
                 this.render();
                 this.init$fields();
                 this.eventBus.trigger("blur", this);
                 this.switchEditable();
                 this.$title.focus();
             } else {
-                // Init task from html on page
+                // Init task from html on page.
                 this.init$fields();
                 this.model = new Task({
                     id: this.options.el.split('-').pop(),
@@ -52,7 +54,6 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task', 'mt.editor'], function
             "keypress": "keyShortcuts",
             "keyup": "onChange",
             "mouseover .mt-task": "mouseover",
-            "mouseout .mt-task": "mouseOut2",
             "mouseleave .mt-task": "mouseleave",
             "blur .mt-task-title": "blurTitle"
         },
@@ -75,7 +76,7 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task', 'mt.editor'], function
             var $focusable = $target.closest('.mt-editable, .mt-task');
             if ($focusable.length) {
                 if (!$focusable.is(this.$elementWithFocus)) {
-                    // Focus has moved to another focusable element
+                    // Focus has moved to another focusable element.
                     this.$elementWithFocus = $focusable;
                     if (this.$text.is($focusable)) {
                         editor.show('text' + this.model.id, this.$text[0], this.$textEditorToolbar, function() {
@@ -85,7 +86,7 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task', 'mt.editor'], function
                     }
                     if (this.$title.is($focusable)) {
                         if (!this.model.get('title')) {
-                            // TODO: if title is empty -> move cursor to beginning
+                            // TODO: if title is empty -> move cursor to beginning.
                         }
                     }
                 }
@@ -127,20 +128,30 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task', 'mt.editor'], function
             return false;
         },
         setFocusOnEditableDiv: function(element) {
-            // traverse parents and set focus on element with contenteditable=true
+            // Traverse parents and set focus on element with contenteditable=true.
             var $el = $(element);
             $el.closest('[contenteditable="true"]').focus();
         },
         keyShortcuts: function(event) {
+            // Quit on mutation keys.
+            if (event.keyCode === 91        // Left Command
+                    || event.keyCode === 93 // Right Command
+                    || event.keyCode === 16 // Shift
+                    || event.keyCode === 17 // Control
+                    || event.keyCode === 18 // Alt
+                    )
+            {
+                return false;
+            }
             var $target = $(event.target);
-            // Remove 'enter new task' text if exists
+            // Remove 'enter new task' text if exists.
             if (this.$titleNew) {
                 this.$titleNew.remove();
                 delete this.$titleNew;
             }
-            // Title specific events
+            // Title field specific events.
             if ($target.closest(this.$title).length) {
-                // return, tab -> switch to text field
+                // Enter, Tab keys -> switch to text field.
                 if (event.keyCode === 13 || event.keyCode === 9) {
                     if (this.$text.attr('contenteditable') !== 'true') {
                         this.$text.attr('contenteditable', 'true');
@@ -149,9 +160,9 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task', 'mt.editor'], function
                     return false;
                 }
             }
-            // text specific events
+            // Text field specific events.
             if ($target.closest(this.$text).length) {
-                // tab -> switch to title field
+                // Tab key -> switch to title field.
                 if (event.keyCode === 9) {
                     this.$title.focus();
                     return false;
@@ -159,8 +170,7 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task', 'mt.editor'], function
             }
         },
         onChange: function(event) {
-
-            // save changed content
+            // Save changed content.
             var self = this;
             var $target = $(event.target);
             if ($target.closest(this.$title).length) {
@@ -204,7 +214,7 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task', 'mt.editor'], function
         switchEditable: function(on) {
             // Stop running animations.
             this.$editableMask.stop(true, true);
-            // Default on = true.
+            // Default switch on = true.
             on = (typeof on === 'undefined') ? true : on;
             if (on) {
                 this.editMode = true;
@@ -236,6 +246,5 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task', 'mt.editor'], function
             this.$el.hide();
         }
     });
-
     return TaskView;
 });
