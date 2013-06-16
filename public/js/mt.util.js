@@ -2,15 +2,15 @@
  * Copyright 2013 MyTasq.com
  * Author: Matthias Danetzky
  * 
- * Diverse utility functions
+ * Diverse utility functions.
  * 
- * validateEmail: checks if given string is a proper email address
- * loadAndSlide: loads content and slides it from right or left
+ * validateEmail: Checks if given string is a proper email address.
+ * loadAndSlide: Loads content and slides it from right.
  */
 
 define(['jquery', 'mt.spinner', 'transit'], function($, activity) {
 
-    // define jquery fixed selector
+    // Define jquery fixed selector.
     $.expr[':'].fixed = $.expr[':'].fixed || function(obj) {
         return $(obj).css('position') === 'fixed';
     };
@@ -19,6 +19,20 @@ define(['jquery', 'mt.spinner', 'transit'], function($, activity) {
         validateEmail: function(email) {
             var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(email);
+        },
+        reloadContent: function(elementToReplaceId, url, callback) {
+            var showActivity = !activity.isActive();
+            if (showActivity) {
+                activity.show();
+            }
+            var elementToReplace = $('#' + elementToReplaceId);
+            elementToReplace.empty();
+            elementToReplace.load(url, function() {
+                if (showActivity) {
+                    activity.hide();
+                }
+                callback();
+            });
         },
         loadAndSlide: function(elementToReplaceId, url, callback) {
             var showActivity = !activity.isActive();
