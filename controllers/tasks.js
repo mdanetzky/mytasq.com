@@ -16,7 +16,7 @@ module.exports = exports = {
     },
     userTasks: function(context, callback) {
         if (context.user) {
-            Task.find({author: context.user._id, done: false}).sort('-lastModifiedTime').limit(15).lean().exec(callback);
+            Task.find({author: context.user.id, done: false}).sort('-lastModifiedTime').limit(15).lean().exec(callback);
         } else {
             callback('user not logged in');
         }
@@ -38,15 +38,16 @@ module.exports = exports = {
         if (id === 'new') {
             delete mongoData._id;
             if (context.user) {
+                // Create new task for existing user only
                 mongoData.author = new mongoose.Types.ObjectId(context.user.id);
+                Task.create(mongoData, function(err, task) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback(null, task.get('_id').toString());
+                    }
+                });
             }
-            Task.create(mongoData, function(err, task) {
-                if (err) {
-                    callback(err);
-                } else {
-                    callback(null, task.get('_id').toString());
-                }
-            });
         } else {
             id = mongoData._id;
             delete mongoData._id;
