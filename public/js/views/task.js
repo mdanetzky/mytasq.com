@@ -14,15 +14,12 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
         hasMouseover: false,
         $elementWithFocus: null,
         initialize: function() {
-            this.eventBus = this.options.eventBus;
-            this.eventBus.on("blur", this.blur, this);
+            this.taskList = this.options.taskList;
+            this.taskList.on("blur", this.blur, this);
             if (this.model) {
                 // Init task from given model.
                 this.render();
                 this.init$fields();
-                this.eventBus.trigger("blur", this);
-                this.switchEditable();
-                this.$title.focus();
             } else {
                 // Init task from html on page.
                 this.init$fields();
@@ -33,6 +30,9 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
                 });
             }
             if (this.model.id === 'new') {
+                this.taskList.trigger("blur", this);
+                this.switchEditable();
+                this.$title.focus();
                 this.$buttons.css('display', 'none');
                 this.$title.html('<div class="mt-title-empty-new-task" style="opacity:0.2;">Enter new task..</div>');
                 this.$titleNew = this.$title.find('.mt-title-empty-new-task');
@@ -65,7 +65,7 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
             }
         },
         blurTitle: function(event) {
-            // Cleanup title.
+            // Remove formatting from title.
             if (this.model.get('title')) {
                 this.$title.text(this.$title.text());
             }
@@ -106,11 +106,11 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
                 this.model.save({"done": true}, {
                     patch: true,
                     success: function(model, response, options) {
-                        self.eventBus.trigger('removeTaskFromView', self);
+                        self.taskList.trigger('removeTaskFromView', self);
                     },
                     error: function(response) {
                         console.log(response);
-                        alert("Task save failed!\ncheck console for details.");
+                        alert("Task save failed!\nCheck console for details.");
                     }
                 });
             }
@@ -118,7 +118,7 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
         },
         click: function(event) {
             if (!this.editMode) {
-                this.eventBus.trigger("blur", this);
+                this.taskList.trigger("blur", this);
                 this.switchEditable();
             }
             this.setFocusOnEditableDiv(event.target);

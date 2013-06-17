@@ -6,33 +6,48 @@
  */
 
 define(['mt.backbone.sio', 'underscore', 'jquery', 'models/tasks', 'models/task', 'views/task'], function(Backbone, _, $, Tasks, Task, TaskView) {
-
     var TasksView = Backbone.View.extend({
-        el: "#tasks",
+        el: '',
         newTaskView: null,
         initialize: function() {
-
-            // create event bus
-            this.eventBus = {};
-            _.extend(this.eventBus, Backbone.Events);
-            this.eventBus.on("removeTaskFromView", this.removeTaskFromView, this);
-            var self = this;
+            this.on("removeTaskFromView", this.removeTaskFromView, this);
             if (!this.collection) {
                 this.collection = new Tasks();
             }
+        },
+        initializeFromHTML: function() {
+            var self = this;
             $(this.el).find('[id|="task"]').each(function() {
-                var taskView = new TaskView({el: '#' + $(this).attr('id'), eventBus: self.eventBus});
+                var taskView = new TaskView({el: '#' + $(this).attr('id'), taskList: self});
                 self.collection.add(taskView.model);
             });
         },
+        fetchFromServer: function(options, callback) {
+            var self = this;
+            var options = options || {};
+            this.collection = this.collection || new Tasks();
+            var newTasks = new Tasks();
+            options.success = function(collection, response, options) {
+                collection.each(function(task) {
+                    self.$el.append('<div id="task-' + task.id + '" class="row-fluid">');
+                    new TaskView({el: '#task-' + task.id, model: task, taskList: self});
+                    self.collection.add(task);
+                });
+                callback(null, 'OK');
+            };
+            options.error = function(collection, response, options) {
+                callback(response);
+            };
+            newTasks.fetch(options);
+        },
         createNewTask: function() {
             if (this.collection.get('new')) {
-                newTaskView.show();
-                newTaskView.focus();
+                this.newTaskView.show();
+                this.newTaskView.focus();
             } else {
                 this.$el.prepend('<div id="task-new" class="row-fluid mt.task"></div>');
                 var newTask = new Task({id: 'new'});
-                newTaskView = new TaskView({el: '#task-new', model: newTask, eventBus: this.eventBus});
+                this.newTaskView = new TaskView({el: '#task-new', model: newTask, taskList: this});
                 this.collection.add(newTask, {at: 0});
             }
         },
@@ -63,6 +78,5 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'models/tasks', 'models/task'
             }
         }
     });
-
     return TasksView;
 });
