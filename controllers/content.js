@@ -2,7 +2,7 @@
  * Copyright 2013 MyTasq.com
  * Author: Matthias Danetzky
  * 
- * content controller
+ * Content controller.
  */
 
 var async = require('async')
@@ -41,7 +41,7 @@ module.exports = exports = {
                 callback();
             }
         ], function(err) {
-            //This is the final callback
+            // This is the final callback.
             callback(err, renderingContext);
         });
     }

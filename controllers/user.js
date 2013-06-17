@@ -1,6 +1,8 @@
 /* 
  * Copyright 2013 MyTasq.com
  * Author: Matthias Danetzky
+ * 
+ * User controller.
  */
 
 module.exports = exports = {
