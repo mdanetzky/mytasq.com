@@ -9,9 +9,9 @@
  */
 
 define(['mt.backbone.sio', 'underscore', 'jquery', 'nicescroll'], function(Backbone, _, $) {
-
-    var ScrollableView = function() {
+    var ScrollableView = function(options) {
         _.extend(this, {
+            options: options,
             scrollbars: null,
             currentHeight: 0,
             $el: $(this.el),
@@ -65,10 +65,16 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'nicescroll'], function(Backb
                             spacebarenabled: false,
                             enablekeyboard: false
                         };
-                        if (self.barOptions){
+                        if (self.barOptions) {
                             _.extend(options, self.barOptions);
                         }
                         self.scrollbars = self.$viewport.niceScroll(options);
+                        self.scrollbars.scrollstart(function(info) {
+//                    console.log(info);
+                        });
+                        self.scrollbars.scrollend(function(info) {
+//                    console.log(info);
+                        });
                         if (callback) {
                             callback.apply(ctx);
                         }
@@ -76,13 +82,9 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'nicescroll'], function(Backb
                 }
             }
         });
-
-        // Initialization
         this.initialize && this.initialize.apply(this, arguments);
     };
-
-    // Make extendable
+    // Make it extendable.
     ScrollableView.extend = Backbone.View.extend;
-
     return ScrollableView;
 });
