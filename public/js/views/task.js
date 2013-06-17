@@ -95,7 +95,6 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
         },
         mouseover: function(event) {
             if (!this.hasMouseover) {
-                this.eventBus.trigger('mouseover', this);
                 this.hasMouseover = true;
                 this.$buttons.stop(true, true);
                 this.$buttons.show();
@@ -113,7 +112,6 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
                         console.log(response);
                         alert("Task save failed!\ncheck console for details.");
                     }
-
                 });
             }
             return false;
