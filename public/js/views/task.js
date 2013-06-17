@@ -6,7 +6,7 @@
  * Task.
  */
 
-define(['mt.backbone.sio', 'mt.templates', 'models/task', 'mt.editor'], function(Backbone, templates, Task, editor) {
+define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor'], function(Backbone, $, templates, Task, editor) {
     var TaskView = Backbone.View.extend({
         el: '',
         editMode: false,
@@ -98,7 +98,7 @@ define(['mt.backbone.sio', 'mt.templates', 'models/task', 'mt.editor'], function
                 this.eventBus.trigger('mouseover', this);
                 this.hasMouseover = true;
                 this.$buttons.stop(true, true);
-                this.$buttons.fadeIn('fast');
+                this.$buttons.show();
             }
         },
         done: function(event) {
