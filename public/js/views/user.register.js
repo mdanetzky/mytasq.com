@@ -1,6 +1,9 @@
 /* 
  * Copyright 2013 MyTasq.com
  * Author: Matthias Danetzky
+ * 
+ * Backbone View.
+ * User registration form.
  */
 
 define(['mt.backbone.sio', 'underscore', 'mt.util', 'jquery', 'mt.spinner'], function(Backbone, _, util, $, activity) {
