@@ -1,6 +1,8 @@
 /* 
  * Copyright 2013 MyTasq.com
  * Author: Matthias Danetzky
+ * 
+ * Tasks controller.
  */
 
 var Task = require('../models/task')
@@ -9,7 +11,6 @@ var Task = require('../models/task')
         , backboneMongoose = require('../lib/mt.backbone.mongoose')
         , log = require('../lib/mt.logger')(module)
         ;
-
 module.exports = exports = {
     publicTasks: function(context, callback) {
         Task.find({public: true}).sort('-lastModifiedTime').limit(5).lean().exec(callback);
@@ -38,7 +39,7 @@ module.exports = exports = {
         if (id === 'new') {
             delete mongoData._id;
             if (context.user) {
-                // Create new task for existing user only
+                // Create new task for existing user only.
                 mongoData.author = new mongoose.Types.ObjectId(context.user.id);
                 Task.create(mongoData, function(err, task) {
                     if (err) {
@@ -49,6 +50,7 @@ module.exports = exports = {
                 });
             }
         } else {
+            // Modify existing task.
             id = mongoData._id;
             delete mongoData._id;
             Task.update({_id: id}, mongoData, {upsert: true}, function(err) {
