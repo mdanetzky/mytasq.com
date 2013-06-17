@@ -11,7 +11,7 @@
                 <ul class="nav pull-right">
                     <% if (session.user) { %>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" data-toggle="dropdown"><%= session.user.email %><strong class="caret"></strong></a>
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown"><%= session.user.email %> <strong class="caret"></strong></a>
                         <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
                             <div id="userLogout" class="control-group">
                                 <button type="submit" id="userLogoutSend" class="btn">Logout</button>
@@ -41,6 +41,18 @@
                 </ul>
                 <ul class="nav">
                     <li class="active"><a id="new_task" href="#">New Task</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tasks <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                          <li><a id="mt-nav-done-by-me" href="#">Done by me</a></li>
+                          <li><a href="#">Another action</a></li>
+                          <li><a href="#">Something else here</a></li>
+                          <li class="divider"></li>
+                          <li class="nav-header">Nav header</li>
+                          <li><a href="#">Separated link</a></li>
+                          <li><a href="#">One more separated link</a></li>
+                        </ul>
+                      </li>
                     <li><a href="#about">Task</a></li>
                     <li><a href="#about">Team</a></li>
                     <li><a href="#about">About</a></li>
@@ -63,7 +75,7 @@
                 <li><a href="#">Link</a></li>
             </ul>
         </div>
-        <div id="mt-tasks-list-container" class="span7" style="position:relative; padding: 0 10px 0 10px;">
+        <div id="mt-middle-container" class="span7" style="position:relative; padding: 0 10px 0 10px;">
             <% if(tasks){ print(templates('tasks', {tasks:tasks})); }%>
         </div>
         <div id="mt-right-nav-container" class="mt-right-nav span2" style="position:relative;">
@@ -78,10 +90,11 @@
     </div>
 </div>
 
-<div id="mt-footer" style="overflow: hidden; position: absolute; right: 0; bottom: 0; left: 0; padding: 0 10px 0 10px;">
+<div id="mt-footer" style="overflow: hidden; position: absolute; right: 0; bottom: 0; left: 0; margin: 0 10px 0 10px; height: 42px;">
     <hr style="margin: 0px 0px 10px 0px;">
     <footer>
-        <p>&copy; MyTasq.com 2013</p>
+        <div style="position: absolute; top: 12px; left: 5px; font-size: smaller; font-weight: bold;"><p>This site uses cookies. By continuing to browse the site, you are agreeing to our use of cookies.</p></div>
+        <div style="position: absolute; top: 10px; right: 5px;"><p>&copy; MyTasq.com 2013</p></div>
     </footer>
 </div>
 
