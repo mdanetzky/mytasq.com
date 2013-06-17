@@ -12,6 +12,8 @@ a { outline: 0; }
 p { outline: 0; }
 h2 { outline: 0; }
 
+a.dropdown-toggle { outline: none}
+
 @media (max-width: 767px) {
     #mt-right-nav-container{
         display: none !important;
