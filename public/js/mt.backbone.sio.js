@@ -1,16 +1,17 @@
 /* 
  * Copyright 2013 MyTasq.com
  * Author: Matthias Danetzky
+ * 
+ * Backbone extension.
+ * Socket.io based sync with buffering and deferred send.
  */
 
 define(['backbone', 'underscore', 'mt.socket', 'jquery'], function(Backbone, _, socket, $) {
     var originalCollection, originalModel, originalView, originalSync;
-
     originalSync = Backbone.sync;
     originalModel = Backbone.Model.prototype.constructor;
     originalView = Backbone.View.prototype.constructor;
     originalCollection = Backbone.Collection.prototype.constructor;
-
     // Collection with models to be saved with delay.
     var deferredModels = new Backbone.Collection();
     // On window close try to save all deferred models immediately.
@@ -29,7 +30,6 @@ define(['backbone', 'underscore', 'mt.socket', 'jquery'], function(Backbone, _, 
             });
         }
     });
-
     var bufferModelChanges = function(buffer, model, options) {
         var changedAttributes;
         if (options.patch) {
@@ -46,118 +46,122 @@ define(['backbone', 'underscore', 'mt.socket', 'jquery'], function(Backbone, _, 
         }
         return buffer;
     };
-
-    var sendData = function(method, model, options) {
-        var error, socket, success, _ref, modelAttributes;
-        socket = model.socket || ((_ref = model.collection) !== null ? _ref.socket : void 0);
+    var sendData = function(method, data, options) {
+        var error, socket, modelAttributes, socketData, model2send = {};
+        socket = data.socket;
         if (!socket) {
             return originalSync.apply(this, arguments);
         }
-        var model2send = {};
-
-        if (options.patch) {
-            modelAttributes = model.changedAttributes();
-        } else {
-            modelAttributes = model.toJSON();
+        if (data instanceof Backbone.Model) {
+            if (options.patch) {
+                modelAttributes = data.changedAttributes();
+            } else {
+                modelAttributes = data.toJSON();
+            }
         }
-        // check if anything to send
-        if (modelAttributes || model._saveBuffer) {
+        if (data instanceof Backbone.Collection && !options.query) {
+            
+            // TODO: save collection.
+            
+        }
+        // Check if there is anything to be sent.
+        if (modelAttributes || data._saveBuffer || options.query) {
+            // If not sent within 5 sec., mark timeout.
+            data._saveTimeout = setTimeout(function() {
 
-            model._saveTimeout = setTimeout(function() {
+                // TODO: store data until the connection is back on
 
-                // todo: store data until the connection is back on
-
-                console('SAVE TIMEOUT');
-                model._saveTimeout = null;
+                console.log('SOCKET SEND TIMEOUT');
+                data._saveTimeout = null;
                 error.call(this, 'timeout');
             }, 5000);
-            if (model._saveBuffer) {
-                model2send = model._saveBuffer;
-                delete model._saveBuffer;
+            if (data._saveBuffer) {
+                model2send = data._saveBuffer;
+                delete data._saveBuffer;
             }
             if (modelAttributes) {
                 model2send = _.extend(model2send, modelAttributes);
             }
-
-            model2send.id = model.id;
-            model._savingData = model2send;
-            var modelUrl = (typeof model.url === 'function') ? model.url() : model.url;
-            socket.emit("backbone.sync", {
-                url: modelUrl,
-                method: method,
-                model: model2send
-            }, function(err, response) {
+            model2send.id = data.id;
+            data._savingData = model2send;
+            var dataUrl = (typeof data.url === 'function') ? data.url() : data.url;
+            socketData = {
+                url: dataUrl,
+                method: method
+            };
+            if(data instanceof Backbone.Model){
+                socketData.model = model2send;
+            }
+            if(options.query) {
+                socketData.query = options.query;
+            }
+            socket.emit("backbone.sync", socketData, function(err, response) {
                 if (err) {
                     options.error.call(this, err);
                 } else {
                     options.success.call(this, response);
                 }
-                delete model._savingData;
-                clearTimeout(model._saveTimeout);
-                model._saveTimeout = null;
+                delete data._savingData;
+                clearTimeout(data._saveTimeout);
+                data._saveTimeout = null;
             });
         }
     };
-
-    Backbone.sync = function(method, model, options) {
+    Backbone.sync = function(method, data, options) {
         if (options.deferredSave) {
-            // Postpone save by deferralTime
+            // Postpone save by deferralTime.
             var deferralTime = 1000;
-            model._saveBuffer = bufferModelChanges(model._saveBuffer, model, options);
-            if (model._saveBuffer) {
+            data._saveBuffer = bufferModelChanges(data._saveBuffer, data, options);
+            if (data._saveBuffer) {
                 delete options.deferredSave;
-                if (model._saveTimeoutDeferred) {
-                    // Cancel any other deferrals on this model
-                    clearTimeout(model._saveTimeoutDeferred);
+                if (data._saveTimeoutDeferred) {
+                    // Cancel any other deferrals on this model.
+                    clearTimeout(data._saveTimeoutDeferred);
                 }
-                model._saveMethodDeferred = method;
-                deferredModels.add(model);
-                model._saveTimeoutDeferred = setTimeout(function() {
-                    deferredModels.remove(model);
-                    Backbone.sync(method, model, options);
+                data._saveMethodDeferred = method;
+                deferredModels.add(data);
+                data._saveTimeoutDeferred = setTimeout(function() {
+                    deferredModels.remove(data);
+                    Backbone.sync(method, data, options);
                 }, deferralTime);
             }
             return;
         }
-        if (model._savingData && !options.immediate) {
-            // Buffer changes until current save is finished
-            model._saveBuffer = bufferModelChanges(model._saveBuffer, model, options);
+        if (data._savingData && !options.immediate) {
+            // Buffer changes until current save is finished.
+            data._saveBuffer = bufferModelChanges(data._saveBuffer, data, options);
             // If there is any data not yet saved,
-            // try to save it later
-            if (model._saveBuffer) {
-                if (model._saveTimeoutQueue) {
-                    clearTimeout(model._saveTimeoutQueue);
+            // try to save it later.
+            if (data._saveBuffer) {
+                if (data._saveTimeoutQueue) {
+                    clearTimeout(data._saveTimeoutQueue);
                 }
-                model._saveTimeoutQueue = setTimeout(function() {
-                    model._saveTimeoutQueue = null;
-                    Backbone.sync(method, model, options);
+                data._saveTimeoutQueue = setTimeout(function() {
+                    data._saveTimeoutQueue = null;
+                    Backbone.sync(method, data, options);
                 }, 200);
             }
         } else {
-            sendData(method, model, options);
+            sendData(method, data, options);
         }
     };
-
     Backbone.Model = Backbone.Model.extend({
         constructor: function(attributes, options) {
             this.socket = socket;
             originalModel.apply(this, arguments);
         }
     });
-
     Backbone.View = Backbone.View.extend({
         constructor: function(attributes, options) {
             this.socket = socket;
             originalView.apply(this, arguments);
         }
     });
-
     Backbone.Collection = Backbone.Collection.extend({
         constructor: function(attributes, options) {
             this.socket = socket;
             originalCollection.apply(this, arguments);
         }
     });
-
     return Backbone;
 });
