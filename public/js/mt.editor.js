@@ -1,13 +1,13 @@
 /* 
  * Copyright 2013 MyTasq.com
  * Author: Matthias Danetzky
+ * 
+ * CKEditor wrapper.
  */
 
 define(['mt.backbone.sio', 'jquery', 'ckeditor'], function(Backbone, $) {
     this.CKEDITOR.disableAutoInline = true;
-
     var editors = {};
-
     return {
         show: function(id, element, $toolbarTarget, callback) {
             var self = this;
@@ -17,8 +17,7 @@ define(['mt.backbone.sio', 'jquery', 'ckeditor'], function(Backbone, $) {
                 editor = {};
                 editor.ck = CKEDITOR.inline(element, options);
                 editor.$toolbarTarget = $toolbarTarget;
-                editor.ck.on('focus', function(event)
-                {
+                editor.ck.on('focus', function(event) {
                     // Cut out the CK toolbar and move it to task.
                     var $toolbar = $('#cke_' + event.editor.name + ' .cke_inner');
                     editor.$toolbarTarget.append($toolbar);
@@ -59,8 +58,7 @@ define(['mt.backbone.sio', 'jquery', 'ckeditor'], function(Backbone, $) {
                     "margin-bottom": 0
                 }, 'fast');
                 editor.isVisible = false;
-
-                // Destroy unused editor instances 30 seconds after hide
+                // Destroy unused editor instances 30 seconds after hide.
                 var self = this;
                 editor.destroyTimeout = setTimeout(function() {
                     self.destroy(id);

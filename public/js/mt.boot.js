@@ -56,7 +56,6 @@
             }
         }
     });
-
     mtRequire(['mt.spinner'], function(activity) {
         activity.show();
         mtRequire(['mt.main', 'bootstrap'], function(mtMain) {
