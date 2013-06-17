@@ -12,6 +12,29 @@ var Task = require('../models/task')
         , log = require('../lib/mt.logger')(module)
         ;
 module.exports = exports = {
+    getTasks: function(context, callback) {
+        if (context.data.query) {
+            if (context.data.query.name) {
+                // Execute query by name.
+                switch (context.data.query.name) {
+                    case 'tasks-done-by-me':
+                        Task.find({author: context.user.id, done: true}).sort('-lastModifiedTime').limit(15).lean().exec(function(err, data) {
+                            if (!err) {
+                                callback(err, backboneMongoose.convert(data));
+                            } else {
+                                callback(err, data);
+                            }
+                        });
+                        break;
+                    default:
+                        callback('getTasks: No such query: ' + context.data.query.name);
+                        break;
+                }
+            }
+        } else {
+            callback('getTasks: Missing query!');
+        }
+    },
     publicTasks: function(context, callback) {
         Task.find({public: true}).sort('-lastModifiedTime').limit(5).lean().exec(callback);
     },
