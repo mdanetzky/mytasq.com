@@ -6,32 +6,29 @@
  * Main mt application.
  */
 
-define(
-        ['mt.backbone.sio', 'underscore', 'jquery', 'mt.socket'
-                    , 'models/user.register', 'views/user.register'
-                    , 'models/user.login', 'views/user.login'
-                    , 'views/user.logout'
-                    , 'views/tasks.container'
-                    , 'views/tasks'
-                    , 'views/nav.left'
-                    , 'views/nav.right'
-
-        ], function(Backbone, _, $, socket
+define(['mt.backbone.sio', 'underscore', 'jquery', 'mt.socket'
+            , 'models/user.register', 'views/user.register'
+            , 'models/user.login', 'views/user.login'
+            , 'views/user.logout'
+            , 'views/middle.container'
+            , 'views/nav.left'
+            , 'views/nav.right'
+            , 'views/nav.top'
+], function(Backbone, _, $, socket
         , UserRegisterModel, UserRegisterView
         , UserLoginModel, UserLoginView
         , UserLogoutView
-        , TasksContainerView
-        , TasksView
+        , MiddleContainerView
         , NavLeftView
         , NavRightView
+        , NavTopView
         ) {
-
     var AppRouter = Backbone.Router.extend({
         routes: {
-            "dummy": "empty", // #help
-            "empty.html": "empty", // #help
-            "search/:query": "search", // #search/kiwis
-            "search/:query/p:page": "search"   // #search/kiwis/p7
+            "dummy": "empty",
+            "empty.html": "empty",
+            "search/:query": "search",
+            "search/:query/p:page": "search"
         },
         empty: function(query, page) {
             console.log(query);
@@ -40,14 +37,10 @@ define(
         search: function(query, page) {
 
         }
-
     });
     var AppView = Backbone.View.extend({
-        self: this,
         el: 'body',
         $window: $(window),
-        $topNav: $('#mt-topnav'),
-        $footer: $('#mt-footer'),
         $mainRow: $('#mt-main-row'),
         mainRowHeight: 0,
         initialize: function() {
@@ -61,7 +54,7 @@ define(
         removeViews: function() {
             this.navLeftView.remove();
             this.navRightView.remove();
-            this.tasksView.remove();
+            this.middleContainerView.remove();
         },
         initViews: function() {
             var self = this;
@@ -71,10 +64,10 @@ define(
                 self.userLoginModel = new UserLoginModel();
                 self.userLoginView = new UserLoginView({model: self.userLoginModel, app: self});
                 self.userLogoutView = new UserLogoutView();
-                self.tasksContainerView = new TasksContainerView();
-                self.tasksView = new TasksView();
+                self.middleContainerView = new MiddleContainerView({app: self});
                 self.navLeftView = new NavLeftView();
                 self.navRightView = new NavRightView();
+                self.navTopView = new NavTopView({app: self});
                 self.mainRowHeight = 0;
                 self.$mainRow = $('#mt-main-row');
                 self.$topNav = $('#mt-topnav');
@@ -82,25 +75,18 @@ define(
                 self.resize();
             });
         },
-        events: {
-            "click #new_task": "createTask"
-        },
         resize: function() {
             var mainRowHeight = this.$mainRow.height();
             // Execute only if window height has changed.
             if (this.mainRowHeight !== mainRowHeight) {
                 this.mainRowHeight = mainRowHeight;
-                // Resize tasks container.
-                this.tasksContainerView.resize(mainRowHeight);
+                // Resize middle container.
+                this.middleContainerView.resize(mainRowHeight);
                 // Resize left nav container.
                 this.navLeftView.resize(mainRowHeight);
                 // Resize right nav container.
                 this.navRightView.resize(mainRowHeight);
             }
-        },
-        createTask: function() {
-            this.tasksView.createNewTask();
-            return false;
         }
     });
     return AppView;
