@@ -6,7 +6,7 @@
  * Tasks list.
  */
 
-define(['mt.backbone.sio', 'underscore', 'jquery', 'models/tasks', 'models/task', 'views/task'], function(Backbone, _, $, Tasks, Task, TaskView) {
+define(['mt.backbone.sio', 'underscore', 'jquery', 'models/tasks', 'models/task', 'views/task', 'mt.spinner'], function(Backbone, _, $, Tasks, Task, TaskView, activity) {
     var TasksView = Backbone.View.extend({
         el: '',
         loadingData: false,
@@ -39,6 +39,7 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'models/tasks', 'models/task'
         fetchFromServer: function(callback) {
             if (!this.loadingData) {
                 this.loadingData = true;
+                activity.show();
                 var self = this;
                 var options = {
                     query: this.query
@@ -58,12 +59,14 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'models/tasks', 'models/task'
                     if (callback) {
                         callback(null, 'OK');
                     }
+                    activity.hide();
                     self.loadingData = false;
                 };
                 options.error = function(collection, response, options) {
                     if (callback) {
                         callback(response);
                     }
+                    activity.hide();
                     self.loadingData = false;
                 };
                 newTasks.fetch(options);
