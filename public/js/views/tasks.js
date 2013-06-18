@@ -2,18 +2,26 @@
  * Copyright 2013 MyTasq.com
  * Author: Matthias Danetzky
  * 
- * Tasks View
+ * Backbone View.
+ * Tasks list.
  */
 
 define(['mt.backbone.sio', 'underscore', 'jquery', 'models/tasks', 'models/task', 'views/task'], function(Backbone, _, $, Tasks, Task, TaskView) {
     var TasksView = Backbone.View.extend({
         el: '',
-        newTaskView: null,
+        loadingData: false,
+        query: null,
+        allDataLoaded: false,
         initialize: function() {
-            this.on("removeTaskFromView", this.removeTaskFromView, this);
+            this.on('removeTaskFromView', this.removeTaskFromView, this);
+            this.options.container.on('loadNextPage', this.loadNextPage, this);
             if (!this.collection) {
                 this.collection = new Tasks();
             }
+            this.query = {
+                name: this.$el.attr('id'),
+                page: 0
+            };
         },
         initializeFromHTML: function() {
             var self = this;
@@ -22,23 +30,44 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'models/tasks', 'models/task'
                 self.collection.add(taskView.model);
             });
         },
-        fetchFromServer: function(options, callback) {
-            var self = this;
-            var options = options || {};
-            this.collection = this.collection || new Tasks();
-            var newTasks = new Tasks();
-            options.success = function(collection, response, options) {
-                collection.each(function(task) {
-                    self.$el.append('<div id="task-' + task.id + '" class="row-fluid">');
-                    new TaskView({el: '#task-' + task.id, model: task, taskList: self});
-                    self.collection.add(task);
-                });
-                callback(null, 'OK');
-            };
-            options.error = function(collection, response, options) {
-                callback(response);
-            };
-            newTasks.fetch(options);
+        loadNextPage: function() {
+            if (!this.loadingData && !this.allDataLoaded) {
+                this.query.page++;
+                this.fetchFromServer();
+            }
+        },
+        fetchFromServer: function(callback) {
+            if (!this.loadingData) {
+                this.loadingData = true;
+                var self = this;
+                var options = {
+                    query: this.query
+                };
+                this.collection = this.collection || new Tasks();
+                var newTasks = new Tasks();
+                options.success = function(collection, response, options) {
+                    if (collection.length === 0) {
+                        self.allDataLoaded = true;
+                    } else {
+                        collection.each(function(task) {
+                            self.$el.append('<div id="task-' + task.id + '" class="row-fluid">');
+                            new TaskView({el: '#task-' + task.id, model: task, taskList: self});
+                            self.collection.add(task);
+                        });
+                    }
+                    if (callback) {
+                        callback(null, 'OK');
+                    }
+                    self.loadingData = false;
+                };
+                options.error = function(collection, response, options) {
+                    if (callback) {
+                        callback(response);
+                    }
+                    self.loadingData = false;
+                };
+                newTasks.fetch(options);
+            }
         },
         createNewTask: function() {
             if (this.collection.get('new')) {

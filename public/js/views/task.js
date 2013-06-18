@@ -60,8 +60,7 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
         mouseleave: function(event) {
             if (this.hasMouseover) {
                 this.hasMouseover = false;
-                this.$buttons.stop(true, true);
-                this.$buttons.fadeOut('fast');
+                this.$buttons.hide();
             }
         },
         blurTitle: function(event) {

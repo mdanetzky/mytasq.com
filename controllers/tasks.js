@@ -10,15 +10,36 @@ var Task = require('../models/task')
         , sanitize = require('validator').sanitize
         , backboneMongoose = require('../lib/mt.backbone.mongoose')
         , log = require('../lib/mt.logger')(module)
+        , pageSize = 15
         ;
 module.exports = exports = {
     getTasks: function(context, callback) {
         if (context.data.query) {
             if (context.data.query.name) {
                 // Execute query by name.
+                var skip = (context.data.query.page || 0) * pageSize;
                 switch (context.data.query.name) {
+                    case 'tasks-created-by-me':
+                        Task.find({author: context.user.id, done: false})
+                                .sort('-lastModifiedTime')
+                                .skip(skip)
+                                .limit(pageSize)
+                                .lean()
+                                .exec(function(err, data) {
+                            if (!err) {
+                                callback(err, backboneMongoose.convert(data));
+                            } else {
+                                callback(err, data);
+                            }
+                        });
+                        break;
                     case 'tasks-done-by-me':
-                        Task.find({author: context.user.id, done: true}).sort('-lastModifiedTime').limit(15).lean().exec(function(err, data) {
+                        Task.find({author: context.user.id, done: true})
+                                .sort('-lastModifiedTime')
+                                .skip(skip)
+                                .limit(pageSize)
+                                .lean()
+                                .exec(function(err, data) {
                             if (!err) {
                                 callback(err, backboneMongoose.convert(data));
                             } else {
@@ -40,7 +61,7 @@ module.exports = exports = {
     },
     userTasks: function(context, callback) {
         if (context.user) {
-            Task.find({author: context.user.id, done: false}).sort('-lastModifiedTime').limit(15).lean().exec(callback);
+            Task.find({author: context.user.id, done: false}).sort('-lastModifiedTime').limit(pageSize).lean().exec(callback);
         } else {
             callback('user not logged in');
         }

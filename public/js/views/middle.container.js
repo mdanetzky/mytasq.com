@@ -3,7 +3,7 @@
  * Author: Matthias Danetzky
  * 
  * Backbone view.
- * Container of all task lists.
+ * Container in the middle of the screen.
  */
 
 define(['underscore', 'jquery', 'views/scrollable', 'views/tasks'], function(_, $, ScrollableView, TasksView) {
@@ -12,7 +12,7 @@ define(['underscore', 'jquery', 'views/scrollable', 'views/tasks'], function(_, 
         viewport: '#mt-middle-container',
         taskList: null,
         initialize: function() {
-            this.createTaskListFromHTML('#tasks');
+            this.createTaskListFromHTML('[id|="tasks"]');
             this.options.app.on('showDoneByMe', this.showDoneByMe, this);
             this.options.app.on('createTask', this.createTask, this);
         },
@@ -21,7 +21,8 @@ define(['underscore', 'jquery', 'views/scrollable', 'views/tasks'], function(_, 
         },
         createTaskListFromHTML: function(listElementSelector) {
             var newTaskList = new TasksView({
-                el: listElementSelector
+                el: listElementSelector,
+                container: this
             });
             newTaskList.initializeFromHTML();
             this.taskList = newTaskList;
@@ -30,10 +31,11 @@ define(['underscore', 'jquery', 'views/scrollable', 'views/tasks'], function(_, 
             var self = this;
             this.$el.prepend('<div id="tasks-done-by-me" style="position: relative;"></div>');
             var newTaskList = new TasksView({
-                el: '#tasks-done-by-me'
+                el: '#tasks-done-by-me',
+                container: this
             });
             this.taskList.remove();
-            newTaskList.fetchFromServer({query: {name: 'tasks-done-by-me'}}, function(error, resp) {
+            newTaskList.fetchFromServer(function(error, resp) {
                 if (error) {
                     alert(error);
                 } else {
