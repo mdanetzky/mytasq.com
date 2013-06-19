@@ -14,8 +14,8 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
         hasMouseover: false,
         $elementWithFocus: null,
         initialize: function() {
-            this.taskList = this.options.taskList;
-            this.taskList.on("blur", this.blur, this);
+            this.options.taskList.on("blur", this.blur, this);
+            this.options.app.on("globalClick", this.blur, this);
             if (this.model) {
                 // Init task from given model.
                 this.render();
@@ -30,7 +30,7 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
                 });
             }
             if (this.model.id === 'new') {
-                this.taskList.trigger("blur", this);
+                this.options.taskList.trigger("blur", this);
                 this.switchEditable();
                 this.$title.focus();
                 this.$buttons.css('display', 'none');
@@ -105,7 +105,7 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
                 this.model.save({"done": true}, {
                     patch: true,
                     success: function(model, response, options) {
-                        self.taskList.trigger('removeTaskFromView', self);
+                        self.options.taskList.trigger('removeTaskFromView', self);
                     },
                     error: function(response) {
                         console.log(response);
@@ -117,7 +117,7 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
         },
         click: function(event) {
             if (!this.editMode) {
-                this.taskList.trigger("blur", this);
+                this.options.taskList.trigger("blur", this);
                 this.switchEditable();
             }
             this.setFocusOnEditableDiv(event.target);

@@ -51,6 +51,9 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'mt.socket'
             this.on("global-render", this.initViews, this);
             this.$window.bind('resize', _.bind(this.resize, this));
         },
+        events: {
+            "click": "click"
+        },
         removeViews: function() {
             this.navLeftView.remove();
             this.navRightView.remove();
@@ -74,6 +77,10 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'mt.socket'
                 self.$footer = $('#mt-footer');
                 self.resize();
             });
+        },
+        click: function(event) {
+            // Send click on body to all interested recipients.
+            this.trigger("globalClick", event);
         },
         resize: function() {
             var mainRowHeight = this.$mainRow.height();

@@ -22,7 +22,8 @@ define(['underscore', 'jquery', 'views/scrollable', 'views/tasks'], function(_, 
         createTaskListFromHTML: function(listElementSelector) {
             var newTaskList = new TasksView({
                 el: listElementSelector,
-                container: this
+                container: this,
+                app: this.options.app
             });
             newTaskList.initializeFromHTML();
             this.taskList = newTaskList;
@@ -32,7 +33,8 @@ define(['underscore', 'jquery', 'views/scrollable', 'views/tasks'], function(_, 
             this.$el.prepend('<div id="tasks-done-by-me" style="position: relative;"></div>');
             var newTaskList = new TasksView({
                 el: '#tasks-done-by-me',
-                container: this
+                container: this,
+                app: this.options.app
             });
             this.taskList.remove();
             newTaskList.fetchFromServer(function(error, resp) {

@@ -26,7 +26,11 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'models/tasks', 'models/task'
         initializeFromHTML: function() {
             var self = this;
             $(this.el).find('[id|="task"]').each(function() {
-                var taskView = new TaskView({el: '#' + $(this).attr('id'), taskList: self});
+                var taskView = new TaskView({
+                    el: '#' + $(this).attr('id'),
+                    taskList: self,
+                    app: self.options.app
+                });
                 self.collection.add(taskView.model);
             });
         },
@@ -52,7 +56,12 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'models/tasks', 'models/task'
                     } else {
                         collection.each(function(task) {
                             self.$el.append('<div id="task-' + task.id + '" class="row-fluid">');
-                            new TaskView({el: '#task-' + task.id, model: task, taskList: self});
+                            new TaskView({
+                                el: '#task-' + task.id,
+                                model: task,
+                                taskList: self,
+                                app: self.options.app
+                            });
                             self.collection.add(task);
                         });
                     }
@@ -79,7 +88,12 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'models/tasks', 'models/task'
             } else {
                 this.$el.prepend('<div id="task-new" class="row-fluid mt.task"></div>');
                 var newTask = new Task({id: 'new'});
-                this.newTaskView = new TaskView({el: '#task-new', model: newTask, taskList: this});
+                this.newTaskView = new TaskView({
+                    el: '#task-new',
+                    model: newTask,
+                    taskList: this,
+                    app: this.options.app
+                });
                 this.collection.add(newTask, {at: 0});
             }
         },
