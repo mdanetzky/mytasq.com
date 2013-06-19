@@ -5,7 +5,7 @@
  * CKEditor wrapper.
  */
 
-define(['mt.backbone.sio', 'jquery', 'ckeditor'], function(Backbone, $) {
+define(['mt.backbone.sio', 'jquery', 'mt.util', 'ckeditor'], function(Backbone, $, util) {
     this.CKEDITOR.disableAutoInline = true;
     var editors = {};
     return {
@@ -21,7 +21,8 @@ define(['mt.backbone.sio', 'jquery', 'ckeditor'], function(Backbone, $) {
                     // Cut out the CK toolbar and move it to task.
                     var $toolbar = $('#cke_' + event.editor.name + ' .cke_inner');
                     editor.$toolbarTarget.append($toolbar);
-                    self.swingIn(editor);
+                    //self.swingIn(editor);
+                    util.swingInFromTop(editor.$toolbarTarget.parent());
                     if (callback) {
                         callback();
                     }
@@ -53,10 +54,7 @@ define(['mt.backbone.sio', 'jquery', 'ckeditor'], function(Backbone, $) {
             var editor = editors[id];
             if (editor && editor.isVisible) {
                 editor.$toolbarTarget.parent().stop(true, true);
-                editor.$toolbarTarget.parent().animate({
-                    height: 0,
-                    "margin-bottom": 0
-                }, 'fast');
+                util.swingOutToTop(editor.$toolbarTarget.parent());
                 editor.isVisible = false;
                 // Destroy unused editor instances 30 seconds after hide.
                 var self = this;

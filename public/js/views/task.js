@@ -6,13 +6,14 @@
  * Task.
  */
 
-define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor'], function(Backbone, $, templates, Task, editor) {
+define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor', 'mt.util'], function(Backbone, $, templates, Task, editor, util) {
     var TaskView = Backbone.View.extend({
         el: '',
         editMode: false,
         hasChanged: false,
         hasMouseover: false,
         $elementWithFocus: null,
+        hasFocus: false,
         initialize: function() {
             this.options.taskList.on("blur", this.blur, this);
             this.options.app.on("globalClick", this.blur, this);
@@ -41,21 +42,29 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
         init$fields: function() {
             this.$title = this.$el.find('.mt-task-title');
             this.$text = this.$el.find('.mt-task-text');
-            this.$buttons = this.$el.find('.btn-toolbar');
+            this.$buttons = this.$el.find('.mt-task-buttons');
+            this.$options = this.$el.find('.mt-task-options');
             this.$editableMask = this.$el.find('.mt-task-edit-mode');
             this.$textEditorToolbar = this.$el.find('.mt-task-text-editor-toolbar');
             this.$textEditorToolbarContainer = this.$el.find('.mt-task-text-editor-toolbar-container');
         },
         events: {
+            "click .mt-task-options-toggle": "toggleTaskOptions",
             "click .mt-task": "click",
             "focus .mt-task": "focus",
             "click .mt-btn-task-done": "done",
+            "click .mt-task-delete": "del",
             "keydown": "keyShortcuts",
             "keypress": "keyShortcuts",
             "keyup": "onChange",
             "mouseover .mt-task": "mouseover",
             "mouseleave .mt-task": "mouseleave",
             "blur .mt-task-title": "blurTitle"
+        },
+        toggleTaskOptions: function() {
+            console.log('toggle');
+            var menu = this.$el.find('.dropdown .dropdown-toggle');
+            menu.dropdown('toggle');
         },
         mouseleave: function(event) {
             if (this.hasMouseover) {
@@ -71,6 +80,10 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
         },
         focus: function(event) {
             var self = this;
+            if (!this.hasFocus) {
+                this.hasFocus = true;
+                util.swingInFromTop(this.$options);
+            }
             var $target = $(event.target);
             var $focusable = $target.closest('.mt-editable, .mt-task');
             if ($focusable.length) {
@@ -115,7 +128,27 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
             }
             return false;
         },
+        del: function(event) {
+            var self = this;
+            if (this.model.id !== 'new') {
+                this.model.save({"deleted": true}, {
+                    patch: true,
+                    success: function(model, response, options) {
+                        self.options.taskList.trigger('removeTaskFromView', self);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Task save failed!\nCheck console for details.");
+                    }
+                });
+            }
+            return false;
+        },
         click: function(event) {
+            if (!this.hasFocus) {
+                this.hasFocus = true;
+                util.swingInFromTop(this.$options);
+            }
             if (!this.editMode) {
                 this.options.taskList.trigger("blur", this);
                 this.switchEditable();
@@ -228,12 +261,18 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
             }
         },
         blur: function(initiator) {
-            if (this.editMode && this !== initiator) {
-                if (this.model.get('id') !== 'new') {
-                    this.switchEditable(false);
+            if (this !== initiator) {
+                if (this.editMode) {
+                    if (this.model.get('id') !== 'new') {
+                        this.switchEditable(false);
+                    }
+                    editor.hide('text' + this.model.id);
+                    this.$elementWithFocus = null;
                 }
-                editor.hide('text' + this.model.id);
-                this.$elementWithFocus = null;
+                if (this.hasFocus) {
+                    this.hasFocus = false;
+                    util.swingOutToTop(this.$options);
+                }
             }
         },
         show: function() {

@@ -18,6 +18,23 @@ define(['jquery', 'mt.spinner', 'transit'], function($, activity) {
             var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(email);
         },
+        swingInFromTop: function($element) {
+            // Slide in from top.
+            var elementHeight = $element[0].scrollHeight;
+            $element.animate({
+                height: elementHeight,
+                "margin-bottom": 10
+            }, 'fast', 'swing', function() {
+                $element.css('height', '');
+            });
+        },
+        swingOutToTop: function($element) {
+            // Hide out to top.
+            $element.animate({
+                height: 0,
+                "margin-bottom": 0
+            }, 'fast', 'swing');
+        },
         reloadContent: function(elementToReplaceId, url, callback) {
             var showActivity = !activity.isActive();
             if (showActivity) {
