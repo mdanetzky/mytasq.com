@@ -121,7 +121,7 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
                 this.switchEditable();
             }
             this.setFocusOnEditableDiv(event.target);
-            // Prevent further bubbling
+            // Prevent further bubbling.
             return false;
         },
         setFocusOnEditableDiv: function(element) {
@@ -130,7 +130,7 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
             $el.closest('[contenteditable="true"]').focus();
         },
         keyShortcuts: function(event) {
-            // Quit on mutation keys.
+            // Swallow mutation keys.
             if (event.keyCode === 91        // Left Command
                     || event.keyCode === 93 // Right Command
                     || event.keyCode === 16 // Shift
@@ -213,18 +213,18 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor']
             this.$editableMask.stop(true, true);
             // Default switch on = true.
             on = (typeof on === 'undefined') ? true : on;
-            if (on) {
+            if (on && !this.model.get('done')) {
                 this.editMode = true;
                 this.$title.attr('contenteditable', 'true');
                 if (this.model.get("text")) {
                     this.$text.attr('contenteditable', 'true');
                 }
-                this.$editableMask.fadeIn(200);
+                this.$editableMask.fadeIn(100);
             } else {
                 this.editMode = false;
                 this.$title.attr('contenteditable', 'false');
                 this.$text.attr('contenteditable', 'false');
-                this.$editableMask.fadeOut(400);
+                this.$editableMask.fadeOut(200);
             }
         },
         blur: function(initiator) {
