@@ -10,14 +10,15 @@ var mongoose = require('mongoose')
 
 // Define schema
 var TaskSchema = new Schema({
-    title: {type: String, default: ''}
+    title: {type: String, default: '', index: true}
     , text: {type: String, default: ''}
-
     , author: {type: Schema.ObjectId, ref: 'User', index: true}
+    , assignee: {type: Schema.ObjectId, ref: 'User', sparse: true}
     , cretionTime: {type: Date, default: Date.now}
     , lastModifiedTime: {type: Date, default: Date.now, index: true}
     , public: {type: Boolean, default: false, index: true}
     , done: {type: Boolean, default: false, index: true}
+    , deleted: {type: Boolean, required: true, default: false, index: true}
 }, {collection: "mtTasks"});
 
 
