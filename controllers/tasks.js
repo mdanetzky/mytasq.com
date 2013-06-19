@@ -20,7 +20,10 @@ module.exports = exports = {
                 var skip = (context.data.query.page || 0) * pageSize;
                 switch (context.data.query.name) {
                     case 'tasks-created-by-me':
-                        Task.find({author: context.user.id, done: false})
+                        Task.find({
+                            author: context.user.id,
+                            done: false
+                        }).or({deleted: null}, {deleted: false})
                                 .sort('-lastModifiedTime')
                                 .skip(skip)
                                 .limit(pageSize)
@@ -35,6 +38,7 @@ module.exports = exports = {
                         break;
                     case 'tasks-done-by-me':
                         Task.find({author: context.user.id, done: true})
+                                .or({deleted: null}, {deleted: false})
                                 .sort('-lastModifiedTime')
                                 .skip(skip)
                                 .limit(pageSize)
@@ -67,19 +71,49 @@ module.exports = exports = {
         }
     },
     saveTask: function(context, callback) {
-        var id = context.data.model.id;
-        var mongoData = backboneMongoose.convert(context.data.model);
+        var self = this;
         if (context.data.model.title) {
-            log.debug('Original title: ' + context.data.model.title);
             context.data.model.title = sanitize(context.data.model.title).xss().trim();
-            log.debug('Sanitized title: ' + context.data.model.title);
         }
         if (context.data.model.text) {
-            log.debug('Original text: ' + context.data.model.text);
             context.data.model.text = sanitize(context.data.model.text).xss().trim();
-            log.debug('Sanitized text: ' + context.data.model.text);
         }
+        if (typeof context.data.model.deleted === 'boolean') {
+            if (context.data.model.deleted) {
+                // Check if task can be deleted.
+                if (context.data.model.id) {
+                    if (context.data.model.id === 'new') {
+                        callback('Can not delete task with id="new".');
+                    } else {
+                        Task.findOne({_id: context.data.model.id, author: context.user.id}).lean()
+                                .exec(function(err, data) {
+                            if (!err) {
+                                if (data) {
+                                    // This record has been written by logged in user
+                                    // and can be deleted.
+                                    self.upsert(context, callback);
+                                } else {
+                                    callback('Unauthorized delete.');
+                                }
+                            } else {
+                                callback(err, data);
+                            }
+                        });
+                    }
+                } else {
+                    // TODO: undelete task.
+                }
+            } else {
+                callback('Missing task id.');
+            }
+        } else {
+            this.upsert(context, callback);
+        }
+    },
+    upsert: function(context, callback) {
+        var mongoData = backboneMongoose.convert(context.data.model);
         mongoData.lastModifiedTime = new Date();
+        var id = context.data.model.id;
         if (id === 'new') {
             delete mongoData._id;
             if (context.user) {
