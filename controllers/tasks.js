@@ -23,7 +23,7 @@ module.exports = exports = {
                         Task.find({
                             author: context.user.id,
                             done: false
-                        }).or({deleted: null}, {deleted: false})
+                        }).or([{deleted: null}, {deleted: false}])
                                 .sort('-lastModifiedTime')
                                 .skip(skip)
                                 .limit(pageSize)
@@ -38,7 +38,7 @@ module.exports = exports = {
                         break;
                     case 'tasks-done-by-me':
                         Task.find({author: context.user.id, done: true})
-                                .or({deleted: null}, {deleted: false})
+                                .or([{deleted: null}, {deleted: false}])
                                 .sort('-lastModifiedTime')
                                 .skip(skip)
                                 .limit(pageSize)
