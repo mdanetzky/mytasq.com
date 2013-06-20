@@ -71,6 +71,9 @@ module.exports = exports = {
         }
     },
     saveTask: function(context, callback) {
+
+        // TODO: check if the user is authorized to perform save of particular fields
+        
         var self = this;
         if (context.data.model.title) {
             context.data.model.title = sanitize(context.data.model.title).xss().trim();
@@ -111,9 +114,9 @@ module.exports = exports = {
         }
     },
     upsert: function(context, callback) {
+        var id = context.data.model.id;
         var mongoData = backboneMongoose.convert(context.data.model);
         mongoData.lastModifiedTime = new Date();
-        var id = context.data.model.id;
         if (id === 'new') {
             delete mongoData._id;
             if (context.user) {
