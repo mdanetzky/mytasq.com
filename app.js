@@ -16,12 +16,11 @@ var express = require('express')
         , conf = require('./lib/mt.conf')
         , log = require('./lib/mt.logger')(module)
         ;
-
 log.info('#################################');
 log.info('START: mytasq.com server instance');
-// precompile templates at start
+// precompile templates at start.
 require('./lib/mt.templates');
-// Check for errors in configuration
+// Check for errors in configuration.
 if (conf.err) {
     log.error(conf.err);
     process.exit(1);
@@ -31,23 +30,23 @@ if (conf.development) {
         log.log('debug', 'Mongoose collection: "' + collectionName + '" method: "' + method + '" query: ', query);
     });
 }
-// Prepare logStream for express
+// Prepare logStream for express.
 var logStream = {
     write: function(message){
         log.info(message);
     }
 };
-// Connect to the database
+// Connect to the database.
 mongoose.connect(conf.db.uri, conf.db.options, function(err) {
     if (err) {
         console.log(conf.err);
         process.exit(1);
     }
 });
-// Create session store
+// Create session store.
 var MongoStore = require('connect-mongo')(express);
 var sessionStore = new MongoStore(conf.session.db);
-// Define CPUs cluster
+// Define CPUs cluster.
 if (cluster.isMaster && !conf.singleThread) {
     // Count the machine's CPUs.
     var cpuCount = require('os').cpus().length;
