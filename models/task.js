@@ -10,7 +10,7 @@ var mongoose = require('mongoose')
 
 // Define schema
 var TaskSchema = new Schema({
-    parent: {type: Schema.ObjectId, ref: 'Task', index: true}
+    parentTask: {type: Schema.ObjectId, ref: 'Task', index: true}
     , title: {type: String, default: '', index: true}
     , text: {type: String, default: ''}
     , author: {type: Schema.ObjectId, ref: 'User', index: true}
