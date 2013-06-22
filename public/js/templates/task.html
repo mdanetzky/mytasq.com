@@ -1,4 +1,4 @@
-<div class="span12 mt-task" style="position: relative;">
+<div class="span12 mt-task" style="position: relative;min-height: 0;">
     <h2 class="mt-task-title mt-editable" style="<%if(task.done){%>color: #138808<%}%>"><%=task.title %></h2>
     <div class="mt-task-text mt-editable"><%=task.text %></div>
     <div class="mt-task-text-editor-toolbar-container" style="overflow: hidden; height: 0;">
@@ -7,8 +7,7 @@
     <div class="mt-task-options" style="overflow: hidden; height: 0;">
         <div class="btn-toolbar" style="margin: 0;">
             <div class="btn-group">
-                <button class="btn mt-task-delete">Delete</button>
-                <button class="btn">2</button>
+                <button class="btn mt-task-new-task">New Task</button>
                 <button class="btn">3</button>
                 <button class="btn">4</button>
             </div>
@@ -19,22 +18,26 @@
             </div>
             <div class="btn-group">
                 <button class="btn">8</button>
+                <button class="btn mt-task-delete">Delete</button>
             </div>
         </div>
     </div>
     <div class="btn-toolbar mt-task-buttons" style="position: absolute; right: 0; bottom: 0; display: none;">
         <div class="btn-group" style="margin-bottom: 0;">
             <%if(!task.done){%><button class="btn mt-btn-task-done"><i class="icon-ok"></i></button><%}%>
-            <div class="dropdown btn-group">
-                <a class="btn dropdown-toggle mt-task-options-toggle" data-toggle="dropdown" href="#">
-                    <i class="icon-align-justify"></i>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Foo</a></li>
-                    <li><a href="#">Bar</a></li>
-                </ul>
-            </div>
+            <!--            <div class="dropdown btn-group">
+                            <a class="btn dropdown-toggle mt-task-options-toggle" data-toggle="dropdown" href="#">
+                                <i class="icon-align-justify"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Foo</a></li>
+                                <li><a href="#">Bar</a></li>
+                            </ul>
+                        </div>-->
         </div> 
     </div>
     <div class="mt-task-edit-mode" style="display:none;"></div>
+</div>
+<div class="span12" style="min-height: 0;">
+    <div id="tasks-of-task-<%=task.id%>" class="mt-task-subtasks" style="padding-left: 10%;"></div>
 </div>

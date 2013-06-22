@@ -22,13 +22,19 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'models/tasks', 'models/task'
                 name: this.$el.attr('id'),
                 page: 0
             };
+            if (this.query.name.indexOf('tasks-of-task-') === 0) {
+                this.parentTaskId = this.query.name.split('-').pop();
+                this.query.name = 'tasks-of-task';
+                this.query.parentTaskId = this.parentTaskId;
+            }
         },
         initializeFromHTML: function() {
             var self = this;
-            $(this.el).find('[id|="task"]').each(function() {
+            this.$el.find('[id|="task"]').each(function() {
                 var taskView = new TaskView({
                     el: '#' + $(this).attr('id'),
                     taskList: self,
+                    container: self.options.container,
                     app: self.options.app
                 });
                 self.collection.add(taskView.model);
@@ -60,6 +66,7 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'models/tasks', 'models/task'
                                 el: '#task-' + task.id,
                                 model: task,
                                 taskList: self,
+                                container: self.options.container,
                                 app: self.options.app
                             });
                             self.collection.add(task);
@@ -86,12 +93,18 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'models/tasks', 'models/task'
                 this.newTaskView.show();
                 this.newTaskView.focus();
             } else {
-                this.$el.prepend('<div id="task-new" class="row-fluid mt.task"></div>');
+                // New task element id must be unique document wide.
+                var newTaskElId = this.$el.attr('id') + 'task-new';
+                this.$el.prepend('<div id="' + newTaskElId + '" class="row-fluid mt.task"></div>');
                 var newTask = new Task({id: 'new'});
+                if (this.parentTaskId) {
+                    newTask.set('parentTask', this.parentTaskId);
+                }
                 this.newTaskView = new TaskView({
-                    el: '#task-new',
+                    el: '#' + newTaskElId,
                     model: newTask,
                     taskList: this,
+                    container: this.options.container,
                     app: this.options.app
                 });
                 this.collection.add(newTask, {at: 0});

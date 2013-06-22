@@ -12,7 +12,7 @@ define(['underscore', 'jquery', 'views/scrollable', 'views/tasks'], function(_, 
         viewport: '#mt-middle-container',
         taskList: null,
         initialize: function() {
-            this.createTaskListFromHTML('[id|="tasks"]');
+            this.createTaskListFromHTML('#' + this.$el.attr('id') + ' > [id|="tasks"]');
             this.options.app.on('showDoneByMe', this.showDoneByMe, this);
             this.options.app.on('createTask', this.createTask, this);
         },

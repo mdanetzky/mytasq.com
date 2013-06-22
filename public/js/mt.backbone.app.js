@@ -14,6 +14,7 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'mt.socket'
             , 'views/nav.left'
             , 'views/nav.right'
             , 'views/nav.top'
+            , 'views/tasks'
 ], function(Backbone, _, $, socket
         , UserRegisterModel, UserRegisterView
         , UserLoginModel, UserLoginView
@@ -22,6 +23,7 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'mt.socket'
         , NavLeftView
         , NavRightView
         , NavTopView
+        , TasksView
         ) {
     var AppRouter = Backbone.Router.extend({
         routes: {
@@ -94,6 +96,9 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'mt.socket'
                 // Resize right nav container.
                 this.navRightView.resize(mainRowHeight);
             }
+        },
+        createTasksView: function(options) {
+            return new TasksView(options);
         }
     });
     return AppView;

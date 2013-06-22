@@ -22,8 +22,10 @@ module.exports = exports = {
                     case 'tasks-created-by-me':
                         Task.find({
                             author: context.user.id,
+                            parentTask: null,
                             done: false
-                        }).or([{deleted: null}, {deleted: false}])
+                        })
+                                .or([{deleted: null}, {deleted: false}])
                                 .sort('-lastModifiedTime')
                                 .skip(skip)
                                 .limit(pageSize)
@@ -51,6 +53,25 @@ module.exports = exports = {
                             }
                         });
                         break;
+                    case 'tasks-of-task':
+                        if (context.data.query.parentTaskId) {
+                            Task.find({parentTask: context.data.query.parentTaskId, done: false})
+                                    .or([{deleted: null}, {deleted: false}])
+                                    .sort('-lastModifiedTime')
+                                    .skip(skip)
+                                    .limit(pageSize)
+                                    .lean()
+                                    .exec(function(err, data) {
+                                if (!err) {
+                                    callback(err, backboneMongoose.convert(data));
+                                } else {
+                                    callback(err, data);
+                                }
+                            });
+                        } else {
+                            log.error('getTasks (tasks-of-task): missing parentTaskId!');
+                        }
+                        break;
                     default:
                         callback('getTasks: No such query: ' + context.data.query.name);
                         break;
@@ -73,7 +94,7 @@ module.exports = exports = {
     saveTask: function(context, callback) {
 
         // TODO: check if the user is authorized to perform save of particular fields
-        
+
         var self = this;
         if (context.data.model.title) {
             context.data.model.title = sanitize(context.data.model.title).xss().trim();
@@ -92,7 +113,7 @@ module.exports = exports = {
                                 .exec(function(err, data) {
                             if (!err) {
                                 if (data) {
-                                    // This record has been written by logged in user
+                                    // This task has been written by currently logged in user
                                     // and can be deleted.
                                     self.upsert(context, callback);
                                 } else {
@@ -116,12 +137,15 @@ module.exports = exports = {
     upsert: function(context, callback) {
         var id = context.data.model.id;
         var mongoData = backboneMongoose.convert(context.data.model);
+        if (mongoData.parentTask) {
+            mongoData.parentTask = backboneMongoose.toMongooseId(mongoData.parentTask);
+        }
         mongoData.lastModifiedTime = new Date();
         if (id === 'new') {
             delete mongoData._id;
             if (context.user) {
                 // Create new task for existing user only.
-                mongoData.author = new mongoose.Types.ObjectId(context.user.id);
+                mongoData.author = backboneMongoose.toMongooseId(context.user.id);
                 Task.create(mongoData, function(err, task) {
                     if (err) {
                         callback(err);

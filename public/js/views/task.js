@@ -14,6 +14,7 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
         hasMouseover: false,
         $elementWithFocus: null,
         hasFocus: false,
+        subTaskList: null,
         initialize: function() {
             this.options.taskList.on("blur", this.blur, this);
             this.options.app.on("globalClick", this.blur, this);
@@ -49,7 +50,7 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
             this.$textEditorToolbarContainer = this.$el.find('.mt-task-text-editor-toolbar-container');
         },
         events: {
-            "click .mt-task-options-toggle": "toggleTaskOptions",
+            "click .mt-task-new-task": "newTask",
             "click .mt-task": "click",
             "focus .mt-task": "focus",
             "click .mt-btn-task-done": "done",
@@ -61,10 +62,25 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
             "mouseleave .mt-task": "mouseleave",
             "blur .mt-task-title": "blurTitle"
         },
-        toggleTaskOptions: function() {
-            console.log('toggle');
-            var menu = this.$el.find('.dropdown .dropdown-toggle');
-            menu.dropdown('toggle');
+        newTask: function() {
+            var self = this;
+            this.ensureSubTasks(function() {
+                self.subTaskList.createNewTask();
+            });
+        },
+        ensureSubTasks: function(callback) {
+            if (!this.subTaskList) {
+                this.subTaskList = this.options.app.createTasksView({
+                    el: '#tasks-of-task-' + this.model.id,
+                    container: this.options.container,
+                    app: this.options.app
+                });
+                this.subTaskList.fetchFromServer(callback);
+            } else {
+                if (callback) {
+                    callback();
+                }
+            }
         },
         mouseleave: function(event) {
             if (this.hasMouseover) {
@@ -82,6 +98,8 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
             var self = this;
             if (!this.hasFocus) {
                 this.hasFocus = true;
+                util.swingInFromTop(this.$options);
+                this.ensureSubTasks();
                 util.swingInFromTop(this.$options);
             }
             var $target = $(event.target);
@@ -146,8 +164,7 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
         },
         click: function(event) {
             if (!this.hasFocus) {
-                this.hasFocus = true;
-                util.swingInFromTop(this.$options);
+                this.focus(event);
             }
             if (!this.editMode) {
                 this.options.taskList.trigger("blur", this);
@@ -212,10 +229,11 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
             if (this.model.get('id') === 'new' && !this.hasChanged) {
                 if (this.model.isValid()) {
                     this.model.save(null, {
-                        patch: true,
+                        patch: false,
                         success: function(model, response, options) {
                             self.model.set('id', '' + response);
                             self.$el.attr('id', 'task-' + self.model.get('id'));
+                            self.$el.find('#tasks-of-task-new').attr('id', 'tasks-of-task-' + self.model.get('id'));
                             self.$buttons.fadeIn();
                         },
                         error: function(response) {

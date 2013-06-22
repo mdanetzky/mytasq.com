@@ -14,6 +14,13 @@ define(['jquery', 'mt.spinner', 'transit'], function($, activity) {
         return $(obj).css('position') === 'fixed';
     };
     return {
+        checkElementVisible: function($element, $viewport){
+
+            // TODO: check if current lement position is within visible part of the viewport.
+            
+            var relativeY = $element.offset().top - $viewport.offset().top;
+            return true;
+        },
         validateEmail: function(email) {
             var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(email);
