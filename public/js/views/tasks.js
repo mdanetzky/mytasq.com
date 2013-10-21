@@ -12,7 +12,8 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'models/tasks', 'models/task'
         loadingData: false,
         query: null,
         allDataLoaded: false,
-        initialize: function() {
+        initialize: function(options) {
+            this.options = options;
             this.on('removeTaskFromView', this.removeTaskFromView, this);
             this.options.container.on('loadNextPage', this.loadNextPage, this);
             if (!this.collection) {

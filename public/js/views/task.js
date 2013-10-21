@@ -15,7 +15,8 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
         $elementWithFocus: null,
         hasFocus: false,
         subTaskList: null,
-        initialize: function() {
+        initialize: function(options) {
+            this.options = options;
             this.options.taskList.on("blur", this.blur, this);
             this.options.app.on("globalClick", this.blur, this);
             if (this.model) {
