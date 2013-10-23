@@ -6,7 +6,7 @@
  * Task.
  */
 
-define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor', 'mt.util'], function(Backbone, $, templates, Task, editor, util) {
+define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor', 'mt.util'], function (Backbone, $, templates, Task, editor, util) {
     var TaskView = Backbone.View.extend({
         el: '',
         editMode: false,
@@ -15,7 +15,8 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
         $elementWithFocus: null,
         hasFocus: false,
         subTaskList: null,
-        initialize: function(options) {
+        initialize: function (options) {
+            var me = this;
             this.options = options;
             this.options.taskList.on("blur", this.blur, this);
             this.options.app.on("globalClick", this.blur, this);
@@ -40,8 +41,17 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
                 this.$title.html('<div class="mt-title-empty-new-task" style="opacity:0.2;">Enter new task..</div>');
                 this.$titleNew = this.$title.find('.mt-title-empty-new-task');
             }
+            if (this.model.get("text")) {
+                this.$text.attr('contenteditable', 'true');
+                editor.init('text' + this.model.id, this.$text[0], this.$textEditorToolbar, function () {
+                    me.click({
+                        target: me.$text[0]
+                    });
+                });
+                //            this.$text.attr('contenteditable', 'false');
+            }
         },
-        init$fields: function() {
+        init$fields: function () {
             this.$title = this.$el.find('.mt-task-title');
             this.$text = this.$el.find('.mt-task-text');
             this.$buttons = this.$el.find('.mt-task-buttons');
@@ -63,13 +73,13 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
             "mouseleave .mt-task": "mouseleave",
             "blur .mt-task-title": "blurTitle"
         },
-        newTask: function() {
+        newTask: function () {
             var self = this;
-            this.ensureSubTasks(function() {
+            this.ensureSubTasks(function () {
                 self.subTaskList.createNewTask();
             });
         },
-        ensureSubTasks: function(callback) {
+        ensureSubTasks: function (callback) {
             if (!this.subTaskList) {
                 this.subTaskList = this.options.app.createTasksView({
                     el: '#tasks-of-task-' + this.model.id,
@@ -83,19 +93,19 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
                 }
             }
         },
-        mouseleave: function(event) {
+        mouseleave: function (event) {
             if (this.hasMouseover) {
                 this.hasMouseover = false;
                 this.$buttons.hide();
             }
         },
-        blurTitle: function(event) {
+        blurTitle: function (event) {
             // Remove formatting from title.
             if (this.model.get('title')) {
                 this.$title.text(this.$title.text());
             }
         },
-        focus: function(event) {
+        focus: function (event) {
             var self = this;
             if (!this.hasFocus) {
                 this.hasFocus = true;
@@ -110,7 +120,7 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
                     // Focus has moved to another focusable element.
                     this.$elementWithFocus = $focusable;
                     if (this.$text.is($focusable)) {
-                        editor.show('text' + this.model.id, this.$text[0], this.$textEditorToolbar, function() {
+                        editor.show('text' + this.model.id, this.$text[0], this.$textEditorToolbar, function () {
                             self.click(event);
                         });
                         return false;
@@ -124,22 +134,24 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
             }
             return false;
         },
-        mouseover: function(event) {
+        mouseover: function (event) {
             if (!this.hasMouseover) {
                 this.hasMouseover = true;
                 this.$buttons.stop(true, true);
                 this.$buttons.show();
             }
         },
-        done: function(event) {
+        done: function (event) {
             var self = this;
             if (this.model.id !== 'new') {
-                this.model.save({"done": true}, {
+                this.model.save({
+                    "done": true
+                }, {
                     patch: true,
-                    success: function(model, response, options) {
+                    success: function (model, response, options) {
                         self.options.taskList.trigger('removeTaskFromView', self);
                     },
-                    error: function(response) {
+                    error: function (response) {
                         console.log(response);
                         alert("Task save failed!\nCheck console for details.");
                     }
@@ -147,15 +159,17 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
             }
             return false;
         },
-        del: function(event) {
+        del: function (event) {
             var self = this;
             if (this.model.id !== 'new') {
-                this.model.save({"deleted": true}, {
+                this.model.save({
+                    "deleted": true
+                }, {
                     patch: true,
-                    success: function(model, response, options) {
+                    success: function (model, response, options) {
                         self.options.taskList.trigger('removeTaskFromView', self);
                     },
-                    error: function(response) {
+                    error: function (response) {
                         console.log(response);
                         alert("Task save failed!\nCheck console for details.");
                     }
@@ -163,7 +177,7 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
             }
             return false;
         },
-        click: function(event) {
+        click: function (event) {
             if (!this.hasFocus) {
                 this.focus(event);
             }
@@ -175,20 +189,23 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
             // Prevent further bubbling.
             return false;
         },
-        setFocusOnEditableDiv: function(element) {
+        setFocusOnEditableDiv: function (element) {
             // Traverse parents and set focus on element with contenteditable=true.
             var $el = $(element);
             $el.closest('[contenteditable="true"]').focus();
         },
-        keyShortcuts: function(event) {
+        keyShortcuts: function (event) {
             // Swallow mutation keys.
-            if (event.keyCode === 91        // Left Command
-                    || event.keyCode === 93 // Right Command
-                    || event.keyCode === 16 // Shift
-                    || event.keyCode === 17 // Control
-                    || event.keyCode === 18 // Alt
-                    )
-            {
+            if (event.keyCode === 91 // Left Command
+            ||
+            event.keyCode === 93 // Right Command
+            ||
+            event.keyCode === 16 // Shift
+            ||
+            event.keyCode === 17 // Control
+            ||
+            event.keyCode === 18 // Alt
+            ) {
                 return false;
             }
             var $target = $(event.target);
@@ -217,7 +234,7 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
                 }
             }
         },
-        onChange: function(event) {
+        onChange: function (event) {
             // Save changed content.
             var self = this;
             var $target = $(event.target);
@@ -231,13 +248,13 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
                 if (this.model.isValid()) {
                     this.model.save(null, {
                         patch: false,
-                        success: function(model, response, options) {
+                        success: function (model, response, options) {
                             self.model.set('id', '' + response);
                             self.$el.attr('id', 'task-' + self.model.get('id'));
                             self.$el.find('#tasks-of-task-new').attr('id', 'tasks-of-task-' + self.model.get('id'));
                             self.$buttons.fadeIn();
                         },
-                        error: function(response) {
+                        error: function (response) {
                             console.log(response);
                             alert("Task save failed!\ncheck console for details.");
                         }
@@ -249,18 +266,19 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
             this.model.save(null, {
                 deferredSave: true,
                 patch: true,
-                success: function(model, response, options) {
-                },
-                error: function(model, response, options) {
+                success: function (model, response, options) {},
+                error: function (model, response, options) {
                     console.log(response);
                 }
             });
         },
-        render: function() {
-            $(this.el).html(templates("task", {task: this.model.toJSON()}));
+        render: function () {
+            $(this.el).html(templates("task", {
+                task: this.model.toJSON()
+            }));
             return this;
         },
-        switchEditable: function(on) {
+        switchEditable: function (on) {
             // Stop running animations.
             this.$editableMask.stop(true, true);
             // Default switch on = true.
@@ -279,7 +297,7 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
                 this.$editableMask.fadeOut(200);
             }
         },
-        blur: function(initiator) {
+        blur: function (initiator) {
             if (this !== initiator) {
                 if (this.editMode) {
                     if (this.model.get('id') !== 'new') {
@@ -294,10 +312,10 @@ define(['mt.backbone.sio', 'jquery', 'mt.templates', 'models/task', 'mt.editor',
                 }
             }
         },
-        show: function() {
+        show: function () {
             this.$el.show();
         },
-        hide: function() {
+        hide: function () {
             this.$el.hide();
         }
     });
