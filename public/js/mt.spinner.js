@@ -15,7 +15,7 @@ define(['spin'], function(Spin) {
         }
         return frag;
     };
-    var fragment = create('<div id="activity-indicator-spinner" style="position:fixed; top:50%; left:50%; margin:-25px 0 0 -25px; width:50px; height:50px; display:none;"></div>');
+    var fragment = create('<div id="activity-indicator-spinner" style="position:fixed; top:50%; left:50%; margin:-25px 0 0 -25px; width:50px; height:50px; display:none; z-index:100000;"></div>');
     document.body.insertBefore(fragment, document.body.childNodes[0]);
     var target = document.getElementById('activity-indicator-spinner');
     var spinner = new Spin().spin(target);
