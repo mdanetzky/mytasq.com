@@ -1,14 +1,15 @@
 /* 
  * Copyright 2013 MyTasq.com
  * Author: Matthias Danetzky
+ * 
+ * Mongoose Model.
+ * Task.
  */
 
 var mongoose = require('mongoose')
         , Schema = mongoose.Schema
         , User = require('./user')
         ;
-
-// Define schema
 var TaskSchema = new Schema({
     parentTask: {type: Schema.ObjectId, ref: 'Task', index: true}
     , title: {type: String, default: '', index: true}
@@ -21,6 +22,4 @@ var TaskSchema = new Schema({
     , done: {type: Boolean, default: false, index: true}
     , deleted: {type: Boolean, required: true, default: false, index: true}
 }, {collection: "mtTasks"});
-
-
 module.exports = mongoose.model('Task', TaskSchema);
