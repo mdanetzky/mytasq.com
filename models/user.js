@@ -1,6 +1,9 @@
 /* 
  * Copyright 2013 MyTasq.com
  * Author: Matthias Danetzky
+ * 
+ * Mongoose model.
+ * User.
  */
 
 var mongoose = require('mongoose'),
