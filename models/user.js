@@ -14,7 +14,8 @@ var mongoose = require('mongoose'),
 
 var UserSchema = new Schema({
     nickname: String,
-    birthdate: Date
+    birthdate: Date,
+    mainTasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }]
 }, {collection: 'mtUsers'});
 
 UserSchema.plugin(passportLocalMongoose, {
