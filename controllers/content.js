@@ -19,6 +19,7 @@ module.exports = exports = {
         renderingContext.templates = require('../lib/mt.templates');
         context.session.visitCount = context.session.visitCount ? context.session.visitCount + 1 : 1;
         context.session.lastVisit = Date.now();
+        renderingContext.teams = [];
         if (context.session.user) {
             getTasks = tasksController.getTasks;
             renderingContext.data = {
@@ -28,8 +29,13 @@ module.exports = exports = {
             };
             renderingContext.taskListId = renderingContext.data.query.name;
         } else {
-            getTasks = tasksController.publicTasks;
-            renderingContext.taskListId = 'tasks-public';
+            getTasks = tasksController.getTasks;
+            renderingContext.data = {
+                query: {
+                    name: 'tasks-public'
+                }
+            };
+            renderingContext.taskListId = renderingContext.data.query.name;
         }
         async.parallel([
             function(callback) {
