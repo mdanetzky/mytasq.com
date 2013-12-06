@@ -1,78 +1,81 @@
-<div id="mt-navbar" class="navbar navbar-inverse navbar-static-top">
-    <div class="navbar-inner">
-        <div class="container-fluid">
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+<div id="mt-navbar" class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="#" style="margin: 0 10px 0 0; padding: 0"><img alt="mytasq.com" src="img/logo32White.png"/></a>
-            <div class="nav-collapse collapse">
-                <ul class="nav pull-right">
-                    <% if (session.user) { %>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" data-toggle="dropdown"><%= session.user.email %> <strong class="caret"></strong></a>
-                        <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-                            <div id="userLogout" class="control-group">
-                                <button type="submit" id="userLogoutSend" class="btn">Logout</button>
+            <a class="navbar-brand" href="" style="margin: 4px 10px 0 0; padding: 0"><img alt="mytasq.com" src="img/logoBlackBlue40x34.png"/></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class=""><a id="new_task" href="#">New Task</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tasks <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a id="mt-nav-done-by-me" href="#">Done by me</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Nav header</li>
+                        <li><a href="#">Separated link</a></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+                <li><a href="#about">Task</a></li>
+                <li><a href="#about">Team</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <% if (session.user) { %>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown"><%= session.user.email %> <strong class="caret"></strong></a>
+                    <div class="dropdown-menu" style="padding: 15px; padding-bottom: 15px;">
+                        <div id="userLogout" class="control-group">
+                            <button type="submit" id="userLogoutSend" class="btn">Logout</button>
+                        </div>
+                    </div>
+                </li>
+                <% } else { %>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">Login <strong class="caret"></strong></a>
+                    <div class="dropdown-menu" style="padding: 15px; padding-bottom: 15px;">
+                        <iframe id="userLoginDummyIframes" src="/dummy" name="userLoginDummyIframe" style="display: none;"></iframe>
+                        <form action="/dummy" id="userLoginForm" class="form-inline" method="post" target="userLoginDummyIframe">
+                            <div id="userLoginEmailCG" class="control-group error">
+                                <input name="email" id="userLoginEmail" type="text" class="input-medium" placeholder="Email" style="width: 100%">
                             </div>
-                        </div>
-                    </li>
-                    <% } else { %>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">Login <strong class="caret"></strong></a>
-                        <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-                            <iframe id="userLoginDummyIframes" src="/dummy" name="userLoginDummyIframe" style="display: none;"></iframe>
-                            <form action="/dummy" id="userLoginForm" class="form-inline" method="post" target="userLoginDummyIframe">
-                                <div id="userLoginEmailCG" class="control-group error">
-                                    <input name="email" id="userLoginEmail" type="text" class="input-medium" placeholder="Email">
+                            <div id="userLoginPasswordCG" class="control-group error">
+                                <input name="password" id="userLoginPassword" type="password" class="input-medium" placeholder="Password" style="width: 100%">
+                            </div>
+                            <div class="btn-toolbar" role="toolbar" style="white-space: nowrap;">
+                                <div class="btn-group">
+                                    <span style="display: inline-block">
+                                        <button type="submit" id="userLoginSend" class="btn btn-primary">Sign in</button>
+                                        <button class="btn btn-default" data-toggle="modal" data-target="#userRegister">Register</button>
+                                    </span>
                                 </div>
-                                <div id="userLoginPasswordCG" class="control-group error">
-                                    <input name="password" id="userLoginPassword" type="password" class="input-medium" placeholder="Password">
-                                </div>
-                                <div class="control-group">
-                                    <button type="submit" id="userLoginSend" class="btn">Sign in</button>
-                                    <button class="btn" data-toggle="modal" data-target="#userRegister">Register</button>
-                                </div>
-                            </form>
-                        </div>
-                    </li>
-                    <% } %>
-                </ul>
-                <ul class="nav">
-                    <li class="active"><a id="new_task" href="#">New Task</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tasks <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                          <li><a id="mt-nav-done-by-me" href="#">Done by me</a></li>
-                          <li><a href="#">Another action</a></li>
-                          <li><a href="#">Something else here</a></li>
-                          <li class="divider"></li>
-                          <li class="nav-header">Nav header</li>
-                          <li><a href="#">Separated link</a></li>
-                          <li><a href="#">One more separated link</a></li>
-                        </ul>
-                      </li>
-                    <li><a href="#about">Task</a></li>
-                    <li><a href="#about">Team</a></li>
-                    <li><a href="#about">About</a></li>
-                </ul>
-            </div>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+                <% } %>
+            </ul>
         </div>
     </div>
 </div>
-
-<div id="mt-main-row" class="container-fluid" style="position: absolute; overflow: hidden; top: 60px; right: 0; bottom: 60px; left: 0;">
-    <div class="row-fluid">
-        <div id="mt-left-nav-container" class="well span3" >
+<div id="mt-main-row" class="container" style="position: absolute; overflow: hidden; top: 60px; right: 0; bottom: 60px; left: 0;">
+    <div class="row">
+        <div id="mt-left-nav-container" class="well col-sm-3" >
             <% print(templates('leftNav'))%>
         </div>
-        <div id="mt-middle-container" class="span7" style="position:relative; padding: 0 10px 0 10px;">
+        <div id="mt-middle-container" class="col-sm-7" style="position:relative; padding: 0 10px 0 10px;">
             <% if(tasks){ print(templates('tasks', {tasks:tasks})); }%>
         </div>
-        <div id="mt-right-nav-container" class="mt-right-nav span2" style="position:relative;">
-            <div class="row-fluid">
-                <div class="span12">
+        <div id="mt-right-nav-container" class="mt-right-nav col-sm-2" style="position:relative;">
+            <div class="row">
+                <div class="col-sm-12">
                     <h2>Heading</h2>
                     <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
                     <p><a class="btn" href="#">View details &raquo;</a></p>
@@ -81,7 +84,6 @@
         </div>
     </div>
 </div>
-
 <div id="mt-footer" style="overflow: hidden; position: absolute; right: 0; bottom: 0; left: 0; margin: 0 10px 0 10px; height: 42px;">
     <hr style="margin: 0px 0px 10px 0px;">
     <footer>
@@ -89,41 +91,44 @@
         <div style="position: absolute; top: 10px; right: 5px;"><p>&copy; MyTasq.com 2013</p></div>
     </footer>
 </div>
-
-<div id="userRegister" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Registration</h3>
-    </div>
-    <div class="modal-body">
-        <iframe id="userRegisterDummyIframes" src="/dummy" name="userRegisterDummyIframe" style="display: none;"></iframe>
-        <form action="/dummy" method="post" target="userRegisterDummyIframe" id="userRegisterForm" class="form-horizontal">
-            <div id="userRegisterEmailCG" class="control-group error">
-                <label class="control-label" for="userRegisterEmail">Email</label>
-                <div class="controls">
-                    <input name="inputEmail" type="text" id="userRegisterEmail" placeholder="Email">
-                </div>
+<div id="userRegister" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Registration</h3>
             </div>
-            <div id="userRegisterPasswordCG" class="control-group error">
-                <label class="control-label" for="userRegisterPassword">Password</label>
-                <div class="controls">
-                    <input type="password" id="userRegisterPassword" placeholder="Password">
-                </div>
+            <div class="modal-body">
+                <iframe id="userRegisterDummyIframes" src="/dummy" name="userRegisterDummyIframe" style="display: none;"></iframe>
+                <form action="/dummy" method="post" target="userRegisterDummyIframe" id="userRegisterForm" class="form-horizontal">
+                    <div id="userRegisterEmailCG" class="control-group error">
+                        <label class="control-label" for="userRegisterEmail">Email</label>
+                        <div class="controls">
+                            <input name="inputEmail" type="text" id="userRegisterEmail" placeholder="Email">
+                        </div>
+                    </div>
+                    <div id="userRegisterPasswordCG" class="control-group error">
+                        <label class="control-label" for="userRegisterPassword">Password</label>
+                        <div class="controls">
+                            <input type="password" id="userRegisterPassword" placeholder="Password">
+                        </div>
+                    </div>
+                    <div id="userRegisterRePasswordCG" class="control-group error">
+                        <label class="control-label" for="userRegisterRePassword">Repeat password</label>
+                        <div class="controls">
+                            <input type="password" id="userRegisterRePassword" placeholder="Repeat password">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="submit" id="userRegisterSend" class="btn btn-primary">Register</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div id="userRegisterRePasswordCG" class="control-group error">
-                <label class="control-label" for="userRegisterRePassword">Repeat password</label>
-                <div class="controls">
-                    <input type="password" id="userRegisterRePassword" placeholder="Repeat password">
-                </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
             </div>
-            <div class="control-group">
-                <div class="controls">
-                    <button type="submit" id="userRegisterSend" class="btn btn-primary">Register</button>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
     </div>
 </div>
