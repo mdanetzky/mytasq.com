@@ -53,6 +53,22 @@ module.exports = exports = {
                             }
                         });
                         break;
+                    case 'tasks-public':
+                        Task.find({public: true})
+                                .or([{done: null}, {done: false}])
+                                .or([{deleted: null}, {deleted: false}])
+                                .sort('-lastModifiedTime')
+                                .skip(skip)
+                                .limit(pageSize)
+                                .lean()
+                                .exec(function(err, data) {
+                            if (!err) {
+                                callback(err, backboneMongoose.convert(data));
+                            } else {
+                                callback(err, data);
+                            }
+                        });
+                        break;
                     case 'tasks-of-task':
                         if (context.data.query.parentTaskId) {
                             Task.find({parentTask: context.data.query.parentTaskId, done: false})
@@ -80,9 +96,6 @@ module.exports = exports = {
         } else {
             callback('getTasks: Missing query!');
         }
-    },
-    publicTasks: function(context, callback) {
-        Task.find({public: true}).sort('-lastModifiedTime').limit(5).lean().exec(callback);
     },
     userTasks: function(context, callback) {
         if (context.user) {
