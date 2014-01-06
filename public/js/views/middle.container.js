@@ -18,7 +18,7 @@ define(['underscore', 'jquery', 'views/scrollable', 'views/tasks'], function(_, 
             this.options.app.on('createTask', this.createTask, this);
         },
         barOptions: {
-            railoffset: {left: 12}
+            railoffset: {left: 8}
         },
         createTaskListFromHTML: function(listElementSelector) {
             var newTaskList = new TasksView({
