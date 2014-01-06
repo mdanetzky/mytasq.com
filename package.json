@@ -14,6 +14,7 @@
     "async": "*",
     "express": "3.x",
     "validator": "*",
+    "sanitize-caja": "*",
     "socket.io": "*",
     "mongoose": "*",
     "connect-mongo": "*",
