@@ -7,7 +7,7 @@
 
 var Task = require('../models/task')
         , mongoose = require('mongoose')
-        , sanitize = require('validator').sanitize
+        , sanitize = require('sanitize-caja')
         , backboneMongoose = require('../lib/mt.backbone.mongoose')
         , log = require('../lib/mt.logger')(module)
         , pageSize = 15
@@ -110,10 +110,10 @@ module.exports = exports = {
 
         var self = this;
         if (context.data.model.title) {
-            context.data.model.title = sanitize(context.data.model.title).xss().trim();
+            context.data.model.title = sanitize(context.data.model.title).trim();
         }
         if (context.data.model.text) {
-            context.data.model.text = sanitize(context.data.model.text).xss().trim();
+            context.data.model.text = sanitize(context.data.model.text).trim();
         }
         if (typeof context.data.model.deleted === 'boolean') {
             if (context.data.model.deleted) {
