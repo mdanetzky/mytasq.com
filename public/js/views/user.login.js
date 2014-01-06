@@ -11,7 +11,8 @@ define(['mt.backbone.sio', 'underscore', 'mt.util', 'jquery', 'mt.spinner', 'mt.
         // User input indicator
         formChanged: false,
         el: "#userLoginForm",
-        initialize: function() {
+        initialize: function(options) {
+            this.options = options;
             this.copyAndValidate();
         },
         events: {
