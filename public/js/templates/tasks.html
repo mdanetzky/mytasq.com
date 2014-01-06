@@ -1,8 +1,11 @@
 <div id="<%=taskListId%>" style="position: relative;">
-<!--    <div id="task-new" class="row-fluid mt.task"></div>-->
-    <% for(var i in tasks) { %>
+    <% var lastDate = null;
+        for(var i in tasks) { %>
     <div id="task-<%=tasks[i].id %>" class="row-fluid">
         <% print(templates("task", {task:tasks[i]})); %>
     </div>
+    <% if(!lastDate){
+        lastDate = tasks[i].lastModifiedTime
+        } %>
     <% } %>
 </div>
