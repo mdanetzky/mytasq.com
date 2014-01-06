@@ -48,9 +48,6 @@ module.exports = exports = {
                     }
                     callback();
                 });
-            },
-            function(callback) {
-                callback();
             }
         ], function(err) {
             // This is the final callback.
