@@ -1,6 +1,6 @@
 {
     "author": "Matthias Danetzky <matthias.danetzky@gmail.com>",
-    "url": "http://192.168.0.218",
+    "url": "http://mytasq.com",
     "staticPathRelative": "public",
     "staticPathAbsolute": "",
     "loglevel": "info",

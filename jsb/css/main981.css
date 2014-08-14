@@ -1,0 +1,17 @@
+
+*{ font: 14px Helvetica, Sans, Arial, sans-serif; margin: 0 0 0 0; }
+.user {	height: 80px; width: 200px; float: left; }
+.user_pic { margin: 20px 0 0 0; height: 40px; width: 40px; float: left; }
+.username { margin: 20px 0 0 0; height: 40px; width: 160px; float: left; 	}
+.login { font-size: 30px; font-weight:bold; position: absolute; bottom:0; }
+.outer_container { width: 981px; margin-left:auto; margin-right:auto; }
+.container { margin: 0 0 0 0; width: 981px; float: left; }
+.left_column { float:left; width: 200px; }
+.main_column { float:left; }
+.topline { height: 35px; background: #4169E1; border-bottom: 1px solid #aabdf0; }
+.topline_container { height:35px; width:981px; margin-left:auto; margin-right:auto; }
+.topline_logo { vertical-align:top; margin:0px 0 0px -3px; padding-top:0px; padding-left: 0px; height: 35px; width: 200px; }
+.dropdown { width:0; height:0; z-index:1000; overflow:hidden; position:absolute; }
+.dropdown_parent { position:relative; }
+.dropdown_content {  z-index:999; }
+.user_dropdown { width:200px; height:300px; border:5px solid #aabdf0; background-color:#ffffff; padding:5px}

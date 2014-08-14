@@ -1,0 +1,972 @@
+2013-10-20 23:53:01 - info: app.js: #################################
+2013-10-20 23:53:01 - info: app.js: START: mytasq.com server instance
+2013-10-20 23:53:01 - info: mt.templates.js: Precompiling templates in /home/mytasq/mytasq.com/public/js/templates
+2013-10-20 23:53:01 - info: mt.templates.js: Precompiling templates in /home/mytasq/mytasq.com/views
+2013-10-20 23:53:01 - error: uncaughtException: Cannot find module 'express/node_modules/connect/node_modules/cookie' 
+{ date: 'Sun Oct 20 2013 23:53:01 GMT+0200 (CEST)',
+  process: 
+   { pid: 2680,
+     uid: 1000,
+     gid: 1000,
+     cwd: '/home/mytasq/mytasq.com',
+     execPath: '/home/mytasq/.nvm/v0.10.18/bin/node',
+     version: 'v0.10.18',
+     argv: [ 'node', '/home/mytasq/mytasq.com/app.js' ],
+     memoryUsage: { rss: 35155968, heapTotal: 31139328, heapUsed: 16402072 } },
+  os: 
+   { loadavg: [ 2.77099609375, 2.90625, 2.89306640625 ],
+     uptime: 2688948.930970933 },
+  trace: 
+   [ { column: 15,
+       file: 'module.js',
+       function: 'Function.Module._resolveFilename',
+       line: 338,
+       method: 'Module._resolveFilename',
+       native: false },
+     { column: 25,
+       file: 'module.js',
+       function: 'Function.Module._load',
+       line: 280,
+       method: 'Module._load',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'Module.require',
+       line: 364,
+       method: 'require',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'require',
+       line: 380,
+       method: null,
+       native: false },
+     { column: 20,
+       file: '/home/mytasq/mytasq.com/lib/mt.socket.js',
+       function: '',
+       line: 10,
+       method: null,
+       native: false },
+     { column: 26,
+       file: 'module.js',
+       function: 'Module._compile',
+       line: 456,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'module.js',
+       function: 'Object.Module._extensions..js',
+       line: 474,
+       method: 'Module._extensions..js',
+       native: false },
+     { column: 32,
+       file: 'module.js',
+       function: 'Module.load',
+       line: 356,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'module.js',
+       function: 'Function.Module._load',
+       line: 312,
+       method: 'Module._load',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'Module.require',
+       line: 364,
+       method: 'require',
+       native: false } ],
+  stack: 
+   [ 'Error: Cannot find module \'express/node_modules/connect/node_modules/cookie\'',
+     '    at Function.Module._resolveFilename (module.js:338:15)',
+     '    at Function.Module._load (module.js:280:25)',
+     '    at Module.require (module.js:364:17)',
+     '    at require (module.js:380:17)',
+     '    at Object.<anonymous> (/home/mytasq/mytasq.com/lib/mt.socket.js:10:20)',
+     '    at Module._compile (module.js:456:26)',
+     '    at Object.Module._extensions..js (module.js:474:10)',
+     '    at Module.load (module.js:356:32)',
+     '    at Function.Module._load (module.js:312:12)',
+     '    at Module.require (module.js:364:17)' ] }
+2013-10-20 23:53:01 - info: app.js: Express server listening on port 80
+2013-10-20 23:53:01 - info: mt.templates.js: Compiling template: leftNav.html
+2013-10-20 23:53:01 - info: mt.templates.js: Template 'leftNav' compiled and cached
+2013-10-20 23:53:01 - info: mt.templates.js: Compiling template: message.box.html
+2013-10-20 23:53:01 - info: mt.templates.js: Template 'message.box' compiled and cached
+2013-10-20 23:53:01 - info: mt.templates.js: Compiling template: task.html
+2013-10-20 23:53:01 - info: mt.templates.js: Template 'task' compiled and cached
+2013-10-20 23:53:01 - info: mt.templates.js: Compiling template: tasks.html
+2013-10-20 23:53:01 - info: mt.templates.js: Template 'tasks' compiled and cached
+2013-10-20 23:53:01 - info: mt.templates.js: Compiling template: teams.html
+2013-10-20 23:53:01 - info: mt.templates.js: Template 'teams' compiled and cached
+2013-10-20 23:53:01 - info: mt.templates.js: Compiling template: content.html
+2013-10-20 23:53:01 - info: mt.templates.js: Template 'content' compiled and cached
+2013-10-20 23:53:01 - info: mt.templates.js: Compiling template: head.html
+2013-10-20 23:53:01 - info: mt.templates.js: Template 'head' compiled and cached
+2013-10-20 23:53:01 - info: mt.templates.js: Compiling template: index.html
+2013-10-20 23:53:01 - info: mt.templates.js: Template 'index' compiled and cached
+2013-10-21 01:27:26 - info: app.js: #################################
+2013-10-21 01:27:26 - info: app.js: START: mytasq.com server instance
+2013-10-21 01:27:26 - info: mt.templates.js: Precompiling templates in /home/mytasq/mytasq.com/public/js/templates
+2013-10-21 01:27:26 - info: mt.templates.js: Precompiling templates in /home/mytasq/mytasq.com/views
+2013-10-21 01:27:27 - error: uncaughtException: Cannot find module 'express/node_modules/connect/node_modules/cookie' 
+{ date: 'Mon Oct 21 2013 01:27:27 GMT+0200 (CEST)',
+  process: 
+   { pid: 3309,
+     uid: 1000,
+     gid: 1000,
+     cwd: '/home/mytasq/mytasq.com',
+     execPath: '/home/mytasq/.nvm/v0.10.18/bin/node',
+     version: 'v0.10.18',
+     argv: [ 'node', '/home/mytasq/mytasq.com/app.js' ],
+     memoryUsage: { rss: 35155968, heapTotal: 31139328, heapUsed: 16521376 } },
+  os: 
+   { loadavg: [ 3.3359375, 2.9609375, 2.8759765625 ],
+     uptime: 2694614.365189544 },
+  trace: 
+   [ { column: 15,
+       file: 'module.js',
+       function: 'Function.Module._resolveFilename',
+       line: 338,
+       method: 'Module._resolveFilename',
+       native: false },
+     { column: 25,
+       file: 'module.js',
+       function: 'Function.Module._load',
+       line: 280,
+       method: 'Module._load',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'Module.require',
+       line: 364,
+       method: 'require',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'require',
+       line: 380,
+       method: null,
+       native: false },
+     { column: 20,
+       file: '/home/mytasq/mytasq.com/lib/mt.socket.js',
+       function: '',
+       line: 10,
+       method: null,
+       native: false },
+     { column: 26,
+       file: 'module.js',
+       function: 'Module._compile',
+       line: 456,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'module.js',
+       function: 'Object.Module._extensions..js',
+       line: 474,
+       method: 'Module._extensions..js',
+       native: false },
+     { column: 32,
+       file: 'module.js',
+       function: 'Module.load',
+       line: 356,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'module.js',
+       function: 'Function.Module._load',
+       line: 312,
+       method: 'Module._load',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'Module.require',
+       line: 364,
+       method: 'require',
+       native: false } ],
+  stack: 
+   [ 'Error: Cannot find module \'express/node_modules/connect/node_modules/cookie\'',
+     '    at Function.Module._resolveFilename (module.js:338:15)',
+     '    at Function.Module._load (module.js:280:25)',
+     '    at Module.require (module.js:364:17)',
+     '    at require (module.js:380:17)',
+     '    at Object.<anonymous> (/home/mytasq/mytasq.com/lib/mt.socket.js:10:20)',
+     '    at Module._compile (module.js:456:26)',
+     '    at Object.Module._extensions..js (module.js:474:10)',
+     '    at Module.load (module.js:356:32)',
+     '    at Function.Module._load (module.js:312:12)',
+     '    at Module.require (module.js:364:17)' ] }
+2013-10-21 01:27:27 - info: app.js: Express server listening on port 80
+2013-10-21 01:27:27 - info: mt.templates.js: Compiling template: content.html
+2013-10-21 01:27:27 - info: mt.templates.js: Template 'content' compiled and cached
+2013-10-21 01:27:27 - info: mt.templates.js: Compiling template: head.html
+2013-10-21 01:27:27 - info: mt.templates.js: Template 'head' compiled and cached
+2013-10-21 01:27:27 - info: mt.templates.js: Compiling template: index.html
+2013-10-21 01:27:27 - info: mt.templates.js: Template 'index' compiled and cached
+2013-10-21 01:27:27 - info: mt.templates.js: Compiling template: leftNav.html
+2013-10-21 01:27:27 - info: mt.templates.js: Template 'leftNav' compiled and cached
+2013-10-21 01:27:27 - info: mt.templates.js: Compiling template: message.box.html
+2013-10-21 01:27:27 - info: mt.templates.js: Template 'message.box' compiled and cached
+2013-10-21 01:27:27 - info: mt.templates.js: Compiling template: task.html
+2013-10-21 01:27:27 - info: mt.templates.js: Template 'task' compiled and cached
+2013-10-21 01:27:27 - info: mt.templates.js: Compiling template: tasks.html
+2013-10-21 01:27:27 - info: mt.templates.js: Template 'tasks' compiled and cached
+2013-10-21 01:27:27 - info: mt.templates.js: Compiling template: teams.html
+2013-10-21 01:27:27 - info: mt.templates.js: Template 'teams' compiled and cached
+2013-10-21 03:01:35 - info: app.js: #################################
+2013-10-21 03:01:35 - info: app.js: START: mytasq.com server instance
+2013-10-21 03:01:35 - info: mt.templates.js: Precompiling templates in /home/mytasq/mytasq.com/public/js/templates
+2013-10-21 03:01:35 - info: mt.templates.js: Precompiling templates in /home/mytasq/mytasq.com/views
+2013-10-21 03:01:35 - error: uncaughtException: Cannot find module 'express/node_modules/connect/node_modules/cookie' 
+{ date: 'Mon Oct 21 2013 03:01:35 GMT+0200 (CEST)',
+  process: 
+   { pid: 3794,
+     uid: 1000,
+     gid: 1000,
+     cwd: '/home/mytasq/mytasq.com',
+     execPath: '/home/mytasq/.nvm/v0.10.18/bin/node',
+     version: 'v0.10.18',
+     argv: [ 'node', '/home/mytasq/mytasq.com/app.js' ],
+     memoryUsage: { rss: 34476032, heapTotal: 31139328, heapUsed: 16687288 } },
+  os: 
+   { loadavg: [ 2.7333984375, 2.7919921875, 2.85205078125 ],
+     uptime: 2700262.522024186 },
+  trace: 
+   [ { column: 15,
+       file: 'module.js',
+       function: 'Function.Module._resolveFilename',
+       line: 338,
+       method: 'Module._resolveFilename',
+       native: false },
+     { column: 25,
+       file: 'module.js',
+       function: 'Function.Module._load',
+       line: 280,
+       method: 'Module._load',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'Module.require',
+       line: 364,
+       method: 'require',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'require',
+       line: 380,
+       method: null,
+       native: false },
+     { column: 20,
+       file: '/home/mytasq/mytasq.com/lib/mt.socket.js',
+       function: '',
+       line: 10,
+       method: null,
+       native: false },
+     { column: 26,
+       file: 'module.js',
+       function: 'Module._compile',
+       line: 456,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'module.js',
+       function: 'Object.Module._extensions..js',
+       line: 474,
+       method: 'Module._extensions..js',
+       native: false },
+     { column: 32,
+       file: 'module.js',
+       function: 'Module.load',
+       line: 356,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'module.js',
+       function: 'Function.Module._load',
+       line: 312,
+       method: 'Module._load',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'Module.require',
+       line: 364,
+       method: 'require',
+       native: false } ],
+  stack: 
+   [ 'Error: Cannot find module \'express/node_modules/connect/node_modules/cookie\'',
+     '    at Function.Module._resolveFilename (module.js:338:15)',
+     '    at Function.Module._load (module.js:280:25)',
+     '    at Module.require (module.js:364:17)',
+     '    at require (module.js:380:17)',
+     '    at Object.<anonymous> (/home/mytasq/mytasq.com/lib/mt.socket.js:10:20)',
+     '    at Module._compile (module.js:456:26)',
+     '    at Object.Module._extensions..js (module.js:474:10)',
+     '    at Module.load (module.js:356:32)',
+     '    at Function.Module._load (module.js:312:12)',
+     '    at Module.require (module.js:364:17)' ] }
+2013-10-21 03:01:35 - info: app.js: Express server listening on port 80
+2013-10-21 03:01:35 - info: mt.templates.js: Compiling template: leftNav.html
+2013-10-21 03:01:35 - info: mt.templates.js: Template 'leftNav' compiled and cached
+2013-10-21 03:01:35 - info: mt.templates.js: Compiling template: message.box.html
+2013-10-21 03:01:35 - info: mt.templates.js: Template 'message.box' compiled and cached
+2013-10-21 03:01:35 - info: mt.templates.js: Compiling template: task.html
+2013-10-21 03:01:35 - info: mt.templates.js: Template 'task' compiled and cached
+2013-10-21 03:01:35 - info: mt.templates.js: Compiling template: tasks.html
+2013-10-21 03:01:35 - info: mt.templates.js: Template 'tasks' compiled and cached
+2013-10-21 03:01:35 - info: mt.templates.js: Compiling template: teams.html
+2013-10-21 03:01:35 - info: mt.templates.js: Template 'teams' compiled and cached
+2013-10-21 03:01:35 - info: mt.templates.js: Compiling template: content.html
+2013-10-21 03:01:35 - info: mt.templates.js: Template 'content' compiled and cached
+2013-10-21 03:01:35 - info: mt.templates.js: Compiling template: head.html
+2013-10-21 03:01:35 - info: mt.templates.js: Template 'head' compiled and cached
+2013-10-21 03:01:35 - info: mt.templates.js: Compiling template: index.html
+2013-10-21 03:01:35 - info: mt.templates.js: Template 'index' compiled and cached
+2013-10-21 04:46:42 - info: app.js: #################################
+2013-10-21 04:46:43 - info: app.js: START: mytasq.com server instance
+2013-10-21 04:46:43 - info: mt.templates.js: Precompiling templates in /home/mytasq/mytasq.com/public/js/templates
+2013-10-21 04:46:43 - info: mt.templates.js: Precompiling templates in /home/mytasq/mytasq.com/views
+2013-10-21 04:46:43 - error: uncaughtException: Cannot find module 'express/node_modules/connect/node_modules/cookie' 
+{ date: 'Mon Oct 21 2013 04:46:43 GMT+0200 (CEST)',
+  process: 
+   { pid: 4036,
+     uid: 1000,
+     gid: 1000,
+     cwd: '/home/mytasq/mytasq.com',
+     execPath: '/home/mytasq/.nvm/v0.10.18/bin/node',
+     version: 'v0.10.18',
+     argv: [ 'node', '/home/mytasq/mytasq.com/app.js' ],
+     memoryUsage: { rss: 34496512, heapTotal: 31139328, heapUsed: 16734472 } },
+  os: 
+   { loadavg: [ 2.5595703125, 2.89697265625, 2.9951171875 ],
+     uptime: 2706570.509808657 },
+  trace: 
+   [ { column: 15,
+       file: 'module.js',
+       function: 'Function.Module._resolveFilename',
+       line: 338,
+       method: 'Module._resolveFilename',
+       native: false },
+     { column: 25,
+       file: 'module.js',
+       function: 'Function.Module._load',
+       line: 280,
+       method: 'Module._load',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'Module.require',
+       line: 364,
+       method: 'require',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'require',
+       line: 380,
+       method: null,
+       native: false },
+     { column: 20,
+       file: '/home/mytasq/mytasq.com/lib/mt.socket.js',
+       function: '',
+       line: 10,
+       method: null,
+       native: false },
+     { column: 26,
+       file: 'module.js',
+       function: 'Module._compile',
+       line: 456,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'module.js',
+       function: 'Object.Module._extensions..js',
+       line: 474,
+       method: 'Module._extensions..js',
+       native: false },
+     { column: 32,
+       file: 'module.js',
+       function: 'Module.load',
+       line: 356,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'module.js',
+       function: 'Function.Module._load',
+       line: 312,
+       method: 'Module._load',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'Module.require',
+       line: 364,
+       method: 'require',
+       native: false } ],
+  stack: 
+   [ 'Error: Cannot find module \'express/node_modules/connect/node_modules/cookie\'',
+     '    at Function.Module._resolveFilename (module.js:338:15)',
+     '    at Function.Module._load (module.js:280:25)',
+     '    at Module.require (module.js:364:17)',
+     '    at require (module.js:380:17)',
+     '    at Object.<anonymous> (/home/mytasq/mytasq.com/lib/mt.socket.js:10:20)',
+     '    at Module._compile (module.js:456:26)',
+     '    at Object.Module._extensions..js (module.js:474:10)',
+     '    at Module.load (module.js:356:32)',
+     '    at Function.Module._load (module.js:312:12)',
+     '    at Module.require (module.js:364:17)' ] }
+2013-10-21 04:46:43 - info: app.js: Express server listening on port 80
+2013-10-21 04:46:43 - info: mt.templates.js: Compiling template: leftNav.html
+2013-10-21 04:46:43 - info: mt.templates.js: Template 'leftNav' compiled and cached
+2013-10-21 04:46:43 - info: mt.templates.js: Compiling template: message.box.html
+2013-10-21 04:46:43 - info: mt.templates.js: Template 'message.box' compiled and cached
+2013-10-21 04:46:43 - info: mt.templates.js: Compiling template: task.html
+2013-10-21 04:46:43 - info: mt.templates.js: Template 'task' compiled and cached
+2013-10-21 04:46:43 - info: mt.templates.js: Compiling template: tasks.html
+2013-10-21 04:46:43 - info: mt.templates.js: Template 'tasks' compiled and cached
+2013-10-21 04:46:43 - info: mt.templates.js: Compiling template: teams.html
+2013-10-21 04:46:43 - info: mt.templates.js: Template 'teams' compiled and cached
+2013-10-21 04:46:43 - info: mt.templates.js: Compiling template: content.html
+2013-10-21 04:46:43 - info: mt.templates.js: Template 'content' compiled and cached
+2013-10-21 04:46:43 - info: mt.templates.js: Compiling template: head.html
+2013-10-21 04:46:43 - info: mt.templates.js: Template 'head' compiled and cached
+2013-10-21 04:46:43 - info: mt.templates.js: Compiling template: index.html
+2013-10-21 04:46:43 - info: mt.templates.js: Template 'index' compiled and cached
+2013-10-21 06:26:18 - info: app.js: #################################
+2013-10-21 06:26:18 - info: app.js: START: mytasq.com server instance
+2013-10-21 06:26:18 - info: mt.templates.js: Precompiling templates in /home/mytasq/mytasq.com/public/js/templates
+2013-10-21 06:26:18 - info: mt.templates.js: Precompiling templates in /home/mytasq/mytasq.com/views
+2013-10-21 06:26:19 - error: uncaughtException: Cannot find module 'express/node_modules/connect/node_modules/cookie' 
+{ date: 'Mon Oct 21 2013 06:26:19 GMT+0200 (CEST)',
+  process: 
+   { pid: 4534,
+     uid: 1000,
+     gid: 1000,
+     cwd: '/home/mytasq/mytasq.com',
+     execPath: '/home/mytasq/.nvm/v0.10.18/bin/node',
+     version: 'v0.10.18',
+     argv: [ 'node', '/home/mytasq/mytasq.com/app.js' ],
+     memoryUsage: { rss: 34631680, heapTotal: 31139328, heapUsed: 16581704 } },
+  os: 
+   { loadavg: [ 3.212890625, 3.021484375, 2.90478515625 ],
+     uptime: 2712546.340748058 },
+  trace: 
+   [ { column: 15,
+       file: 'module.js',
+       function: 'Function.Module._resolveFilename',
+       line: 338,
+       method: 'Module._resolveFilename',
+       native: false },
+     { column: 25,
+       file: 'module.js',
+       function: 'Function.Module._load',
+       line: 280,
+       method: 'Module._load',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'Module.require',
+       line: 364,
+       method: 'require',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'require',
+       line: 380,
+       method: null,
+       native: false },
+     { column: 20,
+       file: '/home/mytasq/mytasq.com/lib/mt.socket.js',
+       function: '',
+       line: 10,
+       method: null,
+       native: false },
+     { column: 26,
+       file: 'module.js',
+       function: 'Module._compile',
+       line: 456,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'module.js',
+       function: 'Object.Module._extensions..js',
+       line: 474,
+       method: 'Module._extensions..js',
+       native: false },
+     { column: 32,
+       file: 'module.js',
+       function: 'Module.load',
+       line: 356,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'module.js',
+       function: 'Function.Module._load',
+       line: 312,
+       method: 'Module._load',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'Module.require',
+       line: 364,
+       method: 'require',
+       native: false } ],
+  stack: 
+   [ 'Error: Cannot find module \'express/node_modules/connect/node_modules/cookie\'',
+     '    at Function.Module._resolveFilename (module.js:338:15)',
+     '    at Function.Module._load (module.js:280:25)',
+     '    at Module.require (module.js:364:17)',
+     '    at require (module.js:380:17)',
+     '    at Object.<anonymous> (/home/mytasq/mytasq.com/lib/mt.socket.js:10:20)',
+     '    at Module._compile (module.js:456:26)',
+     '    at Object.Module._extensions..js (module.js:474:10)',
+     '    at Module.load (module.js:356:32)',
+     '    at Function.Module._load (module.js:312:12)',
+     '    at Module.require (module.js:364:17)' ] }
+2013-10-21 06:26:19 - info: app.js: Express server listening on port 80
+2013-10-21 06:26:19 - info: mt.templates.js: Compiling template: leftNav.html
+2013-10-21 06:26:19 - info: mt.templates.js: Template 'leftNav' compiled and cached
+2013-10-21 06:26:19 - info: mt.templates.js: Compiling template: message.box.html
+2013-10-21 06:26:19 - info: mt.templates.js: Template 'message.box' compiled and cached
+2013-10-21 06:26:19 - info: mt.templates.js: Compiling template: task.html
+2013-10-21 06:26:19 - info: mt.templates.js: Template 'task' compiled and cached
+2013-10-21 06:26:19 - info: mt.templates.js: Compiling template: tasks.html
+2013-10-21 06:26:19 - info: mt.templates.js: Template 'tasks' compiled and cached
+2013-10-21 06:26:19 - info: mt.templates.js: Compiling template: teams.html
+2013-10-21 06:26:19 - info: mt.templates.js: Template 'teams' compiled and cached
+2013-10-21 06:26:19 - info: mt.templates.js: Compiling template: content.html
+2013-10-21 06:26:19 - info: mt.templates.js: Template 'content' compiled and cached
+2013-10-21 06:26:19 - info: mt.templates.js: Compiling template: head.html
+2013-10-21 06:26:19 - info: mt.templates.js: Template 'head' compiled and cached
+2013-10-21 06:26:19 - info: mt.templates.js: Compiling template: index.html
+2013-10-21 06:26:19 - info: mt.templates.js: Template 'index' compiled and cached
+2013-10-21 08:02:17 - info: app.js: #################################
+2013-10-21 08:02:17 - info: app.js: START: mytasq.com server instance
+2013-10-21 08:02:17 - info: mt.templates.js: Precompiling templates in /home/mytasq/mytasq.com/public/js/templates
+2013-10-21 08:02:17 - info: mt.templates.js: Precompiling templates in /home/mytasq/mytasq.com/views
+2013-10-21 08:02:17 - error: uncaughtException: Cannot find module 'express/node_modules/connect/node_modules/cookie' 
+{ date: 'Mon Oct 21 2013 08:02:17 GMT+0200 (CEST)',
+  process: 
+   { pid: 5423,
+     uid: 1000,
+     gid: 1000,
+     cwd: '/home/mytasq/mytasq.com',
+     execPath: '/home/mytasq/.nvm/v0.10.18/bin/node',
+     version: 'v0.10.18',
+     argv: [ 'node', '/home/mytasq/mytasq.com/app.js' ],
+     memoryUsage: { rss: 35168256, heapTotal: 31139328, heapUsed: 16400992 } },
+  os: 
+   { loadavg: [ 2.798828125, 3.09912109375, 3.083984375 ],
+     uptime: 2718305.015984712 },
+  trace: 
+   [ { column: 15,
+       file: 'module.js',
+       function: 'Function.Module._resolveFilename',
+       line: 338,
+       method: 'Module._resolveFilename',
+       native: false },
+     { column: 25,
+       file: 'module.js',
+       function: 'Function.Module._load',
+       line: 280,
+       method: 'Module._load',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'Module.require',
+       line: 364,
+       method: 'require',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'require',
+       line: 380,
+       method: null,
+       native: false },
+     { column: 20,
+       file: '/home/mytasq/mytasq.com/lib/mt.socket.js',
+       function: '',
+       line: 10,
+       method: null,
+       native: false },
+     { column: 26,
+       file: 'module.js',
+       function: 'Module._compile',
+       line: 456,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'module.js',
+       function: 'Object.Module._extensions..js',
+       line: 474,
+       method: 'Module._extensions..js',
+       native: false },
+     { column: 32,
+       file: 'module.js',
+       function: 'Module.load',
+       line: 356,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'module.js',
+       function: 'Function.Module._load',
+       line: 312,
+       method: 'Module._load',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'Module.require',
+       line: 364,
+       method: 'require',
+       native: false } ],
+  stack: 
+   [ 'Error: Cannot find module \'express/node_modules/connect/node_modules/cookie\'',
+     '    at Function.Module._resolveFilename (module.js:338:15)',
+     '    at Function.Module._load (module.js:280:25)',
+     '    at Module.require (module.js:364:17)',
+     '    at require (module.js:380:17)',
+     '    at Object.<anonymous> (/home/mytasq/mytasq.com/lib/mt.socket.js:10:20)',
+     '    at Module._compile (module.js:456:26)',
+     '    at Object.Module._extensions..js (module.js:474:10)',
+     '    at Module.load (module.js:356:32)',
+     '    at Function.Module._load (module.js:312:12)',
+     '    at Module.require (module.js:364:17)' ] }
+2013-10-21 08:02:17 - info: app.js: Express server listening on port 80
+2013-10-21 08:02:17 - info: mt.templates.js: Compiling template: leftNav.html
+2013-10-21 08:02:17 - info: mt.templates.js: Template 'leftNav' compiled and cached
+2013-10-21 08:02:17 - info: mt.templates.js: Compiling template: message.box.html
+2013-10-21 08:02:17 - info: mt.templates.js: Template 'message.box' compiled and cached
+2013-10-21 08:02:17 - info: mt.templates.js: Compiling template: task.html
+2013-10-21 08:02:17 - info: mt.templates.js: Template 'task' compiled and cached
+2013-10-21 08:02:17 - info: mt.templates.js: Compiling template: tasks.html
+2013-10-21 08:02:17 - info: mt.templates.js: Template 'tasks' compiled and cached
+2013-10-21 08:02:17 - info: mt.templates.js: Compiling template: teams.html
+2013-10-21 08:02:17 - info: mt.templates.js: Template 'teams' compiled and cached
+2013-10-21 08:02:17 - info: mt.templates.js: Compiling template: content.html
+2013-10-21 08:02:17 - info: mt.templates.js: Template 'content' compiled and cached
+2013-10-21 08:02:17 - info: mt.templates.js: Compiling template: head.html
+2013-10-21 08:02:17 - info: mt.templates.js: Template 'head' compiled and cached
+2013-10-21 08:02:17 - info: mt.templates.js: Compiling template: index.html
+2013-10-21 08:02:17 - info: mt.templates.js: Template 'index' compiled and cached
+2013-10-21 09:38:00 - info: app.js: #################################
+2013-10-21 09:38:00 - info: app.js: START: mytasq.com server instance
+2013-10-21 09:38:00 - info: mt.templates.js: Precompiling templates in /home/mytasq/mytasq.com/public/js/templates
+2013-10-21 09:38:00 - info: mt.templates.js: Precompiling templates in /home/mytasq/mytasq.com/views
+2013-10-21 09:38:01 - error: uncaughtException: Cannot find module 'express/node_modules/connect/node_modules/cookie' 
+{ date: 'Mon Oct 21 2013 09:38:01 GMT+0200 (CEST)',
+  process: 
+   { pid: 6344,
+     uid: 1000,
+     gid: 1000,
+     cwd: '/home/mytasq/mytasq.com',
+     execPath: '/home/mytasq/.nvm/v0.10.18/bin/node',
+     version: 'v0.10.18',
+     argv: [ 'node', '/home/mytasq/mytasq.com/app.js' ],
+     memoryUsage: { rss: 34541568, heapTotal: 31139328, heapUsed: 16739304 } },
+  os: 
+   { loadavg: [ 3.51611328125, 2.90478515625, 2.88134765625 ],
+     uptime: 2724048.372223519 },
+  trace: 
+   [ { column: 15,
+       file: 'module.js',
+       function: 'Function.Module._resolveFilename',
+       line: 338,
+       method: 'Module._resolveFilename',
+       native: false },
+     { column: 25,
+       file: 'module.js',
+       function: 'Function.Module._load',
+       line: 280,
+       method: 'Module._load',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'Module.require',
+       line: 364,
+       method: 'require',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'require',
+       line: 380,
+       method: null,
+       native: false },
+     { column: 20,
+       file: '/home/mytasq/mytasq.com/lib/mt.socket.js',
+       function: '',
+       line: 10,
+       method: null,
+       native: false },
+     { column: 26,
+       file: 'module.js',
+       function: 'Module._compile',
+       line: 456,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'module.js',
+       function: 'Object.Module._extensions..js',
+       line: 474,
+       method: 'Module._extensions..js',
+       native: false },
+     { column: 32,
+       file: 'module.js',
+       function: 'Module.load',
+       line: 356,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'module.js',
+       function: 'Function.Module._load',
+       line: 312,
+       method: 'Module._load',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'Module.require',
+       line: 364,
+       method: 'require',
+       native: false } ],
+  stack: 
+   [ 'Error: Cannot find module \'express/node_modules/connect/node_modules/cookie\'',
+     '    at Function.Module._resolveFilename (module.js:338:15)',
+     '    at Function.Module._load (module.js:280:25)',
+     '    at Module.require (module.js:364:17)',
+     '    at require (module.js:380:17)',
+     '    at Object.<anonymous> (/home/mytasq/mytasq.com/lib/mt.socket.js:10:20)',
+     '    at Module._compile (module.js:456:26)',
+     '    at Object.Module._extensions..js (module.js:474:10)',
+     '    at Module.load (module.js:356:32)',
+     '    at Function.Module._load (module.js:312:12)',
+     '    at Module.require (module.js:364:17)' ] }
+2013-10-21 09:38:01 - info: app.js: Express server listening on port 80
+2013-10-21 09:38:01 - info: mt.templates.js: Compiling template: leftNav.html
+2013-10-21 09:38:01 - info: mt.templates.js: Template 'leftNav' compiled and cached
+2013-10-21 09:38:01 - info: mt.templates.js: Compiling template: message.box.html
+2013-10-21 09:38:01 - info: mt.templates.js: Template 'message.box' compiled and cached
+2013-10-21 09:38:01 - info: mt.templates.js: Compiling template: task.html
+2013-10-21 09:38:01 - info: mt.templates.js: Template 'task' compiled and cached
+2013-10-21 09:38:01 - info: mt.templates.js: Compiling template: tasks.html
+2013-10-21 09:38:01 - info: mt.templates.js: Template 'tasks' compiled and cached
+2013-10-21 09:38:01 - info: mt.templates.js: Compiling template: teams.html
+2013-10-21 09:38:01 - info: mt.templates.js: Template 'teams' compiled and cached
+2013-10-21 09:38:01 - info: mt.templates.js: Compiling template: content.html
+2013-10-21 09:38:01 - info: mt.templates.js: Template 'content' compiled and cached
+2013-10-21 09:38:01 - info: mt.templates.js: Compiling template: head.html
+2013-10-21 09:38:01 - info: mt.templates.js: Template 'head' compiled and cached
+2013-10-21 09:38:01 - info: mt.templates.js: Compiling template: index.html
+2013-10-21 09:38:01 - info: mt.templates.js: Template 'index' compiled and cached
+2013-10-21 11:12:31 - info: app.js: #################################
+2013-10-21 11:12:31 - info: app.js: START: mytasq.com server instance
+2013-10-21 11:12:31 - info: mt.templates.js: Precompiling templates in /home/mytasq/mytasq.com/public/js/templates
+2013-10-21 11:12:31 - info: mt.templates.js: Precompiling templates in /home/mytasq/mytasq.com/views
+2013-10-21 11:12:31 - error: uncaughtException: Cannot find module 'express/node_modules/connect/node_modules/cookie' 
+{ date: 'Mon Oct 21 2013 11:12:31 GMT+0200 (CEST)',
+  process: 
+   { pid: 7220,
+     uid: 1000,
+     gid: 1000,
+     cwd: '/home/mytasq/mytasq.com',
+     execPath: '/home/mytasq/.nvm/v0.10.18/bin/node',
+     version: 'v0.10.18',
+     argv: [ 'node', '/home/mytasq/mytasq.com/app.js' ],
+     memoryUsage: { rss: 34533376, heapTotal: 31139328, heapUsed: 16665520 } },
+  os: 
+   { loadavg: [ 3.0458984375, 3.10986328125, 3.01318359375 ],
+     uptime: 2729719.041712337 },
+  trace: 
+   [ { column: 15,
+       file: 'module.js',
+       function: 'Function.Module._resolveFilename',
+       line: 338,
+       method: 'Module._resolveFilename',
+       native: false },
+     { column: 25,
+       file: 'module.js',
+       function: 'Function.Module._load',
+       line: 280,
+       method: 'Module._load',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'Module.require',
+       line: 364,
+       method: 'require',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'require',
+       line: 380,
+       method: null,
+       native: false },
+     { column: 20,
+       file: '/home/mytasq/mytasq.com/lib/mt.socket.js',
+       function: '',
+       line: 10,
+       method: null,
+       native: false },
+     { column: 26,
+       file: 'module.js',
+       function: 'Module._compile',
+       line: 456,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'module.js',
+       function: 'Object.Module._extensions..js',
+       line: 474,
+       method: 'Module._extensions..js',
+       native: false },
+     { column: 32,
+       file: 'module.js',
+       function: 'Module.load',
+       line: 356,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'module.js',
+       function: 'Function.Module._load',
+       line: 312,
+       method: 'Module._load',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'Module.require',
+       line: 364,
+       method: 'require',
+       native: false } ],
+  stack: 
+   [ 'Error: Cannot find module \'express/node_modules/connect/node_modules/cookie\'',
+     '    at Function.Module._resolveFilename (module.js:338:15)',
+     '    at Function.Module._load (module.js:280:25)',
+     '    at Module.require (module.js:364:17)',
+     '    at require (module.js:380:17)',
+     '    at Object.<anonymous> (/home/mytasq/mytasq.com/lib/mt.socket.js:10:20)',
+     '    at Module._compile (module.js:456:26)',
+     '    at Object.Module._extensions..js (module.js:474:10)',
+     '    at Module.load (module.js:356:32)',
+     '    at Function.Module._load (module.js:312:12)',
+     '    at Module.require (module.js:364:17)' ] }
+2013-10-21 11:12:31 - info: app.js: Express server listening on port 80
+2013-10-21 11:12:31 - info: mt.templates.js: Compiling template: content.html
+2013-10-21 11:12:32 - info: mt.templates.js: Template 'content' compiled and cached
+2013-10-21 11:12:32 - info: mt.templates.js: Compiling template: head.html
+2013-10-21 11:12:32 - info: mt.templates.js: Template 'head' compiled and cached
+2013-10-21 11:12:32 - info: mt.templates.js: Compiling template: index.html
+2013-10-21 11:12:32 - info: mt.templates.js: Template 'index' compiled and cached
+2013-10-21 11:12:32 - info: mt.templates.js: Compiling template: leftNav.html
+2013-10-21 11:12:32 - info: mt.templates.js: Template 'leftNav' compiled and cached
+2013-10-21 11:12:32 - info: mt.templates.js: Compiling template: message.box.html
+2013-10-21 11:12:32 - info: mt.templates.js: Template 'message.box' compiled and cached
+2013-10-21 11:12:32 - info: mt.templates.js: Compiling template: task.html
+2013-10-21 11:12:32 - info: mt.templates.js: Template 'task' compiled and cached
+2013-10-21 11:12:32 - info: mt.templates.js: Compiling template: tasks.html
+2013-10-21 11:12:32 - info: mt.templates.js: Template 'tasks' compiled and cached
+2013-10-21 11:12:32 - info: mt.templates.js: Compiling template: teams.html
+2013-10-21 11:12:32 - info: mt.templates.js: Template 'teams' compiled and cached
+2013-10-21 12:52:11 - info: app.js: #################################
+2013-10-21 12:52:12 - info: app.js: START: mytasq.com server instance
+2013-10-21 12:52:12 - info: mt.templates.js: Precompiling templates in /home/mytasq/mytasq.com/public/js/templates
+2013-10-21 12:52:12 - info: mt.templates.js: Precompiling templates in /home/mytasq/mytasq.com/views
+2013-10-21 12:52:12 - error: uncaughtException: Cannot find module 'express/node_modules/connect/node_modules/cookie' 
+{ date: 'Mon Oct 21 2013 12:52:12 GMT+0200 (CEST)',
+  process: 
+   { pid: 7903,
+     uid: 1000,
+     gid: 1000,
+     cwd: '/home/mytasq/mytasq.com',
+     execPath: '/home/mytasq/.nvm/v0.10.18/bin/node',
+     version: 'v0.10.18',
+     argv: [ 'node', '/home/mytasq/mytasq.com/app.js' ],
+     memoryUsage: { rss: 34525184, heapTotal: 31139328, heapUsed: 16805632 } },
+  os: 
+   { loadavg: [ 3.4140625, 3.2041015625, 2.9833984375 ],
+     uptime: 2735699.404848636 },
+  trace: 
+   [ { column: 15,
+       file: 'module.js',
+       function: 'Function.Module._resolveFilename',
+       line: 338,
+       method: 'Module._resolveFilename',
+       native: false },
+     { column: 25,
+       file: 'module.js',
+       function: 'Function.Module._load',
+       line: 280,
+       method: 'Module._load',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'Module.require',
+       line: 364,
+       method: 'require',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'require',
+       line: 380,
+       method: null,
+       native: false },
+     { column: 20,
+       file: '/home/mytasq/mytasq.com/lib/mt.socket.js',
+       function: '',
+       line: 10,
+       method: null,
+       native: false },
+     { column: 26,
+       file: 'module.js',
+       function: 'Module._compile',
+       line: 456,
+       method: '_compile',
+       native: false },
+     { column: 10,
+       file: 'module.js',
+       function: 'Object.Module._extensions..js',
+       line: 474,
+       method: 'Module._extensions..js',
+       native: false },
+     { column: 32,
+       file: 'module.js',
+       function: 'Module.load',
+       line: 356,
+       method: 'load',
+       native: false },
+     { column: 12,
+       file: 'module.js',
+       function: 'Function.Module._load',
+       line: 312,
+       method: 'Module._load',
+       native: false },
+     { column: 17,
+       file: 'module.js',
+       function: 'Module.require',
+       line: 364,
+       method: 'require',
+       native: false } ],
+  stack: 
+   [ 'Error: Cannot find module \'express/node_modules/connect/node_modules/cookie\'',
+     '    at Function.Module._resolveFilename (module.js:338:15)',
+     '    at Function.Module._load (module.js:280:25)',
+     '    at Module.require (module.js:364:17)',
+     '    at require (module.js:380:17)',
+     '    at Object.<anonymous> (/home/mytasq/mytasq.com/lib/mt.socket.js:10:20)',
+     '    at Module._compile (module.js:456:26)',
+     '    at Object.Module._extensions..js (module.js:474:10)',
+     '    at Module.load (module.js:356:32)',
+     '    at Function.Module._load (module.js:312:12)',
+     '    at Module.require (module.js:364:17)' ] }
+2013-10-21 12:52:12 - info: app.js: Express server listening on port 80
+2013-10-21 12:52:12 - info: mt.templates.js: Compiling template: leftNav.html
+2013-10-21 12:52:12 - info: mt.templates.js: Template 'leftNav' compiled and cached
+2013-10-21 12:52:12 - info: mt.templates.js: Compiling template: message.box.html
+2013-10-21 12:52:12 - info: mt.templates.js: Template 'message.box' compiled and cached
+2013-10-21 12:52:12 - info: mt.templates.js: Compiling template: task.html
+2013-10-21 12:52:12 - info: mt.templates.js: Template 'task' compiled and cached
+2013-10-21 12:52:12 - info: mt.templates.js: Compiling template: tasks.html
+2013-10-21 12:52:12 - info: mt.templates.js: Template 'tasks' compiled and cached
+2013-10-21 12:52:12 - info: mt.templates.js: Compiling template: teams.html
+2013-10-21 12:52:12 - info: mt.templates.js: Template 'teams' compiled and cached
+2013-10-21 12:52:12 - info: mt.templates.js: Compiling template: content.html
+2013-10-21 12:52:12 - info: mt.templates.js: Template 'content' compiled and cached
+2013-10-21 12:52:12 - info: mt.templates.js: Compiling template: head.html
+2013-10-21 12:52:12 - info: mt.templates.js: Template 'head' compiled and cached
+2013-10-21 12:52:12 - info: mt.templates.js: Compiling template: index.html
+2013-10-21 12:52:12 - info: mt.templates.js: Template 'index' compiled and cached

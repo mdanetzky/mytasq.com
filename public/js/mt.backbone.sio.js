@@ -73,6 +73,8 @@ define(['backbone', 'underscore', 'mt.socket', 'jquery'], function(Backbone, _, 
 
                 console.log('SOCKET SEND TIMEOUT');
                 data._saveTimeout = null;
+                
+                // TODO: socket error handling
                 error.call(this, 'timeout');
             }, 5000);
             if (data._saveBuffer) {

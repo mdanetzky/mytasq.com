@@ -1,10 +1,10 @@
 {
     "author": "Matthias Danetzky <matthias.danetzky@gmail.com>",
-    "url": "http://192.168.0.218",
+    "url": "http://mytasq.com",
     "staticPathRelative": "public",
     "staticPathAbsolute": "",
     "loglevel": "debug",
-    "singleThread": false,
+    "singleThread": true,
     "db": {
         "uri": "mongodb://localhost/MyTasq",
         "options": {
