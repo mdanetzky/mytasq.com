@@ -8,22 +8,16 @@
  * https://github.com/inuyaksa/jquery.nicescroll
  */
 
-define(['mt.backbone.sio', 'underscore', 'jquery', 'nicescroll'], function(Backbone, _, $) {
-    var ScrollableView = function(options) {
-        _.extend(this, {
-            scrollbars: null,
-            currentHeight: 0,
-            $el: $(this.el),
-            $viewport: $(this.viewport)
-        });
-        Backbone.View.apply(this, [options]);
-    };
-    _.extend(ScrollableView.prototype, Backbone.View.prototype, {
-        initialize: function() {
-            this.scrollEventBus = {};
-            _.extend(this.scrollEventBus, Backbone.Events);
+define(['underscore', 'jquery', 'nicescroll'], function ( _, $) {
+
+    return {
+        scrollbars: null,
+        currentHeight: 0,
+        initializeScrollable: function() {
+            this.$el = $(this.el);
+            this.$viewport = $(this.viewport);            
         },
-        resize: function(newHeight) {
+        resize: function (newHeight) {
             if (typeof newHeight === 'number' && newHeight >= 0) {
                 if (this.currentHeight !== newHeight) {
                     var contentHeight = this.$viewport[0].scrollHeight;
@@ -45,29 +39,30 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'nicescroll'], function(Backb
             }
             this.ensureScrollbars();
         },
-        remove: function() {
+        remove: function () {
             this.scrollbars.remove();
         },
-        ensureScrollbars: function(callback, ctx) {
+        ensureScrollbars: function (callback, ctx) {
             var self = this;
             if (this.scrollbars) {
                 if (callback) {
                     callback.apply(ctx);
                 }
             } else {
-                $(function() {
+                $(function () {
                     var options = {
                         cursoropacitymax: 0.3,
                         cursorborder: '',
                         iframeautoresize: false,
                         spacebarenabled: false,
-                        enablekeyboard: false
+                        enablekeyboard: false,
+                        autohidemode: "scroll"
                     };
                     if (self.barOptions) {
                         _.extend(options, self.barOptions);
                     }
                     self.scrollbars = self.$viewport.niceScroll(options);
-                    var scrollHandler = function(info) {
+                    var scrollHandler = function (info) {
                         var contentHeight = self.$viewport[0].scrollHeight;
                         var containerHeight = self.$el.outerHeight(false);
                         if (((contentHeight - containerHeight) - info.end.y) < 600) {
@@ -82,8 +77,5 @@ define(['mt.backbone.sio', 'underscore', 'jquery', 'nicescroll'], function(Backb
                 });
             }
         }
-    });
-    // Make it extendable.
-    ScrollableView.extend = Backbone.View.extend;
-    return ScrollableView;
+    };
 });

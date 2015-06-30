@@ -6,8 +6,8 @@
  * Container in the middle of the screen.
  */
 
-define(['underscore', 'jquery', 'views/scrollable', 'views/tasks'], function(_, $, ScrollableView, TasksView) {
-    var MiddleContainerView = ScrollableView.extend({
+define(['mt.backbone.sio', 'underscore', 'jquery', 'views/scrollableMixIn', 'views/tasks'], function(Backbone, _, $, ScrollableViewMixIn, TasksView) {
+    var MiddleContainerView = Backbone.View.extend({
         el: '#mt-middle-container',
         viewport: '#mt-middle-container',
         taskList: null,
@@ -16,6 +16,7 @@ define(['underscore', 'jquery', 'views/scrollable', 'views/tasks'], function(_, 
             this.createTaskListFromHTML('#' + this.$el.attr('id') + ' > [id|="tasks"]');
             this.options.app.on('showDoneByMe', this.showDoneByMe, this);
             this.options.app.on('createTask', this.createTask, this);
+            this.initializeScrollable();
         },
         barOptions: {
             railoffset: {left: 8}
@@ -51,5 +52,6 @@ define(['underscore', 'jquery', 'views/scrollable', 'views/tasks'], function(_, 
             return false;
         }
     });
+    _.extend(MiddleContainerView.prototype, ScrollableViewMixIn);
     return MiddleContainerView;
 });

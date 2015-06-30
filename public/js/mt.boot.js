@@ -9,7 +9,7 @@
     var mtRequire = require.config({
         baseUrl: 'js',
         paths: {
-            "jquery": 'lib/jquery-1.10.2.min',
+            "jquery": 'lib/jquery-1.11.1.min',
             "jquery-ui": 'lib/jquery-ui.min',
             "text": 'lib/require/text',
             "async": 'lib/require/async',
