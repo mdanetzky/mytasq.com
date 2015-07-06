@@ -166,6 +166,7 @@ module.exports = exports = {
                         callback(null, task.get('_id').toString());
                     }
                 });
+                
             }
         } else {
             // Modify existing task.
