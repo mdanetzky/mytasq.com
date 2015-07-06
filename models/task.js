@@ -11,7 +11,9 @@ var mongoose = require('mongoose')
         , User = require('./user')
         ;
 var TaskSchema = new Schema({
-    parentTask: {type: Schema.ObjectId, ref: 'Task', index: true}
+    parentTask: { type: Schema.ObjectId, ref: 'Task', index: true }
+    , openSubtasksNo: { type: Number, default:0 }
+    , clesedSubtasksNo: { type: Number, default:0 }
     , title: {type: String, default: '', index: true}
     , text: {type: String, default: ''}
     , author: {type: Schema.ObjectId, ref: 'User', index: true}
