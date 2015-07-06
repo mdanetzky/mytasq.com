@@ -22,7 +22,7 @@
     "express-session": "*",
     "errorhandler": "*",
     "hiredis": "*",
-    "mongoose": "~3.8.0",
+    "mongoose": "~4.0",
     "method-override": "*",
     "moment": "*",
     "morgan": "*",
