@@ -2,7 +2,7 @@
  * Copyright 2013 MyTasq.com
  * Author: Matthias Danetzky
  * 
- * requitejs r.js build definition
+ * requirejs r.js build definition
  */
 
 ({
